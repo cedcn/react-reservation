@@ -1,0 +1,6 @@
+
+/coverage
+/dist
+examples
+/node_modules
+/webpack.build.js
