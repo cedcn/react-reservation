@@ -1,6 +1,6 @@
 import React from 'react'
+import Reservation from 'react-reservation'
 import Head from 'next/head'
-import Reservation from '../../dist/reservation'
 import { NextPage } from 'next'
 
 const IndexPage: NextPage = () => {
@@ -12,7 +12,19 @@ const IndexPage: NextPage = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div>
+        <style jsx>{`
+          .container {
+            width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          h1 {
+            text-align: center;
+          }
+        `}</style>
         <div className="container">
+          <h1>Reservation</h1>
           <Reservation />
         </div>
       </div>

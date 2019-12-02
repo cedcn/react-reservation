@@ -1,7 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+import Reservation from './Reservation'
 
-const Reservation: React.FC<any> = () => {
-  return <h1>Reservation</h1>
-}
-
-export default Reservation
+ReactDOM.render(<Reservation />, document.getElementById('root'))

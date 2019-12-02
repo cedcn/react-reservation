@@ -1,18 +1,26 @@
 {
   "name": "react-reservation",
-  "version": "1.0.0",
+  "version": "1.0.1-rc",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "esm/index.js",
+  "typings": "types",
   "scripts": {
-    "start": "yarn build && next ./examples",
-    "build": "webpack --config ./webpack.build.js",
-    "watch": "webpack --watch --config ./webpack.build.js"
+    "start": "react-scripts start",
+    "build": "yarn build:es && yarn build:lib && yarn build:dts",
+    "build:es": "cross-env NODE_ENV=es babel src/Reservation --out-dir esm --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "cross-env NODE_ENV=umd babel src/Reservation --out-dir lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:dts": "tsc -d -p ./src/Reservation --emitDeclarationOnly --outDir types",
+    "build-watch:es": "yarn run build:es --watch",
+    "test": "jest",
+    "test-inspect": "babel-node --inspect node_modules/.bin/jest --runInBand"
   },
   "author": "cedcn",
   "license": "MIT",
   "dependencies": {
+    "@emotion/core": "^10.0.22",
     "lodash": "^4.17.15",
-    "nanoid": "^2.1.7"
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -23,13 +31,15 @@
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.7.4",
+    "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
-    "@types/nanoid": "^2.1.0",
     "@types/node": "^12.12.14",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
+    "@types/react-test-renderer": "^16.9.1",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
-    "babel-loader": "^8.0.6",
+    "babel-jest": "^24.9.0",
+    "cross-env": "^6.0.3",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-typescript": "^6.3.1",
     "eslint-config-prettier": "^6.7.0",
@@ -37,12 +47,23 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.1.1",
     "jest": "^24.9.0",
-    "next": "latest",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "typescript": "^3.7.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "react-scripts": "^3.3.0",
+    "react-test-renderer": "^16.12.0",
+    "typescript": "^3.7.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

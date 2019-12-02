@@ -5,11 +5,7 @@
     "jsx": "react",
     "declaration": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -18,19 +14,7 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "isolatedModules": true
   },
-  "exclude": [
-    "node_modules",
-    "examples",
-    "lib",
-    "esm",
-    "**/__tests__/**/*",
-    "*.test.ts",
-    "*.test.tsx"
-  ],
-  "include": [
-    "src"
-  ]
+  "exclude": ["node_modules", "examples", "lib", "esm", "**/__tests__/**/*", "*.test.ts", "*.test.tsx"]
 }
