@@ -11,8 +11,7 @@ const style = css`
 const Reservation: React.FC<any> = () => {
   return (
     <div css={style}>
-      <h1>Reservation</h1>
-      <ReservationCalendar value={null} onChange={() => ({})} availableDays={{ availableWeeks: [0, 1] }} />
+      <ReservationCalendar value={null} onChange={() => ({})} days={{ availableWeeks: [0, 1] }} />
     </div>
   )
 }

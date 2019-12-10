@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import moment from 'moment'
 // import CalendarTable from './CalendarTable'
 import CalendarHeader from './CalendarHeader'
-import { Calendar, isDays } from '../interface'
+import CalendarTable from './CalendarTable'
+import { Calendar, isFixedDays } from '../interface'
 
 interface CalendarProps extends Calendar {}
 
@@ -23,29 +24,32 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
     return true
   }
 
-  const { prefixCls = 'reservation-calendar', availableDays } = props
+  const { prefixCls = 'reservation-calendar', days, value } = props
 
   const today = moment()
 
-  if (!isDays(availableDays)) {
-    const { startDay, endDay } = availableDays
+  if (!isFixedDays(days)) {
+    const { startDay, endDay, availableWeeks } = days
 
     const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay.startOf('day') : today.startOf('day')
     const endMonthDay = endDay ? endDay.endOf('day') : undefined
+    const onChange = () => {}
     const currentMonthDay = startMonthDay.clone().month(currentMonthIdx + startMonthDay.month())
 
     canToLast = startMonthDay.isBefore(currentMonthDay, 'month')
     canToNext = !endMonthDay || (endMonthDay && endMonthDay.isAfter(currentMonthDay, 'month'))
 
-    // const commonProps = {
-    //   ...props,
-    //   currentMonthIdx,
-    //   startDay: startMonthDay,
-    //   endDay: endMonthDay,
-    //   availableWeeks,
-    //   toLast: toLastMonth,
-    //   toNext: toNextMonth,
-    // }
+    const commonProps = {
+      prefixCls,
+      currentMonthIdx,
+      startDay: startMonthDay,
+      endDay: endMonthDay,
+      availableWeeks,
+      value,
+      onChange,
+      toLast: toLastMonth,
+      toNext: toNextMonth,
+    }
 
     return (
       <div className={prefixCls}>
@@ -57,6 +61,7 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
           toNext={toNextMonth}
           toLast={toLastMonth}
         />
+        <CalendarTable {...commonProps} />
       </div>
     )
   }
