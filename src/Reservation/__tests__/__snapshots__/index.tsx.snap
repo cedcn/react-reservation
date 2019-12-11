@@ -1,7 +1,119 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<h1>
-  Reservation
-</h1>
+<div
+  className="rV css-1dhoqxp-ReservationCalendar"
+>
+  <div
+    className="rV-header css-uyiikg-CalendarHeader"
+  >
+    <div
+      className="rV-header__week"
+    >
+      <span>
+        2019年12月
+      </span>
+    </div>
+    <a
+      className="rV-header__arrow rV-header__next-arrow css-1agcduh-CalendarHeader"
+      onClick={[Function]}
+      title="下一月"
+    >
+      下一月
+    </a>
+  </div>
+  <div
+    className="rV-table css-li9qyy-CalendarTable"
+  >
+    <div
+      className="rV-thead css-2z8o9q-CalendarTHead"
+    >
+      <div
+        className="rV-tr css-11qeklm-CalendarTHead"
+        role="row"
+      >
+        <div
+          className="rV-th rV-column-header css-rbejd6"
+          role="columnheader"
+          title="Sun"
+        >
+          <span
+            className="rV-column-header-inner"
+          >
+            Sun
+          </span>
+        </div>
+        <div
+          className="rV-th rV-column-header css-rbejd6"
+          role="columnheader"
+          title="Mon"
+        >
+          <span
+            className="rV-column-header-inner"
+          >
+            Mon
+          </span>
+        </div>
+        <div
+          className="rV-th rV-column-header css-rbejd6"
+          role="columnheader"
+          title="Tue"
+        >
+          <span
+            className="rV-column-header-inner"
+          >
+            Tue
+          </span>
+        </div>
+        <div
+          className="rV-th rV-column-header css-rbejd6"
+          role="columnheader"
+          title="Wed"
+        >
+          <span
+            className="rV-column-header-inner"
+          >
+            Wed
+          </span>
+        </div>
+        <div
+          className="rV-th rV-column-header css-rbejd6"
+          role="columnheader"
+          title="Thu"
+        >
+          <span
+            className="rV-column-header-inner"
+          >
+            Thu
+          </span>
+        </div>
+        <div
+          className="rV-th rV-column-header css-rbejd6"
+          role="columnheader"
+          title="Fri"
+        >
+          <span
+            className="rV-column-header-inner"
+          >
+            Fri
+          </span>
+        </div>
+        <div
+          className="rV-th rV-column-header css-rbejd6"
+          role="columnheader"
+          title="Sat"
+        >
+          <span
+            className="rV-column-header-inner"
+          >
+            Sat
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="rV-tbody-viewer css-slbbi-CalendarTable"
+    />
+  </div>
+</div>
 `;

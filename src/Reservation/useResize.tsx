@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
+import MutationObserver from 'mutation-observer'
 import { get } from 'lodash'
 
 const useResize = (): [(instance: any) => void, number] => {
