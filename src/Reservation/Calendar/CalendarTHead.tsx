@@ -26,13 +26,7 @@ const CalendarTHead: React.FC<CalendarTHeadProps> = (props) => {
 
   const weekDaysEls = weekDays.map((day, xindex) => {
     return (
-      <div
-        css={styles.th}
-        key={xindex}
-        role="columnheader"
-        title={day}
-        className={`${prefixCls}-th ${prefixCls}-column-header`}
-      >
+      <div css={styles.th} key={xindex} role="columnheader" title={day} className={`${prefixCls}-th`}>
         <span className={`${prefixCls}-column-header-inner`}>{day}</span>
       </div>
     )

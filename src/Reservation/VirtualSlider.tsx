@@ -132,7 +132,12 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
 
     if (!isNil(prevIdx)) {
       const position = prevIdx > idx ? 0 : -width * 2
-      const newSliderState = { ...sliderState, position, transition: `all ${SPEED}ms`, animating: true }
+      const newSliderState = {
+        ...sliderState,
+        position,
+        transition: `all ${SPEED}ms`,
+        animating: true,
+      }
       if (!isEqual(newSliderState, sliderState)) {
         setSliderState(newSliderState)
       }
@@ -146,7 +151,9 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
 
   const style = {
     transform: `translate3d(${sliderState.position + Number(sliderState.swipeLeft)}px, 0px, 0px)`,
+    WebkitTransform: `-webkit-translate3d(${sliderState.position + Number(sliderState.swipeLeft)}px, 0px, 0px)`,
     transition: isNil(sliderState.swipeLeft) ? sliderState.transition : undefined,
+    WebkitTransition: isNil(sliderState.swipeLeft) ? sliderState.transition : undefined,
   }
 
   return (

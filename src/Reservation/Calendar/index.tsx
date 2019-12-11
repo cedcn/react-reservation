@@ -26,7 +26,7 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
     return true
   }
 
-  const { prefixCls = 'rV', days, value } = props
+  const { prefixCls = 'rV', days, value, onChange } = props
 
   const today = moment()
 
@@ -35,7 +35,6 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
 
     const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay.startOf('day') : today.startOf('day')
     const endMonthDay = endDay ? endDay.endOf('day') : undefined
-    const onChange = () => {}
     const currentMonthDay = startMonthDay.clone().month(currentMonthIdx + startMonthDay.month())
 
     canToLast = startMonthDay.isBefore(currentMonthDay, 'month')

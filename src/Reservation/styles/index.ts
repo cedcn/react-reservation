@@ -99,15 +99,15 @@ const cell = (theme: Theme, status: CellStatus) => {
   return css`
     ${cellCss}
     height: 50px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 7px;
+    padding: 4px;
+    transition: all 0.2s;
   `
 }
-
-const columnHeader = css`
-  line-height: 18px;
-  padding: 7px 0;
-  width: 33px;
-  text-align: center;
-`
 
 const styles = {
   reservation,
