@@ -1,18 +1,16 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
+import { ThemeProvider } from 'emotion-theming'
 import React from 'react'
 import ReservationCalendar from './Calendar'
 
-const style = css`
-  color: hotpink;
-  background-color: #000;
-`
+const Reservation: React.FC<any> = (props) => {
+  const theme = { borderColor: '#eee' }
 
-const Reservation: React.FC<any> = () => {
   return (
-    <div css={style}>
+    <ThemeProvider theme={theme}>
       <ReservationCalendar value={null} onChange={() => ({})} days={{ availableWeeks: [0, 1] }} />
-    </div>
+    </ThemeProvider>
   )
 }
 

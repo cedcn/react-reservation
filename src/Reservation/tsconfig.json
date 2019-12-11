@@ -16,5 +16,6 @@
     "skipLibCheck": true,
     "isolatedModules": true
   },
-  "exclude": ["node_modules", "examples", "lib", "esm", "**/__tests__/**/*", "*.test.ts", "*.test.tsx"]
+  "exclude": ["node_modules", "examples", "lib", "esm", "**/__tests__/**/*", "*.test.ts", "*.test.tsx"],
+  "include": ["./"]
 }

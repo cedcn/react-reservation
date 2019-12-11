@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
 import React from 'react'
 import moment, { Moment } from 'moment'
 import cx from 'classnames'
@@ -6,6 +8,7 @@ import { beforeCurrentMonthYear, afterCurrentMonthYear, isSameDay, gainCellCls, 
 import { includes, find, get } from 'lodash'
 import ReservationCellStatus from '../ReservationCellStatus'
 import { CalendarTableProps } from './CalendarTable'
+import styles from '../styles'
 
 const getTitleString = (value: Moment) => value.format('LL')
 
@@ -37,7 +40,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
   let passed = 0
   const tableHtml = []
   let current: Moment
-  const cellClass = `reservation-cell ${prefixCls}-cell ${prefixCls}-td`
+  const cellClass = `${prefixCls}-td`
 
   for (let iIndex = 0; iIndex < DATE_ROW_COUNT; iIndex++) {
     let isCurrentWeek
@@ -70,27 +73,29 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         isCurrentWeek = true
       }
 
+      const status = {
+        isToday,
+        isStartDate,
+        isEndDate,
+        isBeforeStartDay,
+        isAfterEndDay,
+        isLastMonthDay,
+        isNextMonthDay,
+        isMakefull,
+        isSelectable,
+        isNotChecked,
+        isSelected,
+      }
       dateCells.push(
         <div
           key={passed}
           onClick={isDisabled ? undefined : onChange.bind(null, current)}
           role="gridcell"
           title={getTitleString(current)}
-          className={gainCellCls(cellClass, {
-            isToday,
-            isStartDate,
-            isEndDate,
-            isBeforeStartDay,
-            isAfterEndDay,
-            isLastMonthDay,
-            isNextMonthDay,
-            isMakefull,
-            isSelectable,
-            isNotChecked,
-            isSelected,
-          })}
+          css={styles.td}
+          className={gainCellCls(cellClass, status)}
         >
-          <div className="reservation-cell__content">
+          <div className={`${prefixCls}-cell`} css={(theme) => styles.cell(theme, status)}>
             <span>{current.format('DD')}</span>
             <ReservationCellStatus
               isSelectable={isSelectable}
@@ -106,14 +111,24 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     }
 
     tableHtml.push(
-      <div key={iIndex} role="row" className={cx(`${prefixCls}-tr`, { 'is-current-week': isCurrentWeek })}>
+      <div
+        key={iIndex}
+        role="row"
+        css={styles.tr}
+        className={cx(`${prefixCls}-tr`, { 'is-current-week': isCurrentWeek })}
+      >
         {dateCells}
       </div>
     )
   }
 
   return (
-    <div className={cx(`${prefixCls}-tbody`, className)} style={{ width }} title={firstMonthDay.format('YYYY年MM月')}>
+    <div
+      className={cx(`${prefixCls}-tbody`, className)}
+      css={styles.tbody}
+      style={{ width }}
+      title={firstMonthDay.format('YYYY年MM月')}
+    >
       {tableHtml}
     </div>
   )

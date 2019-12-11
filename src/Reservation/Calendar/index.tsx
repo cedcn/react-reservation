@@ -1,9 +1,11 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
 import moment from 'moment'
-// import CalendarTable from './CalendarTable'
 import CalendarHeader from './CalendarHeader'
 import CalendarTable from './CalendarTable'
 import { Calendar, isFixedDays } from '../interface'
+import styles from '../styles'
 
 interface CalendarProps extends Calendar {}
 
@@ -24,7 +26,7 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
     return true
   }
 
-  const { prefixCls = 'reservation-calendar', days, value } = props
+  const { prefixCls = 'rV', days, value } = props
 
   const today = moment()
 
@@ -52,7 +54,7 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
     }
 
     return (
-      <div className={prefixCls}>
+      <div className={prefixCls} css={styles.reservation}>
         <CalendarHeader
           prefixCls={prefixCls}
           currentDay={currentMonthDay}

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import useResize from '../useResize'
 import { map } from 'lodash'
@@ -6,6 +8,7 @@ import CalendarTBody from './CalendarTBody'
 import VirtualSlider from '../VirtualSlider'
 import { CalendarTableCommonProps } from '../interface'
 import { gainMonthDays } from '../utils'
+import styles from '../styles'
 
 export interface CalendarTableProps extends CalendarTableCommonProps {}
 
@@ -47,20 +50,20 @@ const CalendarList: React.FC<any> = (props) => {
 
         return <CalendarTBody key={key} {...tBodyProps} />
       }),
-    [displayIdxs, prefixCls, value && value.format(), width]
+    [displayIdxs, prefixCls, value && value.format(), width, availableWeeks, onChange]
   )
 
-  return <>{child}</>
+  return <React.Fragment>{child}</React.Fragment>
 }
 
 const CalendarTable: React.FC<CalendarTableProps> = (props) => {
-  const { prefixCls, value, toNext, startDay, currentMonthIdx, toLast } = props
+  const { prefixCls, value, toNext, startDay, currentMonthIdx, toLast, availableWeeks, onChange } = props
   const [viewEl, width] = useResize()
 
   return (
-    <div className={`${prefixCls}-table`}>
+    <div className={`${prefixCls}-table`} css={styles.table}>
       <CalendarTHead prefixCls={prefixCls} value={value} />
-      <div className={`${prefixCls}-tbody-viewer`} ref={viewEl}>
+      <div className={`${prefixCls}-tbody-viewer`} css={styles.tbodyViewer} ref={viewEl}>
         {!!width && (
           <VirtualSlider
             className={`${prefixCls}-tbody-list`}
@@ -73,6 +76,8 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
               <CalendarList
                 displayIdxs={displayIdxs}
                 startDay={startDay}
+                availableWeeks={availableWeeks}
+                onChange={onChange}
                 value={value}
                 width={width}
                 prefixCls={prefixCls}

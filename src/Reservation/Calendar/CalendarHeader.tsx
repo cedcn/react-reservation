@@ -1,5 +1,8 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
 import React from 'react'
 import { Moment } from 'moment'
+import styles from '../styles'
 
 interface CalendarHeaderProps {
   prefixCls?: string
@@ -10,31 +13,39 @@ interface CalendarHeaderProps {
   toNext: () => void
 }
 
-class CalendarHeader extends React.Component<CalendarHeaderProps> {
-  monthYearElement = () => {
-    const { currentDay } = this.props
+const CalendarHeader: React.FC<CalendarHeaderProps> = (props) => {
+  const monthYearElement = () => {
+    const { currentDay } = props
     return <span>{currentDay.format('YYYY年MM月')}</span>
   }
 
-  render() {
-    const { prefixCls, toLast, toNext, canToLast, canToNext } = this.props
+  const { prefixCls, toLast, toNext, canToLast, canToNext } = props
 
-    return (
-      <div className={`reservation-header ${prefixCls}-header`}>
-        {canToLast && (
-          <a onClick={() => toLast()} title="上一月" className="reservation-prev-button">
-            上一月
-          </a>
-        )}
-        <div className={`reservation-header__title ${prefixCls}-header__week`}>{this.monthYearElement()}</div>
-        {canToNext && (
-          <a onClick={() => toNext()} title="下一月" className="reservation-next-button">
-            下一月
-          </a>
-        )}
-      </div>
-    )
-  }
+  return (
+    <div className={`${prefixCls}-header`} css={styles.header}>
+      {canToLast && (
+        <a
+          className={`${prefixCls}-header__arrow ${prefixCls}-header__prev-arrow`}
+          onClick={() => toLast()}
+          title="上一月"
+          css={(theme) => [styles.headerArrow(), styles.headerPrevArrow()]}
+        >
+          上一月
+        </a>
+      )}
+      <div className={`${prefixCls}-header__week`}>{monthYearElement()}</div>
+      {canToNext && (
+        <a
+          className={`${prefixCls}-header__arrow ${prefixCls}-header__next-arrow`}
+          onClick={() => toNext()}
+          title="下一月"
+          css={(theme) => [styles.headerArrow(), styles.headerNextArrow()]}
+        >
+          下一月
+        </a>
+      )}
+    </div>
+  )
 }
 
 export default CalendarHeader

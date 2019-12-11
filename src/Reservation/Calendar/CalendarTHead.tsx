@@ -1,6 +1,9 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
 import React from 'react'
 import { DATE_COL_COUNT } from '../constants'
 import moment, { Moment } from 'moment'
+import styles from '../styles'
 
 interface CalendarTHeadProps {
   prefixCls: string
@@ -23,15 +26,21 @@ const CalendarTHead: React.FC<CalendarTHeadProps> = (props) => {
 
   const weekDaysEls = weekDays.map((day, xindex) => {
     return (
-      <div key={xindex} role="columnheader" title={day} className={`${prefixCls}-th ${prefixCls}-column-header`}>
+      <div
+        css={styles.th}
+        key={xindex}
+        role="columnheader"
+        title={day}
+        className={`${prefixCls}-th ${prefixCls}-column-header`}
+      >
         <span className={`${prefixCls}-column-header-inner`}>{day}</span>
       </div>
     )
   })
 
   return (
-    <div className={`${prefixCls}-thead`}>
-      <div className={`${prefixCls}-tr`} role="row">
+    <div css={styles.thead} className={`${prefixCls}-thead`}>
+      <div css={styles.tr} className={`${prefixCls}-tr`} role="row">
         {weekDaysEls}
       </div>
     </div>
