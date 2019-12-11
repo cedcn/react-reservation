@@ -7,18 +7,20 @@ export type WeekCode = 0 | 1 | 2 | 3 | 4 | 5 | 6
 export type Theme = any
 
 export interface RepeatDaysByWeek {
-  availableWeeks: WeekCode[]
+  availableWeeks?: WeekCode[]
   startDay?: Moment
   endDay?: Moment
 }
 
 export type FixedDays = Moment[]
 
+export type Days = FixedDays | RepeatDaysByWeek
+
 export interface Calendar {
   prefixCls?: string
   value: CalendarValue
   onChange: (value: CalendarValue) => void
-  days: FixedDays | RepeatDaysByWeek
+  days: Days
 }
 
 export interface CalendarTableCommonProps {
@@ -27,7 +29,8 @@ export interface CalendarTableCommonProps {
   startDay: Moment
   endDay?: Moment
   value: CalendarValue
-  availableWeeks: WeekCode[]
+  availableWeeks?: WeekCode[]
+  availableDays?: FixedDays
   onChange: (value: CalendarValue) => void
   toNext: () => boolean
   toLast: () => boolean
@@ -49,6 +52,6 @@ export interface CellStatus {
   isNextMonthDay?: boolean
 }
 
-export function isFixedDays(days: FixedDays | RepeatDaysByWeek): days is FixedDays {
+export function isFixedDays(days: Days): days is FixedDays {
   return isArray(days)
 }

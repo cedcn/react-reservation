@@ -1,11 +1,8 @@
 import { css } from '@emotion/core'
 import bgLine from '../assets/bg_line.png'
 
-const N10 = '#eee'
-
 // mixins
 const lineGrayCell = css`
-  background-color: ${N10};
   background-image: url(${bgLine});
   background-size: 20px;
   background-repeat: repeat;
@@ -25,8 +22,8 @@ const selectedCell = css`
 `
 
 const selectableCell = css`
-  background-color: #7bd473;
-  color: #fff;
+  background-color: #ccf2da;
+  color: #05510e;
 `
 
 const mixins = {

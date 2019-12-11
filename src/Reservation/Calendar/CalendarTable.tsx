@@ -11,7 +11,6 @@ import { gainMonthDays } from '../utils'
 import styles from '../styles'
 
 export interface CalendarTableProps extends CalendarTableCommonProps {}
-
 const CalendarList: React.FC<any> = (props) => {
   const {
     displayIdxs,
@@ -22,6 +21,7 @@ const CalendarList: React.FC<any> = (props) => {
     toNext,
     toLast,
     availableWeeks,
+    availableDays,
     onChange,
     endDay,
     currentMonthIdx,
@@ -38,6 +38,7 @@ const CalendarList: React.FC<any> = (props) => {
           endDay,
           currentMonthIdx,
           availableWeeks,
+          availableDays,
           monthDays,
           toNext,
           toLast,
@@ -57,7 +58,18 @@ const CalendarList: React.FC<any> = (props) => {
 }
 
 const CalendarTable: React.FC<CalendarTableProps> = (props) => {
-  const { prefixCls, value, toNext, startDay, currentMonthIdx, toLast, availableWeeks, onChange } = props
+  const {
+    prefixCls,
+    value,
+    toNext,
+    startDay,
+    endDay,
+    currentMonthIdx,
+    toLast,
+    availableDays,
+    availableWeeks,
+    onChange,
+  } = props
   const [viewEl, width] = useResize()
 
   return (
@@ -76,7 +88,9 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
               <CalendarList
                 displayIdxs={displayIdxs}
                 startDay={startDay}
+                endDay={endDay}
                 availableWeeks={availableWeeks}
+                availableDays={availableDays}
                 onChange={onChange}
                 value={value}
                 width={width}

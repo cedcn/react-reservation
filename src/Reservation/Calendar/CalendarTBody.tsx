@@ -5,7 +5,7 @@ import moment, { Moment } from 'moment'
 import cx from 'classnames'
 import { DATE_COL_COUNT, DATE_ROW_COUNT } from '../constants'
 import { beforeCurrentMonthYear, afterCurrentMonthYear, isSameDay, gainCellCls, MonthDay } from '../utils'
-import { includes, find, get } from 'lodash'
+import { includes, find, get, isEmpty, findIndex } from 'lodash'
 import ReservationCellStatus from '../ReservationCellStatus'
 import { CalendarTableProps } from './CalendarTable'
 import styles from '../styles'
@@ -32,7 +32,8 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     endDay,
     className,
     width,
-    availableWeeks,
+    availableWeeks = [0, 1, 2, 3, 4, 5, 6],
+    availableDays,
     onChange,
   } = props
 
@@ -61,7 +62,12 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       const currentQuotaSummary = find(quotaSummary, (item) => isSameDay(current, moment(item.datetime)))
       const remainingQuota = get(currentQuotaSummary, 'remainingQuota')
 
-      const isNotChecked = !includes(availableWeeks, current.day())
+      let isNotChecked = !includes(availableWeeks, current.day())
+
+      if (!isEmpty(availableDays)) {
+        isNotChecked = findIndex(availableDays, (day) => isSameDay(day, current)) === -1
+      }
+
       const isMakefull = !isNotChecked && remainingQuota === 0
 
       const isDisabled =

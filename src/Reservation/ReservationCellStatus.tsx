@@ -20,7 +20,7 @@ const ReservationCellStatus: React.FC<ReservationCellStatusProps> = (props) => {
         {isSelected
           ? '已选'
           : isNil(remainingQuota) || remainingQuota >= MAX_SHOW_QUOTA
-          ? '充足'
+          ? ''
           : `余(${formatRemainingQuota(remainingQuota)})`}
       </span>
     )

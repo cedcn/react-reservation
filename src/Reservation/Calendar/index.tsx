@@ -1,14 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
-import moment from 'moment'
+import moment, { Moment } from 'moment'
 import CalendarHeader from './CalendarHeader'
 import CalendarTable from './CalendarTable'
+import { map } from 'lodash'
 import { Calendar, isFixedDays } from '../interface'
 import styles from '../styles'
 
 interface CalendarProps extends Calendar {}
-
 const ReservationCalendar: React.FC<CalendarProps> = (props) => {
   let canToNext = true
   let canToLast = true
@@ -27,47 +27,56 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
   }
 
   const { prefixCls = 'rV', days, value, onChange } = props
-
   const today = moment()
 
-  if (!isFixedDays(days)) {
-    const { startDay, endDay, availableWeeks } = days
+  let startDay: Moment | null | undefined
+  let endDay: Moment | null | undefined
+  let availableWeeks
+  let availableDays
 
-    const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay.startOf('day') : today.startOf('day')
-    const endMonthDay = endDay ? endDay.endOf('day') : undefined
-    const currentMonthDay = startMonthDay.clone().month(currentMonthIdx + startMonthDay.month())
-
-    canToLast = startMonthDay.isBefore(currentMonthDay, 'month')
-    canToNext = !endMonthDay || (endMonthDay && endMonthDay.isAfter(currentMonthDay, 'month'))
-
-    const commonProps = {
-      prefixCls,
-      currentMonthIdx,
-      startDay: startMonthDay,
-      endDay: endMonthDay,
-      availableWeeks,
-      value,
-      onChange,
-      toLast: toLastMonth,
-      toNext: toNextMonth,
-    }
-
-    return (
-      <div className={prefixCls} css={styles.reservation}>
-        <CalendarHeader
-          prefixCls={prefixCls}
-          currentDay={currentMonthDay}
-          canToLast={canToLast}
-          canToNext={canToNext}
-          toNext={toNextMonth}
-          toLast={toLastMonth}
-        />
-        <CalendarTable {...commonProps} />
-      </div>
-    )
+  if (isFixedDays(days)) {
+    startDay = moment.min(days)
+    endDay = moment.max(days)
+    availableDays = map(days, (day) => day.clone().startOf('days'))
+  } else {
+    startDay = days.startDay
+    endDay = days.endDay
+    availableWeeks = days.availableWeeks
   }
 
-  return null
+  const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay.startOf('day') : today.startOf('day')
+  const endMonthDay = endDay ? endDay.endOf('day') : undefined
+  const currentMonthDay = startMonthDay.clone().month(currentMonthIdx + startMonthDay.month())
+
+  canToLast = startMonthDay.isBefore(currentMonthDay, 'month')
+  canToNext = !endMonthDay || (endMonthDay && endMonthDay.isAfter(currentMonthDay, 'month'))
+
+  const commonProps = {
+    prefixCls,
+    currentMonthIdx,
+    startDay: startMonthDay,
+    endDay: endMonthDay,
+    availableWeeks,
+    availableDays,
+    value,
+    onChange,
+    toLast: toLastMonth,
+    toNext: toNextMonth,
+  }
+
+  return (
+    <div className={prefixCls} css={styles.reservation}>
+      <CalendarHeader
+        prefixCls={prefixCls}
+        currentDay={currentMonthDay}
+        canToLast={canToLast}
+        canToNext={canToNext}
+        toNext={toNextMonth}
+        toLast={toLastMonth}
+      />
+      <CalendarTable {...commonProps} />
+    </div>
+  )
 }
 
 export default ReservationCalendar
