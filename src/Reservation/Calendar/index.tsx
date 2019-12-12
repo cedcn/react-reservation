@@ -5,7 +5,7 @@ import moment, { Moment } from 'moment'
 import CalendarHeader from './CalendarHeader'
 import CalendarTable from './CalendarTable'
 import { map } from 'lodash'
-import { Calendar, isFixedDays } from '../interface'
+import { Calendar, isSpecifiedDays } from '../interface'
 import styles from '../styles'
 
 interface CalendarProps extends Calendar {}
@@ -31,17 +31,19 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
 
   let startDay: Moment | null | undefined
   let endDay: Moment | null | undefined
-  let availableWeeks
-  let availableDays
+  let disabledWeeks
+  let disabledDays
+  let specifiedDays
 
-  if (isFixedDays(days)) {
+  if (isSpecifiedDays(days)) {
     startDay = moment.min(days)
     endDay = moment.max(days)
-    availableDays = map(days, (day) => day.clone().startOf('days'))
+    specifiedDays = map(days, (day) => day.clone().startOf('day'))
   } else {
-    startDay = days.startDay
-    endDay = days.endDay
-    availableWeeks = days.availableWeeks
+    startDay = days?.startDay
+    endDay = days?.endDay
+    disabledWeeks = days?.disabledWeeks
+    disabledDays = days?.disabledDays
   }
 
   const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay.startOf('day') : today.startOf('day')
@@ -56,8 +58,9 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
     currentMonthIdx,
     startDay: startMonthDay,
     endDay: endMonthDay,
-    availableWeeks,
-    availableDays,
+    disabledWeeks,
+    disabledDays,
+    specifiedDays,
     value,
     onChange,
     toLast: toLastMonth,

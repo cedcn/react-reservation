@@ -20,8 +20,9 @@ const CalendarList: React.FC<any> = (props) => {
     startDay,
     toNext,
     toLast,
-    availableWeeks,
-    availableDays,
+    disabledWeeks,
+    specifiedDays,
+    disabledDays,
     onChange,
     endDay,
     currentMonthIdx,
@@ -37,8 +38,9 @@ const CalendarList: React.FC<any> = (props) => {
           startDay,
           endDay,
           currentMonthIdx,
-          availableWeeks,
-          availableDays,
+          disabledWeeks,
+          specifiedDays,
+          disabledDays,
           monthDays,
           toNext,
           toLast,
@@ -51,7 +53,7 @@ const CalendarList: React.FC<any> = (props) => {
 
         return <CalendarTBody key={key} {...tBodyProps} />
       }),
-    [displayIdxs, prefixCls, value && value.format(), width, availableWeeks, onChange]
+    [displayIdxs, prefixCls, value && value.format(), width, disabledWeeks, disabledDays, specifiedDays, onChange]
   )
 
   return <React.Fragment>{child}</React.Fragment>
@@ -66,8 +68,9 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
     endDay,
     currentMonthIdx,
     toLast,
-    availableDays,
-    availableWeeks,
+    specifiedDays,
+    disabledWeeks,
+    disabledDays,
     onChange,
   } = props
   const [viewEl, width] = useResize()
@@ -89,8 +92,9 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
                 displayIdxs={displayIdxs}
                 startDay={startDay}
                 endDay={endDay}
-                availableWeeks={availableWeeks}
-                availableDays={availableDays}
+                disabledWeeks={disabledWeeks}
+                disabledDays={disabledDays}
+                specifiedDays={specifiedDays}
                 onChange={onChange}
                 value={value}
                 width={width}

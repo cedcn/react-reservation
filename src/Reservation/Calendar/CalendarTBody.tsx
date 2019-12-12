@@ -32,8 +32,9 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     endDay,
     className,
     width,
-    availableWeeks = [0, 1, 2, 3, 4, 5, 6],
-    availableDays,
+    disabledWeeks = [],
+    specifiedDays,
+    disabledDays,
     onChange,
   } = props
 
@@ -62,17 +63,17 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       const currentQuotaSummary = find(quotaSummary, (item) => isSameDay(current, moment(item.datetime)))
       const remainingQuota = get(currentQuotaSummary, 'remainingQuota')
 
-      let isNotChecked = !includes(availableWeeks, current.day())
-
-      if (!isEmpty(availableDays)) {
-        isNotChecked = findIndex(availableDays, (day) => isSameDay(day, current)) === -1
+      let isNotChecked
+      if (!isEmpty(specifiedDays)) {
+        isNotChecked = findIndex(specifiedDays, (day) => isSameDay(day, current)) === -1
+      } else {
+        isNotChecked =
+          includes(disabledWeeks, current.day()) || findIndex(disabledDays, (day) => isSameDay(day, current)) !== -1
       }
 
       const isMakefull = !isNotChecked && remainingQuota === 0
-
       const isDisabled =
         isLastMonthDay || isNextMonthDay || isBeforeStartDay || isAfterEndDay || isMakefull || isNotChecked
-
       const isSelectable = !isDisabled
 
       if (isToday) {

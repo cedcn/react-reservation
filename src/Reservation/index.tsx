@@ -15,13 +15,22 @@ const Reservation: React.FC<any> = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ReservationCalendar value={value} onChange={onChange} days={{ availableWeeks: [0, 1] }} />
-      <ReservationCalendar value={value} onChange={onChange} days={[moment('2020-04-03'), moment('2020-02-04')]} />
+      <h2>Repeat </h2>
+      <ReservationCalendar value={value} onChange={onChange} />
+      <h2>Repeat, set disabled weeks and set disabled days</h2>
+      <ReservationCalendar
+        value={value}
+        onChange={onChange}
+        days={{ disabledWeeks: [0, 1], disabledDays: [moment('2020-04-03')] }}
+      />
+      <h2>Repeat, set start day and set end day</h2>
       <ReservationCalendar
         value={value}
         onChange={onChange}
         days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
       />
+      <h2>Specified days</h2>
+      <ReservationCalendar value={value} onChange={onChange} days={[moment('2020-04-03'), moment('2020-02-04')]} />
     </ThemeProvider>
   )
 }
