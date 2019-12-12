@@ -1,5 +1,6 @@
 import moment, { Moment } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from './constants'
+import { TimeRange } from './interface'
 import { isNil } from 'lodash'
 
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
@@ -91,6 +92,21 @@ export const gainMonthDays = (startDay: Moment, monthIdx: number): MonthDays => 
   }
 
   return { monthDays, firstMonthDay, lastMonthDay }
+}
+
+export const gainDateTimeRange = (current: Moment, timeRange: TimeRange): [Moment, Moment] => {
+  const { start: startTime, end: endTime } = timeRange
+
+  const startDateTime = current
+    .clone()
+    .hour(startTime[0])
+    .minute(startTime[1])
+  const endDateTime = current
+    .clone()
+    .hour(endTime[0])
+    .minute(endTime[1])
+
+  return [startDateTime, endDateTime]
 }
 
 interface CellClsOptions {

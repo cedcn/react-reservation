@@ -1,7 +1,7 @@
 import { Moment } from 'moment'
 import { isArray } from 'lodash'
+import { WeekDay } from './utils'
 
-export type CalendarValue = Moment | null
 export type WeekCode = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 export type Theme = any
@@ -16,6 +16,9 @@ export interface RepeatDaysByWeek {
 }
 
 export type Days = SpecifiedDays | RepeatDaysByWeek
+
+//
+export type CalendarValue = Moment | null
 
 export interface Calendar {
   prefixCls?: string
@@ -34,6 +37,38 @@ export interface CalendarTableCommonProps {
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
   onChange: (value: CalendarValue) => void
+  toNext: () => boolean
+  toLast: () => boolean
+}
+
+//
+export type TimeBucketsValue = [Moment, Moment] | null
+
+export interface TimeRange {
+  start: [number, number]
+  end: [number, number]
+}
+
+export interface TimeBuckets {
+  prefixCls?: string
+  value: TimeBucketsValue
+  onChange: (value: TimeBucketsValue) => void
+  days?: Days
+  ranges: TimeRange[]
+}
+
+export interface TimeBucketsTableCommonProps {
+  currentWeekIdx: number
+  prefixCls: string
+  startDay: Moment
+  endDay?: Moment
+  value: TimeBucketsValue
+  weekDays: WeekDay[]
+  disabledWeeks?: WeekCode[]
+  specifiedDays?: SpecifiedDays
+  disabledDays?: Moment[]
+  onChange: (value: TimeBucketsValue) => void
+  ranges: TimeRange[]
   toNext: () => boolean
   toLast: () => boolean
 }
