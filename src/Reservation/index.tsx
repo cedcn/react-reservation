@@ -49,6 +49,19 @@ const Reservation: React.FC<any> = (props) => {
           { start: [15, 30], end: [20, 30] },
         ]}
       />
+      <h2>Time Buckets list</h2>
+      <ReservationTimeBuckets
+        value={timeBucketsValue}
+        onChange={onTimeBucketsChange}
+        days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
+        ranges={[
+          { start: [10, 10], end: [11, 20] },
+          { start: [11, 30], end: [13, 30] },
+          { start: [13, 30], end: [15, 30] },
+          { start: [15, 30], end: [20, 30] },
+        ]}
+        mode="tabs"
+      />
     </ThemeProvider>
   )
 }

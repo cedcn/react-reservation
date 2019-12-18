@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import moment, { Moment } from 'moment'
 import TimeBucketsHeader from './TimeBucketsHeader'
 import TimeBucketsTable from './TimeBucketsTable'
+import TimeBucketsTabs from './TimeBucketsTabs'
 import { map, first, last, get } from 'lodash'
 import { TimeBuckets, isSpecifiedDays } from '../interface'
 import { WeekDay, gainWeekDays } from '../utils'
@@ -27,7 +28,7 @@ const ReservationTimeBuckets: React.FC<TimeBucketsProps> = (props) => {
     return true
   }
 
-  const { prefixCls = 'rT', days, value, onChange, ranges } = props
+  const { prefixCls = 'rT', days, value, onChange, ranges, mode = 'table' } = props
   const today = moment()
 
   let startDay: Moment | null | undefined
@@ -70,6 +71,7 @@ const ReservationTimeBuckets: React.FC<TimeBucketsProps> = (props) => {
     specifiedDays,
     value,
     onChange,
+    setCurrentWeekIdx,
     toLast: toLastWeek,
     toNext: toNextWeek,
   }
@@ -85,7 +87,7 @@ const ReservationTimeBuckets: React.FC<TimeBucketsProps> = (props) => {
         toNext={toNextWeek}
         toLast={toLastWeek}
       />
-      <TimeBucketsTable {...commonProps} />
+      {mode === 'tabs' ? <TimeBucketsTabs {...commonProps} /> : <TimeBucketsTable {...commonProps} />}
     </div>
   )
 }

@@ -28,6 +28,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
     endDay,
     weekDays,
     currentWeekIdx,
+    setCurrentWeekIdx,
     ranges,
   } = props
 
@@ -52,11 +53,12 @@ const TimeBucketsList: React.FC<any> = (props) => {
           width,
           value,
           ranges,
+          setCurrentWeekIdx,
         }
 
         return <TimeBucketsContentView key={key} {...tBodyProps} renderer={TimeBucketsTbody} />
       }),
-    [props]
+    [displayIdxs, width]
   )
 
   return <React.Fragment>{child}</React.Fragment>

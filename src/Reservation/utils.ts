@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from './constants'
 import { TimeRange } from './interface'
-import { isNil } from 'lodash'
+import { isNil, map } from 'lodash'
 
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
 export const isSameMonth = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'month')
@@ -42,6 +42,19 @@ export const gainWeekDays = (startDay: Moment, weekIdx: number): WeekDay[] => {
   }
 
   return weekDays
+}
+
+export const gainCurrentDay = (startDay: Moment, dayIdx: number) => {
+  const now = startDay.clone()
+  now.day(dayIdx)
+
+  return now
+}
+
+export const gainTimeSections = (startDay: Moment, dayIdx: number, ranges: TimeRange[]) => {
+  const now = gainCurrentDay(startDay, dayIdx)
+
+  return map(ranges, (range) => ({ range, date: now }))
 }
 
 export type MonthDay = {

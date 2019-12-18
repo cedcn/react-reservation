@@ -55,6 +55,7 @@ export interface TimeBuckets {
   onChange: (value: TimeBucketsValue) => void
   days?: Days
   ranges: TimeRange[]
+  mode?: 'tabs' | 'table'
 }
 
 export interface TimeBucketsTableCommonProps {
@@ -66,6 +67,7 @@ export interface TimeBucketsTableCommonProps {
   weekDays: WeekDay[]
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays
+  setCurrentWeekIdx: any
   disabledDays?: Moment[]
   onChange: (value: TimeBucketsValue) => void
   ranges: TimeRange[]
