@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from './constants'
-import { TimeRange } from './interface'
-import { isNil, map } from 'lodash'
+import { TimeRange, SpecifiedDays, WeekCode } from './interface'
+import { isNil, map, isEmpty, findIndex, includes } from 'lodash'
 
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
 export const isSameMonth = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'month')
@@ -120,6 +120,31 @@ export const gainDateTimeRange = (current: Moment, timeRange: TimeRange): [Momen
     .minute(endTime[1])
 
   return [startDateTime, endDateTime]
+}
+
+export const formatTimeRange = (timeRange: TimeRange): string => {
+  const { start: startTime, end: endTime } = timeRange
+
+  return `${startTime[0]}:${startTime[1]}-${endTime[0]}:${endTime[1]}`
+}
+
+export const isNotCheckedFun = (
+  currentDay: Moment,
+  {
+    specifiedDays,
+    disabledWeeks,
+    disabledDays,
+  }: { specifiedDays?: SpecifiedDays; disabledDays?: moment.Moment[]; disabledWeeks?: WeekCode[] }
+) => {
+  let isNotChecked
+  if (!isEmpty(specifiedDays)) {
+    isNotChecked = findIndex(specifiedDays, (day) => isSameDay(day, currentDay)) === -1
+  } else {
+    isNotChecked =
+      includes(disabledWeeks, currentDay.day()) || findIndex(disabledDays, (day) => isSameDay(day, currentDay)) !== -1
+  }
+
+  return isNotChecked
 }
 
 interface CellClsOptions {

@@ -22,7 +22,7 @@ const Reservation: React.FC<any> = (props) => {
   return (
     <ThemeProvider theme={theme}>
       <h2>Repeat </h2>
-      <ReservationCalendar value={value} onChange={onChange} />
+      {/* <ReservationCalendar value={value} onChange={onChange} />
       <h2>Repeat, set disabled weeks and set disabled days</h2>
       <ReservationCalendar
         value={value}
@@ -49,7 +49,7 @@ const Reservation: React.FC<any> = (props) => {
           { start: [15, 30], end: [20, 30] },
         ]}
       />
-      <h2>Time Buckets list</h2>
+      <h2>Time Buckets list</h2> */}
       <ReservationTimeBuckets
         value={timeBucketsValue}
         onChange={onTimeBucketsChange}

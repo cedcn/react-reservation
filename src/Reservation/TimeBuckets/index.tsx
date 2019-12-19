@@ -10,19 +10,19 @@ import { TimeBuckets, isSpecifiedDays } from '../interface'
 import { WeekDay, gainWeekDays } from '../utils'
 import styles from '../styles'
 
-interface TimeBucketsProps extends TimeBuckets {}
+type TimeBucketsProps = TimeBuckets
 const ReservationTimeBuckets: React.FC<TimeBucketsProps> = (props) => {
   let canToNext = true
   let canToLast = true
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
 
-  const toNextWeek = () => {
+  const toNextWeek = (): boolean => {
     if (!canToNext) return false
     setCurrentWeekIdx(currentWeekIdx + 1)
     return true
   }
 
-  const toLastWeek = () => {
+  const toLastWeek = (): boolean => {
     if (!canToLast) return false
     setCurrentWeekIdx(currentWeekIdx - 1)
     return true

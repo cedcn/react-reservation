@@ -7,7 +7,6 @@ import useResize from '../useResize'
 import TimeBucketsTbody from './TimeBucketsTbody'
 import moment from 'moment'
 import VirtualSlider from '../VirtualSlider'
-import TimeBucketsContentView from './TimeBucketsContentView'
 import { TimeBucketsTableCommonProps } from '../interface'
 import { gainWeekDays } from '../utils'
 import styles from '../styles'
@@ -56,7 +55,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
           setCurrentWeekIdx,
         }
 
-        return <TimeBucketsContentView key={key} {...tBodyProps} renderer={TimeBucketsTbody} />
+        return <TimeBucketsTbody key={key} {...tBodyProps} />
       }),
     [displayIdxs, width]
   )
@@ -70,7 +69,8 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
 
   const isCurrentWeek = currentWeekIdx === 0
   const weekDaysEls = map(weekDays, (day, xindex) => {
-    const isToday = day.date.format('YYYY.M.D') === moment().format('YYYY.M.D')
+    const isToday = day.date.isSame(moment(), 'days')
+
     return (
       <div key={xindex} title={day.week} className={cx(`${prefixCls}-th`, { 'is-today': isToday })} css={styles.th}>
         <span className={cx(`${prefixCls}-th-inner`)}>
@@ -92,7 +92,7 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
           {weekDaysEls}
         </div>
       </div>
-      <div className={`${prefixCls}-weeks-viewer`} ref={viewEl} css={styles.tbodyViewer}>
+      <div className={`${prefixCls}-viewer ${prefixCls}-viewer--weeks`} ref={viewEl} css={styles.tbodyViewer}>
         {!!width && (
           <VirtualSlider
             className={`${prefixCls}-tbody-list`}

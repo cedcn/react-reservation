@@ -78,7 +78,7 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
   return (
     <div className={`${prefixCls}-table`} css={styles.table}>
       <CalendarTHead prefixCls={prefixCls} value={value} />
-      <div className={`${prefixCls}-tbody-viewer`} css={styles.tbodyViewer} ref={viewEl}>
+      <div className={`${prefixCls}-viewer`} css={styles.tbodyViewer} ref={viewEl}>
         {!!width && (
           <VirtualSlider
             className={`${prefixCls}-tbody-list`}

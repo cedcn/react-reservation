@@ -30,5 +30,8 @@ module.exports = {
     ],
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-unused-variable': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
   },
 }
