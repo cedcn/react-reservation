@@ -1,119 +1,700 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<div
-  className="rV css-1dhoqxp-ReservationCalendar"
->
+Array [
+  <h2>
+    Repeat 
+  </h2>,
   <div
-    className="rV-header css-uyiikg-CalendarHeader"
+    className="rV css-1dhoqxp-ReservationCalendar"
   >
     <div
-      className="rV-header__week"
-    >
-      <span>
-        2019年12月
-      </span>
-    </div>
-    <a
-      className="rV-header__arrow rV-header__next-arrow css-1agcduh-CalendarHeader"
-      onClick={[Function]}
-      title="下一月"
-    >
-      下一月
-    </a>
-  </div>
-  <div
-    className="rV-table css-li9qyy-CalendarTable"
-  >
-    <div
-      className="rV-thead css-2z8o9q-CalendarTHead"
+      className="rV-header css-uyiikg-CalendarHeader"
     >
       <div
-        className="rV-tr css-11qeklm-CalendarTHead"
-        role="row"
+        className="rV-header__week"
       >
-        <div
-          className="rV-th rV-column-header css-rbejd6"
-          role="columnheader"
-          title="Sun"
-        >
-          <span
-            className="rV-column-header-inner"
-          >
-            Sun
-          </span>
-        </div>
-        <div
-          className="rV-th rV-column-header css-rbejd6"
-          role="columnheader"
-          title="Mon"
-        >
-          <span
-            className="rV-column-header-inner"
-          >
-            Mon
-          </span>
-        </div>
-        <div
-          className="rV-th rV-column-header css-rbejd6"
-          role="columnheader"
-          title="Tue"
-        >
-          <span
-            className="rV-column-header-inner"
-          >
-            Tue
-          </span>
-        </div>
-        <div
-          className="rV-th rV-column-header css-rbejd6"
-          role="columnheader"
-          title="Wed"
-        >
-          <span
-            className="rV-column-header-inner"
-          >
-            Wed
-          </span>
-        </div>
-        <div
-          className="rV-th rV-column-header css-rbejd6"
-          role="columnheader"
-          title="Thu"
-        >
-          <span
-            className="rV-column-header-inner"
-          >
-            Thu
-          </span>
-        </div>
-        <div
-          className="rV-th rV-column-header css-rbejd6"
-          role="columnheader"
-          title="Fri"
-        >
-          <span
-            className="rV-column-header-inner"
-          >
-            Fri
-          </span>
-        </div>
-        <div
-          className="rV-th rV-column-header css-rbejd6"
-          role="columnheader"
-          title="Sat"
-        >
-          <span
-            className="rV-column-header-inner"
-          >
-            Sat
-          </span>
-        </div>
+        <span>
+          2019年12月
+        </span>
       </div>
+      <a
+        className="rV-header__arrow rV-header__next-arrow css-1agcduh-CalendarHeader"
+        onClick={[Function]}
+        title="下一月"
+      >
+        下一月
+      </a>
     </div>
     <div
-      className="rV-tbody-viewer css-slbbi-CalendarTable"
-    />
-  </div>
-</div>
+      className="rV-table css-li9qyy-CalendarTable"
+    >
+      <div
+        className="rV-thead css-2z8o9q-CalendarTHead"
+      >
+        <div
+          className="rV-tr css-11qeklm-CalendarTHead"
+          role="row"
+        >
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sun"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sun
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Mon"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Mon
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Tue"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Tue
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Wed"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Wed
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Thu"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Thu
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Fri"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Fri
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sat"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sat
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="rV-viewer css-slbbi-CalendarTable"
+      />
+    </div>
+  </div>,
+  <h2>
+    Repeat, set disabled weeks and set disabled days
+  </h2>,
+  <div
+    className="rV css-1dhoqxp-ReservationCalendar"
+  >
+    <div
+      className="rV-header css-uyiikg-CalendarHeader"
+    >
+      <div
+        className="rV-header__week"
+      >
+        <span>
+          2019年12月
+        </span>
+      </div>
+      <a
+        className="rV-header__arrow rV-header__next-arrow css-1agcduh-CalendarHeader"
+        onClick={[Function]}
+        title="下一月"
+      >
+        下一月
+      </a>
+    </div>
+    <div
+      className="rV-table css-li9qyy-CalendarTable"
+    >
+      <div
+        className="rV-thead css-2z8o9q-CalendarTHead"
+      >
+        <div
+          className="rV-tr css-11qeklm-CalendarTHead"
+          role="row"
+        >
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sun"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sun
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Mon"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Mon
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Tue"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Tue
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Wed"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Wed
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Thu"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Thu
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Fri"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Fri
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sat"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sat
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="rV-viewer css-slbbi-CalendarTable"
+      />
+    </div>
+  </div>,
+  <h2>
+    Repeat, set start day and set end day
+  </h2>,
+  <div
+    className="rV css-1dhoqxp-ReservationCalendar"
+  >
+    <div
+      className="rV-header css-uyiikg-CalendarHeader"
+    >
+      <div
+        className="rV-header__week"
+      >
+        <span>
+          2020年02月
+        </span>
+      </div>
+      <a
+        className="rV-header__arrow rV-header__next-arrow css-1agcduh-CalendarHeader"
+        onClick={[Function]}
+        title="下一月"
+      >
+        下一月
+      </a>
+    </div>
+    <div
+      className="rV-table css-li9qyy-CalendarTable"
+    >
+      <div
+        className="rV-thead css-2z8o9q-CalendarTHead"
+      >
+        <div
+          className="rV-tr css-11qeklm-CalendarTHead"
+          role="row"
+        >
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sun"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sun
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Mon"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Mon
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Tue"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Tue
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Wed"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Wed
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Thu"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Thu
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Fri"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Fri
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sat"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sat
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="rV-viewer css-slbbi-CalendarTable"
+      />
+    </div>
+  </div>,
+  <h2>
+    Specified days
+  </h2>,
+  <div
+    className="rV css-1dhoqxp-ReservationCalendar"
+  >
+    <div
+      className="rV-header css-uyiikg-CalendarHeader"
+    >
+      <div
+        className="rV-header__week"
+      >
+        <span>
+          2020年02月
+        </span>
+      </div>
+      <a
+        className="rV-header__arrow rV-header__next-arrow css-1agcduh-CalendarHeader"
+        onClick={[Function]}
+        title="下一月"
+      >
+        下一月
+      </a>
+    </div>
+    <div
+      className="rV-table css-li9qyy-CalendarTable"
+    >
+      <div
+        className="rV-thead css-2z8o9q-CalendarTHead"
+      >
+        <div
+          className="rV-tr css-11qeklm-CalendarTHead"
+          role="row"
+        >
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sun"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sun
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Mon"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Mon
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Tue"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Tue
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Wed"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Wed
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Thu"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Thu
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Fri"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Fri
+            </span>
+          </div>
+          <div
+            className="rV-th css-rbejd6"
+            role="columnheader"
+            title="Sat"
+          >
+            <span
+              className="rV-column-header-inner"
+            >
+              Sat
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="rV-viewer css-slbbi-CalendarTable"
+      />
+    </div>
+  </div>,
+  <h2>
+    Time Buckets
+  </h2>,
+  <div
+    className="rT css-1xd6wqv-ReservationTimeBuckets"
+  >
+    <div
+      className="rT-header css-lxofq8-TimeBucketsHeader"
+    >
+      <div
+        className="rT-header__week"
+      >
+        February 2, 2020
+         - 
+        February 8, 2020
+      </div>
+      <a
+        className="rT-header__arrow rT-header__next-arrow css-k77o27-TimeBucketsHeader"
+        onClick={[Function]}
+        title="下一周"
+      >
+        下一周
+      </a>
+    </div>
+    <div
+      className="rT-table css-6w6r4c-TimeBucketsTable"
+    >
+      <div
+        className="rT-thead css-avz3aa-TimeBucketsTable"
+      >
+        <div
+          className="rT-tr is-current-week css-o90toh-TimeBucketsTable"
+        >
+          <div
+            className="rT-th rT-column css-goa6kd-TimeBucketsTable"
+            role="column"
+          >
+            <span>
+              时段/日期
+            </span>
+          </div>
+          <div
+            className="rT-th css-rbejd6"
+            title="Sun"
+          >
+            <span
+              className="rT-th-inner"
+            >
+              <span>
+                Sun
+              </span>
+              <span>
+                2.2
+              </span>
+            </span>
+          </div>
+          <div
+            className="rT-th css-rbejd6"
+            title="Mon"
+          >
+            <span
+              className="rT-th-inner"
+            >
+              <span>
+                Mon
+              </span>
+              <span>
+                2.3
+              </span>
+            </span>
+          </div>
+          <div
+            className="rT-th css-rbejd6"
+            title="Tue"
+          >
+            <span
+              className="rT-th-inner"
+            >
+              <span>
+                Tue
+              </span>
+              <span>
+                2.4
+              </span>
+            </span>
+          </div>
+          <div
+            className="rT-th css-rbejd6"
+            title="Wed"
+          >
+            <span
+              className="rT-th-inner"
+            >
+              <span>
+                Wed
+              </span>
+              <span>
+                2.5
+              </span>
+            </span>
+          </div>
+          <div
+            className="rT-th css-rbejd6"
+            title="Thu"
+          >
+            <span
+              className="rT-th-inner"
+            >
+              <span>
+                Thu
+              </span>
+              <span>
+                2.6
+              </span>
+            </span>
+          </div>
+          <div
+            className="rT-th css-rbejd6"
+            title="Fri"
+          >
+            <span
+              className="rT-th-inner"
+            >
+              <span>
+                Fri
+              </span>
+              <span>
+                2.7
+              </span>
+            </span>
+          </div>
+          <div
+            className="rT-th css-rbejd6"
+            title="Sat"
+          >
+            <span
+              className="rT-th-inner"
+            >
+              <span>
+                Sat
+              </span>
+              <span>
+                2.8
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="rT-viewer rT-viewer--weeks css-1y9ig7-TimeBucketsTable"
+      />
+    </div>
+  </div>,
+  <h2>
+    Time Buckets list
+  </h2>,
+  <div
+    className="rT css-1xd6wqv-ReservationTimeBuckets"
+  >
+    <div
+      className="rT-header css-lxofq8-TimeBucketsHeader"
+    >
+      <div
+        className="rT-header__week"
+      >
+        February 2, 2020
+         - 
+        February 8, 2020
+      </div>
+      <a
+        className="rT-header__arrow rT-header__next-arrow css-k77o27-TimeBucketsHeader"
+        onClick={[Function]}
+        title="下一周"
+      >
+        下一周
+      </a>
+    </div>
+    <div
+      className="rT-viewer--tabs css-zxfxe-TimeBucketsTabs"
+    >
+      <br />
+    </div>
+  </div>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+  <p>
+    12313123
+  </p>,
+]
 `;
