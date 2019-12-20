@@ -4769,10 +4769,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
-react-reservation@1.1.7:
-  version "1.1.7"
-  resolved "https://registry.npm.taobao.org/react-reservation/download/react-reservation-1.1.7.tgz?cache=0&sync_timestamp=1576853457353&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-reservation%2Fdownload%2Freact-reservation-1.1.7.tgz#2e615c8fbf3400659af8c131a75ab0740ac16dfd"
-  integrity sha1-LmFcj780AGWa+MExp1qwdArBbf0=
+react-reservation@1.1.8:
+  version "1.1.8"
+  resolved "https://registry.npm.taobao.org/react-reservation/download/react-reservation-1.1.8.tgz?cache=0&sync_timestamp=1576856537743&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-reservation%2Fdownload%2Freact-reservation-1.1.8.tgz#514e61a0208a4048bf8bbd406c38c540ae75c3b2"
+  integrity sha1-UU5hoCCKQEi/i71AbDjFQK51w7I=
   dependencies:
     "@emotion/core" "^10.0.22"
     classnames "^2.2.6"
