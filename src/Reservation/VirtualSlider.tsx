@@ -65,12 +65,12 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
 
   const prevIdx = usePrevious(idx)
   const swipeStart = (e: any) => {
-    let state = swipeStartUtil(e)
+    const state = swipeStartUtil(e)
     setSliderState(state)
   }
 
   const swipeMove = (e: any) => {
-    let state = swipeMoveUtil<SliderState>(e, { ...sliderState, scrolling })
+    const state = swipeMoveUtil<SliderState>(e, { ...sliderState, scrolling })
     if (!state) return
 
     if (state.swiping) {
@@ -81,7 +81,7 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
 
   const swipeEnd = (e: any) => {
     let swipeAfterObj = {}
-    let state = swipeEndUtil<SliderState>(e, {
+    const state = swipeEndUtil<SliderState>(e, {
       ...sliderState,
       touchThreshold: width / 5,
       onSwipe: (dir: any) => {
@@ -113,7 +113,7 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
     clickable = true
   }
 
-  let listProps = {
+  const listProps = {
     onClickCapture: clickHandler,
     onTouchStart: swipeStart,
     onTouchMove: sliderState.dragging ? swipeMove : undefined,

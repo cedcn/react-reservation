@@ -1,9 +1,8 @@
 export const getSwipeDirection = (touchObject: any) => {
-  var xDist, yDist, r, swipeAngle
-  xDist = touchObject.startX - touchObject.curX
-  yDist = touchObject.startY - touchObject.curY
-  r = Math.atan2(yDist, xDist)
-  swipeAngle = Math.round((r * 180) / Math.PI)
+  const xDist = touchObject.startX - touchObject.curX
+  const yDist = touchObject.startY - touchObject.curY
+  const r = Math.atan2(yDist, xDist)
+  let swipeAngle = Math.round((r * 180) / Math.PI)
   if (swipeAngle < 0) {
     swipeAngle = 360 - Math.abs(swipeAngle)
   }
@@ -39,8 +38,8 @@ export const swipeMove = <T extends {}>(e: any, spec: any): Partial<T> | undefin
   touchObject.curY = e.touches ? e.touches[0].pageY : e.clientY
   touchObject.swipeLength = Math.round(Math.sqrt(Math.pow(touchObject.curX - touchObject.startX, 2)))
 
-  let positionOffset = touchObject.curX > touchObject.startX ? 1 : -1
-  let touchSwipeLength = touchObject.swipeLength
+  const positionOffset = touchObject.curX > touchObject.startX ? 1 : -1
+  const touchSwipeLength = touchObject.swipeLength
 
   const swipeLeft = touchSwipeLength * positionOffset
 
@@ -67,11 +66,11 @@ export const swipeEnd = <T extends {}>(e: any, spec: any): Partial<T> => {
     return {}
   }
 
-  let minSwipe = touchThreshold
-  let swipeDirection = getSwipeDirection(touchObject)
+  const minSwipe = touchThreshold
+  const swipeDirection = getSwipeDirection(touchObject)
 
   // reset the state of touch related state variables.
-  let state: any = {
+  const state: any = {
     dragging: false,
     swiping: false,
     swiped: false,
