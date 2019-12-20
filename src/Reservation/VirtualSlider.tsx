@@ -61,7 +61,7 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
     swipeLeft: null,
     animating: false,
     position: -width,
-    transition: 'none',
+    transition: undefined,
   })
 
   const prevIdx = usePrevious(idx)
@@ -85,7 +85,7 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
     const state = swipeEndUtil<SliderState>(e, {
       ...sliderState,
       touchThreshold: width / 2.5,
-      onSwipe: (dir: any) => {
+      onSwipe: (dir: string) => {
         let result = false
         if (dir === 'left') {
           result = !!toNext()

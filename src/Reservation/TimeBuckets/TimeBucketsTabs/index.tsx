@@ -2,7 +2,6 @@
 import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
 import { floor } from 'lodash'
-import moment, { Moment } from 'moment'
 import useResize from '../../useResize'
 import VirtualSlider from '../../VirtualSlider'
 import { TimeBucketsTableCommonProps } from '../../interface'
@@ -12,7 +11,7 @@ import styles from '../../styles'
 
 export type TimeBucketsTabsProps = TimeBucketsTableCommonProps
 const TimeBucketsTabs: React.FC<TimeBucketsTabsProps> = (props) => {
-  const { prefixCls, toNext, toLast, currentWeekIdx, setCurrentWeekIdx, weekDays } = props
+  const { prefixCls, toNext, toLast, currentWeekIdx, setCurrentWeekIdx, onChange } = props
   const [viewEl, width] = useResize()
   const [currentDayIdx, setCurrentDayIdx] = useState(0)
 
@@ -62,7 +61,17 @@ const TimeBucketsTabs: React.FC<TimeBucketsTabsProps> = (props) => {
           toNext={toNextDay}
           toLast={toLastDay}
         >
-          {({ displayIdxs }) => <TimeSectionList {...props} width={width} displayIdxs={displayIdxs} />}
+          {({ displayIdxs }) => (
+            <TimeSectionList
+              {...props}
+              width={width}
+              displayIdxs={displayIdxs}
+              onChange={(value: any) => {
+                setCurrentWeekIdx(floor(currentDayIdx / 7))
+                onChange(value)
+              }}
+            />
+          )}
         </VirtualSlider>
       )}
     </div>

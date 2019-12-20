@@ -12,7 +12,7 @@ import {
   MonthDay,
   isNotCheckedFun,
 } from '../utils'
-import { includes, find, get, isEmpty, findIndex } from 'lodash'
+import { find, get } from 'lodash'
 import ReservationCellStatus from '../ReservationCellStatus'
 import { CalendarTableProps } from './CalendarTable'
 import styles from '../styles'

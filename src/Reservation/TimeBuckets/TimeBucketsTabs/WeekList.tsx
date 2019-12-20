@@ -47,9 +47,11 @@ const WeekList: React.FC<WeekListProps> = (props) => {
                 disabledWeeks,
                 disabledDays,
               })
+
               const isBeforeStartDay = weekDay.date.isBefore(startDay, 'days')
               const isAfterEndDay = endDay && weekDay.date.isAfter(endDay, 'days')
               const isDisabled = isNotChecked || isBeforeStartDay || isAfterEndDay
+              const isActive = currentDay.isSame(weekDay.date, 'days')
 
               return (
                 <div
@@ -64,11 +66,11 @@ const WeekList: React.FC<WeekListProps> = (props) => {
                   className={cx(`${prefixCls}-week-tab`, {
                     [`${prefixCls}-is-disabled`]: isDisabled,
                     [`${prefixCls}-is-today`]: isToday,
+                    [`${prefixCls}-is-active`]: isActive,
                   })}
-                  css={() => styles.weekTab({ isDisabled, isToday })}
+                  css={() => styles.weekTab({ isDisabled, isToday, isActive })}
                 >
                   <div>{weekDay.week}</div>
-                  <div>{currentDay.isSame(weekDay.date, 'days') ? 'current' : ''}</div>
                   {weekDay.date.format('MM-DD')}
                 </div>
               )

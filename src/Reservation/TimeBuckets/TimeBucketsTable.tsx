@@ -57,7 +57,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
 
         return <TimeBucketsTbody key={key} {...tBodyProps} />
       }),
-    [displayIdxs, width]
+    [displayIdxs, width, value?.[0]?.format(), value?.[1]?.format()]
   )
 
   return <React.Fragment>{child}</React.Fragment>

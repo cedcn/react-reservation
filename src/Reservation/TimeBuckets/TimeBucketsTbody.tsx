@@ -1,12 +1,13 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core'
+import { jsx, css } from '@emotion/core'
 import React from 'react'
 import moment from 'moment'
 import { map } from 'lodash'
 import cx from 'classnames'
-import { includes, find, get, isEmpty, findIndex } from 'lodash'
-import { gainDateTimeRange, isSameDay, gainCellCls, WeekDay, formatTimeRange, isNotCheckedFun } from '../utils'
+import { find, get } from 'lodash'
+import { gainDateTimeRange, gainCellCls, WeekDay, formatTimeRange, isNotCheckedFun } from '../utils'
 import ReservationCellStatus from '../ReservationCellStatus'
+import ReservationCell from '../ReservationCell'
 import { TimeBucketsTableProps } from './TimeBucketsTable'
 import styles from '../styles'
 
@@ -81,14 +82,14 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
                   css={styles.td}
                   onClick={isDisabled ? undefined : onChange.bind(null, [startDateTime, endDateTime])}
                 >
-                  <div className="reservation-cell__content" css={(theme) => styles.cell(theme, status)}>
+                  <ReservationCell className={`${prefixCls}-reservation-cell`} status={status}>
                     <ReservationCellStatus
                       isSelectable={isSelectable}
                       isSelected={isSelected}
                       remainingQuota={remainingQuota}
                       isFully={isMakefull && !isBeforeStartDayMinute && !isAfterEndDayMinute}
                     />
-                  </div>
+                  </ReservationCell>
                 </div>
               )
             })}
