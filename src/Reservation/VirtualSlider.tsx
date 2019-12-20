@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { usePrevious } from 'react-use'
+import moment from 'moment'
 import { isFunction, isNil, isEqual } from 'lodash'
 import { swipeStart as swipeStartUtil, swipeMove as swipeMoveUtil, swipeEnd as swipeEndUtil } from './inner-slider'
 import useMergeState from './useMergeState'
@@ -83,7 +84,7 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
     let swipeAfterObj = {}
     const state = swipeEndUtil<SliderState>(e, {
       ...sliderState,
-      touchThreshold: width / 5,
+      touchThreshold: width / 2.5,
       onSwipe: (dir: any) => {
         let result = false
         if (dir === 'left') {
@@ -121,14 +122,22 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
     onTouchCancel: sliderState.dragging ? swipeEnd : undefined,
   }
 
-  let timer: any
   useEffect(() => {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      setDisplayIdxs(gainDislayIdxs(idx))
-      setSliderState({ position: -width, transition: 'none', animating: false })
-      clearTimeout(timer)
-    }, SPEED)
+    let requestID: number
+
+    const current = moment()
+    const repeatOften = () => {
+      const sss = moment().diff(current, 'milliseconds')
+      requestID = window.requestAnimationFrame(repeatOften)
+
+      if (sss >= SPEED) {
+        setDisplayIdxs(gainDislayIdxs(idx))
+        setSliderState({ position: -width, transition: undefined, animating: false })
+        window.cancelAnimationFrame(requestID)
+      }
+    }
+
+    requestID = window.requestAnimationFrame(repeatOften)
 
     if (!isNil(prevIdx)) {
       const position = prevIdx > idx ? 0 : -width * 2
@@ -142,11 +151,14 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
         setSliderState(newSliderState)
       }
     }
-    return () => clearTimeout(timer)
+
+    return () => {
+      window.cancelAnimationFrame(requestID)
+    }
   }, [idx, width])
 
   useEffect(() => {
-    setSliderState({ position: -width, transition: 'none', animating: false })
+    setSliderState({ position: -width, transition: undefined, animating: false })
   }, [width])
 
   const style = {
