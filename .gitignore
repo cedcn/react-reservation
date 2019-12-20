@@ -4,3 +4,4 @@ node_modules
 /esm
 /lib
 /types
+/examples/out
