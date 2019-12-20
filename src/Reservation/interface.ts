@@ -18,7 +18,7 @@ export interface RepeatDaysByWeek {
 export type Days = SpecifiedDays | RepeatDaysByWeek
 
 //
-export type CalendarValue = Moment | null
+export type CalendarValue = Moment | null | undefined
 
 export interface Calendar {
   prefixCls?: string
@@ -42,7 +42,7 @@ export interface CalendarTableCommonProps {
 }
 
 //
-export type TimeBucketsValue = [Moment, Moment] | null
+export type TimeBucketsValue = [Moment, Moment] | null | undefined
 
 export interface TimeRange {
   start: [number, number]

@@ -14,7 +14,7 @@ const IndexPage: NextPage = () => {
       <div>
         <style jsx>{`
           .container {
-            width: 500px;
+            width: 100%;
             margin-left: auto;
             margin-right: auto;
           }

@@ -6,12 +6,12 @@ import TimeBucketsHeader from './TimeBucketsHeader'
 import TimeBucketsTable from './TimeBucketsTable'
 import TimeBucketsTabs from './TimeBucketsTabs'
 import { map, first, last, get } from 'lodash'
-import { TimeBuckets, isSpecifiedDays } from '../interface'
+import { TimeBuckets as TimeBucketsType, isSpecifiedDays } from '../interface'
 import { WeekDay, gainWeekDays } from '../utils'
 import styles from '../styles'
 
-type TimeBucketsProps = TimeBuckets
-const ReservationTimeBuckets: React.FC<TimeBucketsProps> = (props) => {
+type TimeBucketsProps = TimeBucketsType
+const TimeBuckets: React.FC<TimeBucketsProps> = (props) => {
   let canToNext = true
   let canToLast = true
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
@@ -92,4 +92,4 @@ const ReservationTimeBuckets: React.FC<TimeBucketsProps> = (props) => {
   )
 }
 
-export default ReservationTimeBuckets
+export default TimeBuckets

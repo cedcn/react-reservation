@@ -5,11 +5,11 @@ import moment, { Moment } from 'moment'
 import CalendarHeader from './CalendarHeader'
 import CalendarTable from './CalendarTable'
 import { map } from 'lodash'
-import { Calendar, isSpecifiedDays } from '../interface'
+import { Calendar as CalendarType, isSpecifiedDays } from '../interface'
 import styles from '../styles'
 
-interface CalendarProps extends Calendar {}
-const ReservationCalendar: React.FC<CalendarProps> = (props) => {
+interface CalendarProps extends CalendarType {}
+const Calendar: React.FC<CalendarProps> = (props) => {
   let canToNext = true
   let canToLast = true
   const [currentMonthIdx, setCurrentMonthIdx] = useState(0)
@@ -82,4 +82,4 @@ const ReservationCalendar: React.FC<CalendarProps> = (props) => {
   )
 }
 
-export default ReservationCalendar
+export default Calendar

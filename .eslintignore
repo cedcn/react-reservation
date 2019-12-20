@@ -1,6 +1,6 @@
 
 /coverage
-/node_modules
+node_modules
 /webpack.build.js
 /lib
 /esm

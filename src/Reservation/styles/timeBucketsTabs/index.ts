@@ -41,7 +41,7 @@ const timeSection = css`
   width: 45%;
   text-align: center;
 
-  &:nth-child(n + 3) {
+  &:nth-of-type(n + 3) {
     margin-top: 10px;
   }
 `
