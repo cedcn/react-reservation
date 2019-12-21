@@ -55,8 +55,10 @@ const TimeSectionList: React.FC<any> = (props) => {
                   onClick={isDisabled ? undefined : onChange.bind(null, [startDateTime, endDateTime])}
                 >
                   <ReservationCell className={`${prefixCls}-cell`} status={status}>
-                    <div>{formatTimeRange(section.range)}</div>
-                    {section.date.format('MM-DD')}
+                    <div>
+                      <div>{formatTimeRange(section.range)}</div>
+                      <div>{section.date.format('MM-DD')}</div>
+                    </div>
                   </ReservationCell>
                 </div>
               )
