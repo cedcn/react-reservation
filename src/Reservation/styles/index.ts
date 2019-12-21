@@ -35,6 +35,10 @@ const headerNextArrow = () => css`
   right: 14px;
 `
 
+const headerLabel = css`
+  font-size: 16px;
+`
+
 const table = css`
   border-spacing: 0;
   margin-bottom: 0;
@@ -60,7 +64,7 @@ const tr = css`
 const td = css`
   width: ${100 / 7}%;
   flex-basis: ${100 / 7}%;
-  padding: 5px;
+  padding: 0.8%;
 `
 const th = css`
   ${td}
@@ -75,7 +79,9 @@ const tbodyList = css`
   left: 0;
 `
 
-const thead = css``
+const thead = css`
+  padding: 0 6px;
+`
 
 const cell = (theme: Theme, status: CellStatus) => {
   let cellCss = mixins.lineGrayCell
@@ -98,10 +104,9 @@ const cell = (theme: Theme, status: CellStatus) => {
 
   return css`
     ${cellCss}
-    height: 50px;
-    font-weight: 500;
+    height: 45px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     border-radius: 7px;
     padding: 4px;
@@ -113,6 +118,7 @@ const styles = {
   reservation,
   header,
   headerArrow,
+  headerLabel,
   headerPrevArrow,
   headerNextArrow,
   table,

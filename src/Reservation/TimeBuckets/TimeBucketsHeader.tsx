@@ -29,7 +29,7 @@ const TimeBucketsHeader: React.FC<TimeBucketsHeaderProps> = (props) => {
           上一周
         </a>
       )}
-      <div className={`${prefixCls}-header__week`}>
+      <div className={`${prefixCls}-header__label`} css={styles.headerLabel}>
         {startWeekDay && startWeekDay.format('LL')} - {endWeekDay && endWeekDay.format('LL')}
       </div>
       {canToNext && (

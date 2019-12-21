@@ -89,6 +89,7 @@ export interface CellStatus {
   isEndDate?: boolean
   isLastMonthDay?: boolean
   isNextMonthDay?: boolean
+  isActiveWeek?: boolean
 }
 
 export function isSpecifiedDays(days?: Days): days is SpecifiedDays {

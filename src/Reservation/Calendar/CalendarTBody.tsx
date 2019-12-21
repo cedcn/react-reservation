@@ -13,17 +13,18 @@ import {
   isNotCheckedFun,
 } from '../utils'
 import { find, get } from 'lodash'
-import ReservationCellStatus from '../ReservationCellStatus'
+import ReservationCell from '../ReservationCell'
+import CalendarCellStatus from './CalendarCellStatus'
 import { CalendarTableProps } from './CalendarTable'
 import styles from '../styles'
 
 const getTitleString = (value: Moment) => value.format('LL')
 
-const quotaSummary: any[] = []
+const quota: any[] = []
 export interface CalendarTBodyProps extends CalendarTableProps {
   width: number
   className?: string
-  quotaSummary?: any[]
+  quota?: any[]
   isLoadingQuota?: boolean
   firstMonthDay: Moment
   monthDays: MonthDay[]
@@ -49,40 +50,33 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
   let passed = 0
   const tableHtml = []
   let current: Moment
-  const cellClass = `${prefixCls}-td`
 
   for (let iIndex = 0; iIndex < DATE_ROW_COUNT; iIndex++) {
-    let isCurrentWeek
+    let isActiveWeek
     const dateCells = []
 
     for (let jIndex = 0; jIndex < DATE_COL_COUNT; jIndex++) {
       current = monthDays[passed].date
 
-      const isToday = isSameDay(current, today)
-      const isStartDate = isSameDay(current, startDay)
-      const isEndDate = isSameDay(current, endDay)
+      const isToday = !!isSameDay(current, today)
+      const isStartDate = !!isSameDay(current, startDay)
+      const isEndDate = !!isSameDay(current, endDay)
       const isLastMonthDay = beforeCurrentMonthYear(current, firstMonthDay)
       const isNextMonthDay = afterCurrentMonthYear(current, firstMonthDay)
       const isBeforeStartDay = current.isBefore(startDay, 'days')
       const isAfterEndDay = endDay && current.isAfter(endDay, 'days')
-      const isSelected = isSameDay(current, value)
 
-      const currentQuotaSummary = find(quotaSummary, (item) => isSameDay(current, moment(item.datetime)))
-      const remainingQuota = get(currentQuotaSummary, 'remainingQuota')
+      const currentQuota = find(quota, (item) => isSameDay(current, moment(item.datetime)))
+      const remaining = get(currentQuota, 'remaining')
+      const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
 
-      const isNotChecked = isNotCheckedFun(current, {
-        specifiedDays,
-        disabledWeeks,
-        disabledDays,
-      })
-
-      const isMakefull = !isNotChecked && remainingQuota === 0
-      const isDisabled =
-        isLastMonthDay || isNextMonthDay || isBeforeStartDay || isAfterEndDay || isMakefull || isNotChecked
-      const isSelectable = !isDisabled
+      const isSelectable = !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked
+      const isMakefull = remaining === 0
+      const isDisabled = !isSelectable || isMakefull
+      const isSelected = !isDisabled && !!isSameDay(current, value)
 
       if (isToday) {
-        isCurrentWeek = true
+        isActiveWeek = true
       }
 
       const status = {
@@ -97,7 +91,9 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         isSelectable,
         isNotChecked,
         isSelected,
+        isActiveWeek,
       }
+
       dateCells.push(
         <div
           key={passed}
@@ -105,17 +101,17 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
           role="gridcell"
           title={getTitleString(current)}
           css={styles.td}
-          className={gainCellCls(cellClass, status)}
+          className={gainCellCls(`${prefixCls}-td`, status)}
         >
-          <div className={`${prefixCls}-cell`} css={(theme) => styles.cell(theme, status)}>
-            <span>{current.format('DD')}</span>
-            <ReservationCellStatus
+          <ReservationCell className={`${prefixCls}-cell`} status={status}>
+            <CalendarCellStatus
               isSelectable={isSelectable}
-              isSelected={!!isSelected}
-              remainingQuota={remainingQuota}
-              isFully={isMakefull && !isBeforeStartDay && !isAfterEndDay}
+              isSelected={isSelected}
+              isMakefull={isMakefull}
+              remaining={remaining}
+              current={current}
             />
-          </div>
+          </ReservationCell>
         </div>
       )
 
@@ -127,7 +123,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         key={iIndex}
         role="row"
         css={styles.tr}
-        className={cx(`${prefixCls}-tr`, { 'is-current-week': isCurrentWeek })}
+        className={cx(`${prefixCls}-tr`, { 'is-active-week': isActiveWeek })}
       >
         {dateCells}
       </div>

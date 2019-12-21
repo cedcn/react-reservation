@@ -33,7 +33,9 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = (props) => {
           上一月
         </a>
       )}
-      <div className={`${prefixCls}-header__week`}>{monthYearElement()}</div>
+      <div className={`${prefixCls}-header__label`} css={styles.headerLabel}>
+        {monthYearElement()}
+      </div>
       {canToNext && (
         <a
           className={`${prefixCls}-header__arrow ${prefixCls}-header__next-arrow`}

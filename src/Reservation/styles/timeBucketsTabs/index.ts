@@ -26,7 +26,8 @@ const weekTab = ({
 
   ${isActive &&
     css`
-      border-bottom: 1px solid blue;
+      border-bottom: 1px solid #ff6e6e;
+      color: #ff6e6e;
     `}
 `
 

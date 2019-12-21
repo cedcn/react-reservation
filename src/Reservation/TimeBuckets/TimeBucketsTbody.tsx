@@ -6,7 +6,7 @@ import { map } from 'lodash'
 import cx from 'classnames'
 import { find, get } from 'lodash'
 import { gainDateTimeRange, gainCellCls, WeekDay, formatTimeRange, isNotCheckedFun } from '../utils'
-import ReservationCellStatus from '../ReservationCellStatus'
+import TimeBucketsCellStatus from './TimeBucketsCellStatus'
 import ReservationCell from '../ReservationCell'
 import { TimeBucketsTableProps } from './TimeBucketsTable'
 import styles from '../styles'
@@ -14,7 +14,7 @@ import styles from '../styles'
 export interface TimeBucketsTbodyProps extends TimeBucketsTableProps {
   width?: number
 }
-const quotaSummary: any[] = []
+const quota: any[] = []
 
 const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
   const {
@@ -32,7 +32,7 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
   } = props
 
   return (
-    <div className={`${prefixCls}-tbody`} style={{ width }}>
+    <div className={`${prefixCls}-tbody`} style={{ width }} css={styles.tbody}>
       {map(ranges, (timeRange, index) => {
         return (
           <div role="row" key={index} className={`${prefixCls}-tr`} css={styles.tr}>
@@ -43,27 +43,23 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
               const current = day.date
               const [startDateTime, endDateTime] = gainDateTimeRange(current, timeRange)
 
-              const currentQuotaSummary = find(
-                quotaSummary,
+              const currentQuota = find(
+                quota,
                 (item) =>
                   startDateTime.isSame(moment(item.startTime), 'minute') &&
                   endDateTime.isSame(moment(item.endTime), 'minute')
               )
-
-              const remainingQuota = get(currentQuotaSummary, 'remainingQuota')
-
-              const isNotChecked = isNotCheckedFun(current, {
-                specifiedDays,
-                disabledWeeks,
-                disabledDays,
-              })
-
-              const isMakefull = !isNotChecked && remainingQuota === 0
               const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
-              const isAfterEndDayMinute = endDay && endDateTime.isAfter(endDay, 'minute')
-              const isDisabled = isBeforeStartDayMinute || isAfterEndDayMinute || isMakefull || isNotChecked
-              const isSelectable = !isDisabled
-              const isSelected = startDateTime.isSame(value?.[0], 'minute') && endDateTime.isSame(value?.[1], 'minute')
+              const isAfterEndDayMinute = !!endDay && endDateTime.isAfter(endDay, 'minute')
+
+              const remaining = get(currentQuota, 'remaining')
+              const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
+
+              const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked
+              const isMakefull = remaining === 0
+              const isDisabled = !isSelectable || isMakefull
+              const isSelected =
+                !isDisabled && startDateTime.isSame(value?.[0], 'minute') && endDateTime.isSame(value?.[1], 'minute')
 
               const status = {
                 isMakefull,
@@ -83,11 +79,11 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
                   onClick={isDisabled ? undefined : onChange.bind(null, [startDateTime, endDateTime])}
                 >
                   <ReservationCell className={`${prefixCls}-reservation-cell`} status={status}>
-                    <ReservationCellStatus
+                    <TimeBucketsCellStatus
                       isSelectable={isSelectable}
                       isSelected={isSelected}
-                      remainingQuota={remainingQuota}
-                      isFully={isMakefull && !isBeforeStartDayMinute && !isAfterEndDayMinute}
+                      remaining={remaining}
+                      isMakefull={isMakefull}
                     />
                   </ReservationCell>
                 </div>

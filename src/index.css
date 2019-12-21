@@ -5,3 +5,9 @@ html {
 body {
   background-color: #fff;
 }
+
+h2 {
+  padding: 0 7px;
+  font-weight: normal;
+  font-size: 18px;
+}

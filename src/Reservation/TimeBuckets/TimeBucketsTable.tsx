@@ -9,7 +9,8 @@ import moment from 'moment'
 import VirtualSlider from '../VirtualSlider'
 import { TimeBucketsTableCommonProps } from '../interface'
 import { gainWeekDays } from '../utils'
-import styles from '../styles'
+import comss from '../styles'
+import styles from '../styles/timeBuckets'
 
 const TimeBucketsList: React.FC<any> = (props) => {
   const {
@@ -72,8 +73,8 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
     const isToday = day.date.isSame(moment(), 'days')
 
     return (
-      <div key={xindex} title={day.week} className={cx(`${prefixCls}-th`, { 'is-today': isToday })} css={styles.th}>
-        <span className={cx(`${prefixCls}-th-inner`)}>
+      <div key={xindex} title={day.week} className={cx(`${prefixCls}-th`, { 'is-today': isToday })} css={comss.th}>
+        <span className={cx(`${prefixCls}-th-inner`)} css={styles.thInner}>
           <span>{day.week}</span>
           <span>{day.date.format('M.D')}</span>
         </span>
@@ -83,16 +84,16 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
   const [viewEl, width] = useResize()
 
   return (
-    <div className={`${prefixCls}-table`} css={styles.table}>
-      <div className={`${prefixCls}-thead`} css={styles.thead}>
-        <div className={cx(`${prefixCls}-tr`, { 'is-current-week': isCurrentWeek })} css={styles.tr}>
-          <div key="column" role="column" className={cx(`${prefixCls}-th`, `${prefixCls}-column`)} css={styles.th}>
+    <div className={`${prefixCls}-table`} css={comss.table}>
+      <div className={`${prefixCls}-thead`} css={comss.thead}>
+        <div className={cx(`${prefixCls}-tr`, { 'is-current-week': isCurrentWeek })} css={comss.tr}>
+          <div key="column" role="column" className={cx(`${prefixCls}-th`, `${prefixCls}-column`)} css={comss.th}>
             <span>时段/日期</span>
           </div>
           {weekDaysEls}
         </div>
       </div>
-      <div className={`${prefixCls}-viewer ${prefixCls}-viewer--weeks`} ref={viewEl} css={styles.tbodyViewer}>
+      <div className={`${prefixCls}-viewer ${prefixCls}-viewer--weeks`} ref={viewEl} css={comss.tbodyViewer}>
         {!!width && (
           <VirtualSlider
             className={`${prefixCls}-tbody-list`}
