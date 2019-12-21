@@ -23,7 +23,6 @@
     "emotion-theming": "^10.0.19",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "react-use": "^13.12.2",
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {

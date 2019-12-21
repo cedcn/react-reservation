@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { usePrevious } from 'react-use'
+import  usePrevious  from './usePrevious'
 import moment from 'moment'
 import { isFunction, isNil, isEqual } from 'lodash'
 import { swipeStart as swipeStartUtil, swipeMove as swipeMoveUtil, swipeEnd as swipeEndUtil } from './inner-slider'
