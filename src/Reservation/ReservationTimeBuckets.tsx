@@ -29,7 +29,7 @@ const ReservationTimeBuckets: React.FC<ReservationTimeBucketsProps> = (props) =>
 
   useEffect(() => {
     setValue(props.value)
-  }, [value])
+  }, [props.value])
 
   return (
     <ThemeProvider theme={theme}>

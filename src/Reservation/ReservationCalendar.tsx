@@ -27,7 +27,7 @@ const ReservationCalendar: React.FC<ReservationCalendarProps> = (props) => {
 
   useEffect(() => {
     setValue(props.value)
-  }, [value])
+  }, [props.value])
 
   return (
     <ThemeProvider theme={theme}>
