@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import ResizeObserver from 'resize-observer-polyfill'
 import { get } from 'lodash'
 
-const useResize = (): [(instance: any) => void, number] => {
+const useResize = (): [(instance: HTMLDivElement | null) => void, number] => {
   const [width, setWidth] = useState(0)
   const config = { attributes: false, childList: true, subtree: true }
   let current: HTMLElement
@@ -14,7 +14,9 @@ const useResize = (): [(instance: any) => void, number] => {
     }
   }
 
-  const mutObserver = typeof MutationObserver !== 'undefined' ? new MutationObserver(resizeHandler) : undefined
+  const [mutObserver] = useState(
+    typeof MutationObserver !== 'undefined' ? new MutationObserver(resizeHandler) : undefined
+  )
   const [resizeObserver] = useState(() => new ResizeObserver(resizeHandler))
 
   const ref = useCallback(
@@ -27,17 +29,11 @@ const useResize = (): [(instance: any) => void, number] => {
         resizeObserver.observe(current)
       }
     },
-    [mutObserver, resizeObserver]
+    [resizeObserver]
   )
 
   useEffect(() => {
     resizeHandler()
-    const w = window
-    w.addEventListener('resize', resizeHandler)
-
-    return () => {
-      w.removeEventListener('resize', resizeHandler)
-    }
   }, [0])
 
   return [ref, width]

@@ -74,7 +74,6 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
     onChange,
   } = props
   const [viewEl, width] = useResize()
-
   return (
     <div className={`${prefixCls}-table`} css={styles.table}>
       <CalendarTHead prefixCls={prefixCls} value={value} />

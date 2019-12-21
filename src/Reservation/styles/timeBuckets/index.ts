@@ -24,7 +24,15 @@ const cellStatusContent = css`
   transform: translate(-50%, -45%);
 `
 
+const column = css`
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const styles = {
+  column,
   cellStatus,
   cellStatusContent,
   thInner,

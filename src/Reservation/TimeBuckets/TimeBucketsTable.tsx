@@ -26,7 +26,6 @@ const TimeBucketsList: React.FC<any> = (props) => {
     disabledDays,
     onChange,
     endDay,
-    weekDays,
     currentWeekIdx,
     setCurrentWeekIdx,
     ranges,
@@ -46,7 +45,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
           disabledWeeks,
           specifiedDays,
           disabledDays,
-          weekDays,
+          weekDays: weekDaysItem,
           toNext,
           toLast,
           onChange,
@@ -58,7 +57,19 @@ const TimeBucketsList: React.FC<any> = (props) => {
 
         return <TimeBucketsTbody key={key} {...tBodyProps} />
       }),
-    [displayIdxs, width, value?.[0]?.format(), value?.[1]?.format()]
+    [
+      prefixCls,
+      displayIdxs,
+      currentWeekIdx,
+      width,
+      value?.[0]?.format(),
+      value?.[1]?.format(),
+      disabledDays,
+      specifiedDays,
+      startDay.format(),
+      endDay && endDay.format(),
+      ranges,
+    ]
   )
 
   return <React.Fragment>{child}</React.Fragment>
@@ -87,7 +98,7 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
     <div className={`${prefixCls}-table`} css={comss.table}>
       <div className={`${prefixCls}-thead`} css={comss.thead}>
         <div className={cx(`${prefixCls}-tr`, { 'is-current-week': isCurrentWeek })} css={comss.tr}>
-          <div key="column" role="column" className={cx(`${prefixCls}-th`, `${prefixCls}-column`)} css={comss.th}>
+          <div key="column" role="column" className={cx(`${prefixCls}-th`, `${prefixCls}-column`)} css={[comss.th, styles.column]}>
             <span>时段/日期</span>
           </div>
           {weekDaysEls}

@@ -9,7 +9,8 @@ import { gainDateTimeRange, gainCellCls, WeekDay, formatTimeRange, isNotCheckedF
 import TimeBucketsCellStatus from './TimeBucketsCellStatus'
 import ReservationCell from '../ReservationCell'
 import { TimeBucketsTableProps } from './TimeBucketsTable'
-import styles from '../styles'
+import comss from '../styles'
+import styles from '../styles/timeBuckets'
 
 export interface TimeBucketsTbodyProps extends TimeBucketsTableProps {
   width?: number
@@ -32,11 +33,11 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
   } = props
 
   return (
-    <div className={`${prefixCls}-tbody`} style={{ width }} css={styles.tbody}>
+    <div className={`${prefixCls}-tbody`} style={{ width }} css={comss.tbody}>
       {map(ranges, (timeRange, index) => {
         return (
-          <div role="row" key={index} className={`${prefixCls}-tr`} css={styles.tr}>
-            <div key="column" className={cx(`${prefixCls}-td`, `${prefixCls}-column-cell`)} css={styles.td}>
+          <div role="row" key={index} className={`${prefixCls}-tr`} css={comss.tr}>
+            <div key="column" className={cx(`${prefixCls}-td`, `${prefixCls}-column-cell`)} css={[comss.td, styles.column]}>
               <span className={`${prefixCls}-td-inner`}>{formatTimeRange(timeRange)}</span>
             </div>
             {map(weekDays, (day: WeekDay, tdIndex) => {
@@ -75,7 +76,7 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
                   role="gridcell"
                   className={gainCellCls(`${prefixCls}-td`, status)}
                   key={tdIndex}
-                  css={styles.td}
+                  css={comss.td}
                   onClick={isDisabled ? undefined : onChange.bind(null, [startDateTime, endDateTime])}
                 >
                   <ReservationCell className={`${prefixCls}-reservation-cell`} status={status}>

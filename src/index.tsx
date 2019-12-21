@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 import ReservationCalendar, { ReservationTimeBuckets } from './Reservation'
-
 import 'normalize.css'
 import './index.css'
 
@@ -11,7 +10,7 @@ ReactDOM.render(
     <h2>Repeat </h2>
     <ReservationCalendar />
     <h2>Repeat, set disabled weeks and set disabled days</h2>
-    <ReservationCalendar days={{ disabledWeeks: [0, 1], disabledDays: [moment('2020-04-03')] }} />
+    <ReservationCalendar days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }} />
     <h2>Repeat, set start day and set end day</h2>
     <ReservationCalendar days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }} />
     <h2>Specified days</h2>
