@@ -6,5 +6,8 @@ module.exports = {
       '/': { page: '/' },
     }
   },
-  assetPrefix: !debug ? '/react-reservation/' : '',
+  assetPrefix: !debug ? '/react-reservation' : '',
+  publicRuntimeConfig: {
+    linkPrefix: !debug ? '/react-reservation' : '',
+  },
 }

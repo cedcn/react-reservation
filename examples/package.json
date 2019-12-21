@@ -6,14 +6,14 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "deploy": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && gh-pages -d ./out"
+    "deploy": "rm -rf ./out && next build && next export && touch out/.nojekyll && gh-pages -t -d out"
   },
   "dependencies": {
     "lodash": "^4.17.15",
     "next": "latest",
-    "react-reservation": "1.1.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-reservation": "1.1.8",
     "react-select": "^3.0.4"
   },
   "devDependencies": {
@@ -22,8 +22,9 @@
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/react-select": "^3.0.2",
-    "typescript": "^3.7.2",
-    "gh-pages": "^2.1.1"
+    "babel-plugin-transform-define": "^2.0.0",
+    "gh-pages": "^2.1.1",
+    "typescript": "^3.7.2"
   },
   "license": "ISC"
 }
