@@ -16,6 +16,7 @@ const IndexPage: NextPage = () => {
         <style jsx>{`
           .container {
             width: 100%;
+            max-width: 768px;
             margin-left: auto;
             margin-right: auto;
           }
@@ -49,10 +50,12 @@ const IndexPage: NextPage = () => {
             <ReservationTimeBuckets
               days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
               ranges={[
-                { start: [10, 10], end: [11, 20] },
-                { start: [11, 30], end: [13, 30] },
-                { start: [13, 30], end: [15, 30] },
-                { start: [15, 30], end: [20, 30] },
+                { start: [10, 30], end: [11, 30] },
+                { start: [11, 30], end: [12, 30] },
+                { start: [13, 30], end: [14, 30] },
+                { start: [14, 30], end: [15, 30] },
+                { start: [15, 30], end: [16, 30] },
+                { start: [16, 30], end: [20, 30] },
               ]}
               mode="tabs"
             />

@@ -78,7 +78,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
 export interface TimeBucketsTableProps extends TimeBucketsTableCommonProps {}
 const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
   const { prefixCls, weekDays, currentWeekIdx, toNext, toLast } = props
-
+  
   const isCurrentWeek = currentWeekIdx === 0
   const weekDaysEls = map(weekDays, (day, xindex) => {
     const isToday = day.date.isSame(moment(), 'days')
