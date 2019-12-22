@@ -10,11 +10,11 @@ interface CellStatusProps {
   isSelected: boolean
   isMakefull: boolean
   remaining?: number | null
+  remainingMaxThreshold: number
 }
 
-const MAX_SHOW_QUOTA = 99
 const TimeBucketsCellStatus: React.FC<CellStatusProps> = (props) => {
-  const { isSelectable, isSelected, isMakefull, remaining } = props
+  const { isSelectable, isSelected, isMakefull, remaining, remainingMaxThreshold } = props
 
   const selectedIcon = (
     <div css={styles.cellStatusContent}>
@@ -41,7 +41,7 @@ const TimeBucketsCellStatus: React.FC<CellStatusProps> = (props) => {
     }
 
     if (isSelectable) {
-      return isNil(remaining) || remaining >= MAX_SHOW_QUOTA ? '' : `余(${formatRemainingQuota(remaining)})`
+      return isNil(remaining) || remaining >= remainingMaxThreshold ? '' : `余(${formatRemainingQuota(remaining)})`
     }
   }
 

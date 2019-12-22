@@ -29,6 +29,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
     currentWeekIdx,
     setCurrentWeekIdx,
     ranges,
+    quotas,
   } = props
 
   const child = useMemo(
@@ -52,6 +53,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
           width,
           value,
           ranges,
+          quotas,
           setCurrentWeekIdx,
         }
 
@@ -69,6 +71,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
       startDay.format(),
       endDay && endDay.format(),
       ranges,
+      quotas,
     ]
   )
 
@@ -78,7 +81,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
 export interface TimeBucketsTableProps extends TimeBucketsTableCommonProps {}
 const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
   const { prefixCls, weekDays, currentWeekIdx, toNext, toLast } = props
-  
+
   const isCurrentWeek = currentWeekIdx === 0
   const weekDaysEls = map(weekDays, (day, xindex) => {
     const isToday = day.date.isSame(moment(), 'days')
@@ -98,7 +101,12 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
     <div className={`${prefixCls}-table`} css={comss.table}>
       <div className={`${prefixCls}-thead`} css={comss.thead}>
         <div className={cx(`${prefixCls}-tr`, { 'is-current-week': isCurrentWeek })} css={comss.tr}>
-          <div key="column" role="column" className={cx(`${prefixCls}-th`, `${prefixCls}-column`)} css={[comss.th, styles.column]}>
+          <div
+            key="column"
+            role="column"
+            className={cx(`${prefixCls}-th`, `${prefixCls}-column`)}
+            css={[comss.th, styles.column]}
+          >
             <span>时段/日期</span>
           </div>
           {weekDaysEls}

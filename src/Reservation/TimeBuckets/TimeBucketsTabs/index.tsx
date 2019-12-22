@@ -26,6 +26,7 @@ const TimeBucketsTabs: React.FC<TimeBucketsTabsProps> = (props) => {
     onChange,
     weekDays,
   } = props
+
   const [viewEl, width] = useResize()
   let canToNextDay = true
   let canToLastDay = true

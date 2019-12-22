@@ -4,7 +4,7 @@ import React from 'react'
 import moment from 'moment'
 import { map } from 'lodash'
 import cx from 'classnames'
-import { find, get } from 'lodash'
+import { find, get, isNil } from 'lodash'
 import { gainDateTimeRange, gainCellCls, WeekDay, formatTimeRange, isNotCheckedFun } from '../utils'
 import TimeBucketsCellStatus from './TimeBucketsCellStatus'
 import ReservationCell from '../ReservationCell'
@@ -15,8 +15,8 @@ import styles from '../styles/timeBuckets'
 export interface TimeBucketsTbodyProps extends TimeBucketsTableProps {
   width?: number
 }
-const quota: any[] = []
 
+const MAX_SHOW_QUOTA = 99
 const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
   const {
     value,
@@ -30,6 +30,7 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
     endDay,
     width,
     onChange,
+    quotas,
   } = props
 
   return (
@@ -37,7 +38,11 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
       {map(ranges, (timeRange, index) => {
         return (
           <div role="row" key={index} className={`${prefixCls}-tr`} css={comss.tr}>
-            <div key="column" className={cx(`${prefixCls}-td`, `${prefixCls}-column-cell`)} css={[comss.td, styles.column]}>
+            <div
+              key="column"
+              className={cx(`${prefixCls}-td`, `${prefixCls}-column-cell`)}
+              css={[comss.td, styles.column]}
+            >
               <span className={`${prefixCls}-td-inner`}>{formatTimeRange(timeRange)}</span>
             </div>
             {map(weekDays, (day: WeekDay, tdIndex) => {
@@ -45,10 +50,9 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
               const [startDateTime, endDateTime] = gainDateTimeRange(current, timeRange)
 
               const currentQuota = find(
-                quota,
-                (item) =>
-                  startDateTime.isSame(moment(item.startTime), 'minute') &&
-                  endDateTime.isSame(moment(item.endTime), 'minute')
+                quotas,
+                (quota) =>
+                  startDateTime.isSame(moment(quota.start), 'minute') && endDateTime.isSame(moment(quota.end), 'minute')
               )
               const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
               const isAfterEndDayMinute = !!endDay && endDateTime.isAfter(endDay, 'minute')
@@ -57,7 +61,8 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
               const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
 
               const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked
-              const isMakefull = remaining === 0
+              const isMakefull = !isNil(remaining) && remaining <= 0
+              const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
               const isDisabled = !isSelectable || isMakefull
               const isSelected =
                 !isDisabled && startDateTime.isSame(value?.[0], 'minute') && endDateTime.isSame(value?.[1], 'minute')
@@ -69,6 +74,7 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
                 isBeforeStartDayMinute,
                 isAfterEndDayMinute,
                 isSelected,
+                isALittleRemaining,
               }
 
               return (
@@ -83,8 +89,9 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
                     <TimeBucketsCellStatus
                       isSelectable={isSelectable}
                       isSelected={isSelected}
-                      remaining={remaining}
                       isMakefull={isMakefull}
+                      remaining={remaining}
+                      remainingMaxThreshold={MAX_SHOW_QUOTA}
                     />
                   </ReservationCell>
                 </div>

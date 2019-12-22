@@ -14,7 +14,7 @@ const cellStatus = css`
   width: 100%;
   justify-content: center;
   flex-direction: column;
-  font-size: 16px;
+  font-size: 14px;
 `
 
 const cellStatusContent = css`

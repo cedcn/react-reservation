@@ -24,7 +24,7 @@ ReactDOM.render(
     <ReservationCalendar days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }} />
     <h2>Specified days</h2>
     <ReservationCalendar days={[moment('2020-04-03'), moment('2020-02-04')]} />
-    <h2>Time Buckets</h2>
+    <h2>Time Bucket</h2>
     <ReservationTimeBuckets
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
       ranges={[
@@ -34,7 +34,22 @@ ReactDOM.render(
         { start: [15, 30], end: [20, 30] },
       ]}
     />
-    <h2>Time Buckets list</h2>
+    <h2>Time Bucket with quotas</h2>
+    <ReservationTimeBuckets
+      days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03'), disabledDays: [moment('2020-02-07')] }}
+      ranges={[
+        { start: [10, 10], end: [11, 20] },
+        { start: [11, 30], end: [13, 30] },
+        { start: [13, 30], end: [15, 30] },
+        { start: [15, 30], end: [20, 30] },
+      ]}
+      quotas={[
+        { start: moment('2020-02-04 10:10'), end: moment('2020-02-04 11:20'), remaining: 1 },
+        { start: moment('2020-02-04 11:30'), end: moment('2020-02-04 13:30'), remaining: 0 },
+        { start: moment('2020-02-06 13:30'), end: moment('2020-02-06 15:30'), remaining: 32 },
+      ]}
+    />
+    <h2>Time Bucket list</h2>
     <ReservationTimeBuckets
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
       ranges={[
@@ -44,6 +59,22 @@ ReactDOM.render(
         { start: [15, 30], end: [20, 30] },
       ]}
       mode="tabs"
+    />
+    <h2>Time Bucket list with quotas</h2>
+    <ReservationTimeBuckets
+      days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
+      ranges={[
+        { start: [10, 10], end: [11, 20] },
+        { start: [11, 30], end: [13, 30] },
+        { start: [13, 30], end: [15, 30] },
+        { start: [15, 30], end: [20, 30] },
+      ]}
+      mode="tabs"
+      quotas={[
+        { start: moment('2020-02-04 10:10'), end: moment('2020-02-04 11:20'), remaining: 1 },
+        { start: moment('2020-02-04 11:30'), end: moment('2020-02-04 13:30'), remaining: 0 },
+        { start: moment('2020-02-06 13:30'), end: moment('2020-02-06 15:30'), remaining: 32 },
+      ]}
     />
   </div>,
   document.getElementById('root')

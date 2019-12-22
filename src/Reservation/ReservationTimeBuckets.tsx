@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
 import React, { useState, useEffect } from 'react'
 import TimeBuckets from './TimeBuckets'
-import { TimeBucketsValue, Theme, TimeRange, Days } from './interface'
+import { TimeBucketsValue, Theme, TimeRange, Days, TimeBucketQuota } from './interface'
 
 const defaultTheme = { borderColor: '#eee' }
 export interface ReservationTimeBucketsProps {
@@ -15,10 +15,11 @@ export interface ReservationTimeBucketsProps {
   days?: Days
   ranges: TimeRange[]
   onChange?: (value: TimeBucketsValue) => void
+  quotas?: TimeBucketQuota[]
 }
 
 const ReservationTimeBuckets: React.FC<ReservationTimeBucketsProps> = (props) => {
-  const { theme = defaultTheme, prefixCls, days, ranges, mode } = props
+  const { theme = defaultTheme, prefixCls, days, ranges, mode, quotas } = props
 
   const v = typeof props.value === 'undefined' ? props.defaultValue : props.value
   const [value, setValue] = useState<TimeBucketsValue>(v)
@@ -33,7 +34,15 @@ const ReservationTimeBuckets: React.FC<ReservationTimeBucketsProps> = (props) =>
 
   return (
     <ThemeProvider theme={theme}>
-      <TimeBuckets value={value} onChange={onChange} prefixCls={prefixCls} days={days} ranges={ranges} mode={mode} />
+      <TimeBuckets
+        value={value}
+        onChange={onChange}
+        prefixCls={prefixCls}
+        days={days}
+        ranges={ranges}
+        mode={mode}
+        quotas={quotas}
+      />
     </ThemeProvider>
   )
 }

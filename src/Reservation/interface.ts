@@ -56,6 +56,12 @@ export interface TimeRange {
   end: [number, number]
 }
 
+export interface TimeBucketQuota {
+  start: Moment
+  end: Moment
+  remaining: number
+}
+
 export interface TimeBuckets {
   prefixCls?: string
   value: TimeBucketsValue
@@ -63,6 +69,7 @@ export interface TimeBuckets {
   days?: Days
   ranges: TimeRange[]
   mode?: 'tabs' | 'table'
+  quotas?: TimeBucketQuota[]
 }
 
 export interface TimeBucketsTableCommonProps {
@@ -80,6 +87,7 @@ export interface TimeBucketsTableCommonProps {
   ranges: TimeRange[]
   toNext: () => boolean
   toLast: () => boolean
+  quotas?: TimeBucketQuota[]
 }
 
 export interface CellStatus {

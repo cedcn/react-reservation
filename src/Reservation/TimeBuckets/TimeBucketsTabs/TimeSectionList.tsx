@@ -1,11 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+import moment from 'moment'
 import React, { useMemo } from 'react'
-import { map } from 'lodash'
+import { map, isNil, find, get } from 'lodash'
 import ReservationCell from '../../ReservationCell'
 import { gainTimeSections, formatTimeRange, gainCellCls, gainDateTimeRange } from '../../utils'
 import styles from '../../styles/timeBucketsTabs'
 
+const MAX_SHOW_QUOTA = 99
 const TimeSectionList: React.FC<any> = (props) => {
   const {
     displayIdxs,
@@ -19,6 +21,7 @@ const TimeSectionList: React.FC<any> = (props) => {
     onChange,
     endDay,
     ranges,
+    quotas,
   } = props
 
   const child = useMemo(
@@ -30,8 +33,15 @@ const TimeSectionList: React.FC<any> = (props) => {
         return (
           <div className={`${prefixCls}-time-section-list`} css={styles.timeSectionList} style={{ width }} key={key}>
             {map(timeSections, (section, index) => {
-              const isMakefull = false
               const [startDateTime, endDateTime] = gainDateTimeRange(section.date, section.range)
+              const currentQuota = find(
+                quotas,
+                (quota) =>
+                  startDateTime.isSame(moment(quota.start), 'minute') && endDateTime.isSame(moment(quota.end), 'minute')
+              )
+              const remaining = get(currentQuota, 'remaining')
+              const isMakefull = !isNil(remaining) && remaining <= 0
+              const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
 
               const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
               const isAfterEndDayMinute = endDay && endDateTime.isAfter(endDay, 'minute')
@@ -45,6 +55,7 @@ const TimeSectionList: React.FC<any> = (props) => {
                 isBeforeStartDayMinute,
                 isAfterEndDayMinute,
                 isSelected,
+                isALittleRemaining,
               }
 
               return (
