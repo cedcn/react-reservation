@@ -30,12 +30,26 @@ const selectableCell = css`
   color: #05510e;
 `
 
+const barelyCell = css`
+  ${selectableCell}
+  background-color: #f9efcd;
+  color: #a76d00;
+`
+
+const disabledCell = css`
+  ${selectableCell}
+  background-color: #e8e8e8;
+  color: #969696;
+`
+
 const mixins = {
   lineGrayCell,
   invalidCell,
   selectedCell,
   selectableCell,
   notInMonthCell,
+  barelyCell,
+  disabledCell,
 }
 
 export default mixins

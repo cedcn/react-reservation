@@ -1,6 +1,6 @@
 import moment, { Moment } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from './constants'
-import { TimeRange, SpecifiedDays, WeekCode } from './interface'
+import { TimeRange, SpecifiedDays, WeekCode, CellStatus } from './interface'
 import { isNil, map, isEmpty, findIndex, includes } from 'lodash'
 
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
@@ -147,23 +147,7 @@ export const isNotCheckedFun = (
   return isNotChecked
 }
 
-interface CellClsOptions {
-  isMakefull?: boolean
-  isSelectable?: boolean
-  isBeforeStartDayMinute?: boolean
-  isAfterEndDayMinute?: boolean
-  isBeforeStartDay?: boolean
-  isAfterEndDay?: boolean
-  isSelected?: boolean
-  isNotChecked?: boolean
-  isToday?: boolean
-  isStartDate?: boolean
-  isEndDate?: boolean
-  isLastMonthDay?: boolean
-  isNextMonthDay?: boolean
-}
-
-export const gainCellCls = (baseCls: string, options?: CellClsOptions): string => {
+export const gainCellCls = (baseCls: string, options?: CellStatus): string => {
   let cls = baseCls
 
   if (isNil(options)) {
@@ -208,6 +192,10 @@ export const gainCellCls = (baseCls: string, options?: CellClsOptions): string =
 
   if (options.isMakefull) {
     cls += ` is-make-full`
+  }
+
+  if (options.isALittleRemaining) {
+    cls += ` is-a-little-remaining`
   }
 
   if (options.isSelectable) {

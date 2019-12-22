@@ -20,11 +20,17 @@ export type Days = SpecifiedDays | RepeatDaysByWeek
 //
 export type CalendarValue = Moment | null | undefined
 
+export interface CalendarQuota {
+  day: Moment
+  remaining: number
+}
+
 export interface Calendar {
   prefixCls?: string
   value: CalendarValue
   onChange: (value: CalendarValue) => void
   days?: Days
+  quotas?: CalendarQuota[]
 }
 
 export interface CalendarTableCommonProps {
@@ -39,6 +45,7 @@ export interface CalendarTableCommonProps {
   onChange: (value: CalendarValue) => void
   toNext: () => boolean
   toLast: () => boolean
+  quotas?: CalendarQuota[]
 }
 
 //
@@ -77,6 +84,7 @@ export interface TimeBucketsTableCommonProps {
 
 export interface CellStatus {
   isMakefull?: boolean
+  isALittleRemaining?: boolean
   isSelectable?: boolean
   isBeforeStartDayMinute?: boolean
   isAfterEndDayMinute?: boolean
@@ -89,7 +97,6 @@ export interface CellStatus {
   isEndDate?: boolean
   isLastMonthDay?: boolean
   isNextMonthDay?: boolean
-  isActiveWeek?: boolean
 }
 
 export function isSpecifiedDays(days?: Days): days is SpecifiedDays {

@@ -97,8 +97,16 @@ const cell = (theme: Theme, status: CellStatus) => {
   if (status.isSelectable) {
     cellCss = mixins.selectableCell
 
+    if (status.isALittleRemaining) {
+      cellCss = mixins.barelyCell
+    }
+
     if (status.isSelected) {
       cellCss = mixins.selectedCell
+    }
+
+    if (status.isMakefull) {
+      cellCss = mixins.disabledCell
     }
   }
 

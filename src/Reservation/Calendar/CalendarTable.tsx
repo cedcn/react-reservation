@@ -25,6 +25,7 @@ const CalendarList: React.FC<any> = (props) => {
     disabledDays,
     onChange,
     endDay,
+    quotas,
     currentMonthIdx,
   } = props
 
@@ -33,6 +34,7 @@ const CalendarList: React.FC<any> = (props) => {
       map(displayIdxs, (idx) => {
         const { monthDays, firstMonthDay, lastMonthDay } = gainMonthDays(startDay, idx)
         const key = firstMonthDay.format()
+
         const tBodyProps = {
           prefixCls,
           startDay,
@@ -49,11 +51,22 @@ const CalendarList: React.FC<any> = (props) => {
           lastMonthDay,
           width,
           value,
+          quotas,
         }
 
         return <CalendarTBody key={key} {...tBodyProps} />
       }),
-    [displayIdxs, prefixCls, value && value.format(), width, disabledWeeks, disabledDays, specifiedDays, onChange]
+    [
+      displayIdxs,
+      prefixCls,
+      value && value.format(),
+      width,
+      disabledWeeks,
+      disabledDays,
+      specifiedDays,
+      onChange,
+      quotas,
+    ]
   )
 
   return <React.Fragment>{child}</React.Fragment>
@@ -72,6 +85,7 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
     disabledWeeks,
     disabledDays,
     onChange,
+    quotas,
   } = props
   const [viewEl, width] = useResize()
   return (
@@ -98,6 +112,7 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
                 value={value}
                 width={width}
                 prefixCls={prefixCls}
+                quotas={quotas}
               />
             )}
           </VirtualSlider>

@@ -12,7 +12,7 @@ import {
   MonthDay,
   isNotCheckedFun,
 } from '../utils'
-import { find, get } from 'lodash'
+import { find, get, isNil } from 'lodash'
 import ReservationCell from '../ReservationCell'
 import CalendarCellStatus from './CalendarCellStatus'
 import { CalendarTableProps } from './CalendarTable'
@@ -20,7 +20,6 @@ import styles from '../styles'
 
 const getTitleString = (value: Moment) => value.format('LL')
 
-const quota: any[] = []
 export interface CalendarTBodyProps extends CalendarTableProps {
   width: number
   className?: string
@@ -30,6 +29,7 @@ export interface CalendarTBodyProps extends CalendarTableProps {
   monthDays: MonthDay[]
 }
 
+const MAX_SHOW_QUOTA = 99
 const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
   const {
     prefixCls,
@@ -44,6 +44,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     specifiedDays,
     disabledDays,
     onChange,
+    quotas,
   } = props
 
   const today = moment()
@@ -66,12 +67,13 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       const isBeforeStartDay = current.isBefore(startDay, 'days')
       const isAfterEndDay = endDay && current.isAfter(endDay, 'days')
 
-      const currentQuota = find(quota, (item) => isSameDay(current, moment(item.datetime)))
+      const currentQuota = find(quotas, (quota) => !!isSameDay(current, moment(quota.day)))
       const remaining = get(currentQuota, 'remaining')
       const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
 
       const isSelectable = !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked
-      const isMakefull = remaining === 0
+      const isMakefull = !isNil(remaining) && remaining <= 0
+      const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
       const isDisabled = !isSelectable || isMakefull
       const isSelected = !isDisabled && !!isSameDay(current, value)
 
@@ -91,7 +93,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         isSelectable,
         isNotChecked,
         isSelected,
-        isActiveWeek,
+        isALittleRemaining,
       }
 
       dateCells.push(
@@ -109,6 +111,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
               isSelected={isSelected}
               isMakefull={isMakefull}
               remaining={remaining}
+              remainingMaxThreshold={MAX_SHOW_QUOTA}
               current={current}
             />
           </ReservationCell>

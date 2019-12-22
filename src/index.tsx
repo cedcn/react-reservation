@@ -9,6 +9,15 @@ ReactDOM.render(
   <div>
     <h2>Repeat </h2>
     <ReservationCalendar />
+    <ReservationCalendar
+      quotas={[
+        { day: moment(), remaining: 1 },
+        { day: moment().add(1, 'day'), remaining: 1 },
+        { day: moment().add(3, 'day'), remaining: 0 },
+        { day: moment().add(10, 'day'), remaining: 100 },
+        { day: moment().add(20, 'day'), remaining: 88 },
+      ]}
+    />
     <h2>Repeat, set disabled weeks and set disabled days</h2>
     <ReservationCalendar days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }} />
     <h2>Repeat, set start day and set end day</h2>
