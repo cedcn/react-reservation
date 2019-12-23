@@ -37,6 +37,19 @@ const timeSectionList = css`
   flex-wrap: wrap;
   padding: 14px;
 `
+const cellStatus = css`
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 14px;
+`
+
+const cellStatusContent = css`
+  margin-top: 3px;
+`
 
 const timeSection = css`
   width: 45%;
@@ -52,6 +65,8 @@ const styles = {
   weekTabContainer,
   timeSectionList,
   timeSection,
+  cellStatus,
+  cellStatusContent,
 }
 
 export default styles

@@ -33,7 +33,7 @@ const CalendarList: React.FC<any> = (props) => {
     () =>
       map(displayIdxs, (idx) => {
         const { monthDays, firstMonthDay, lastMonthDay } = gainMonthDays(startDay, idx)
-        const key = firstMonthDay.format()
+        const key = firstMonthDay.format('YYYY-MM')
 
         const tBodyProps = {
           prefixCls,

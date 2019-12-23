@@ -84,4 +84,4 @@ const WeekList: React.FC<WeekListProps> = (props) => {
   return <React.Fragment>{child}</React.Fragment>
 }
 
-export default WeekList
+export default React.memo(WeekList) 

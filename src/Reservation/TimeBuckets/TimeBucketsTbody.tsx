@@ -104,4 +104,4 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
   )
 }
 
-export default TimeBucketsTbody
+export default React.memo(TimeBucketsTbody)

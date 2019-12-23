@@ -51,7 +51,11 @@ export const gainCurrentDay = (startDay: Moment, dayIdx: number) => {
   return now
 }
 
-export const gainTimeSections = (startDay: Moment, dayIdx: number, ranges: TimeRange[]) => {
+export interface TimeSection {
+  range: TimeRange
+  date: Moment
+}
+export const gainTimeSections = (startDay: Moment, dayIdx: number, ranges: TimeRange[]): TimeSection[] => {
   const now = gainCurrentDay(startDay, dayIdx)
 
   return map(ranges, (range) => ({ range, date: now }))

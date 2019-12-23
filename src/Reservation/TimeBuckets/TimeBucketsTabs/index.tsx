@@ -40,6 +40,7 @@ const TimeBucketsTabs: React.FC<TimeBucketsTabsProps> = (props) => {
   })
 
   const [currentDayIdx, setCurrentDayIdx] = useState(defaultActiveWeekDay ? defaultActiveWeekDay.date.day() : 0)
+  const currentDay = gainCurrentDay(startDay, currentDayIdx)
 
   const toNextDay = (): boolean => {
     if (!canToNextDay) return false
@@ -58,7 +59,6 @@ const TimeBucketsTabs: React.FC<TimeBucketsTabsProps> = (props) => {
     setCurrentWeekIdx(floor(targetCurrentDayIdx / 7))
     return true
   }
-  const currentDay = gainCurrentDay(startDay, currentDayIdx)
   canToLastDay = startDay.isBefore(currentDay, 'day')
   canToNextDay = !endDay || (endDay && endDay.isAfter(currentDay, 'day'))
 

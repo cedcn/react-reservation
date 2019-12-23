@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
 import React, { useState, useEffect } from 'react'
 import Calendar from './Calendar'
+import { isEqual } from 'lodash'
 import { CalendarValue, Theme, Days, CalendarQuota } from './interface'
 
 const defaultTheme = { borderColor: '#eee' }
@@ -24,10 +25,13 @@ const ReservationCalendar: React.FC<ReservationCalendarProps> = (props) => {
 
   const onChange = (value: CalendarValue) => {
     setValue(value)
+    props.onChange && props.onChange(value)
   }
 
   useEffect(() => {
-    setValue(props.value)
+    if (!isEqual(props.value, value)) {
+      setValue(props.value)
+    }
   }, [props.value])
 
   return (

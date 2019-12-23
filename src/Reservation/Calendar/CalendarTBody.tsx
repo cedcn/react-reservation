@@ -69,6 +69,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
 
       const currentQuota = find(quotas, (quota) => !!isSameDay(current, moment(quota.day)))
       const remaining = get(currentQuota, 'remaining')
+      
       const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
 
       const isSelectable = !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked
@@ -98,7 +99,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
 
       dateCells.push(
         <div
-          key={passed}
+          key={current.format('YYYY-MM-DD')}
           onClick={isDisabled ? undefined : onChange.bind(null, current)}
           role="gridcell"
           title={getTitleString(current)}
@@ -132,7 +133,6 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       </div>
     )
   }
-
   return (
     <div
       className={cx(`${prefixCls}-tbody`, className)}
@@ -145,4 +145,4 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
   )
 }
 
-export default CalendarTBody
+export default React.memo(CalendarTBody)

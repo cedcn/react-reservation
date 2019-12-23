@@ -5,6 +5,7 @@ import React, { useMemo } from 'react'
 import { map, isNil, find, get } from 'lodash'
 import ReservationCell from '../../ReservationCell'
 import { gainTimeSections, formatTimeRange, gainCellCls, gainDateTimeRange } from '../../utils'
+import CellStatus from './CellStatus'
 import styles from '../../styles/timeBucketsTabs'
 
 const MAX_SHOW_QUOTA = 99
@@ -39,14 +40,15 @@ const TimeSectionList: React.FC<any> = (props) => {
                 (quota) =>
                   startDateTime.isSame(moment(quota.start), 'minute') && endDateTime.isSame(moment(quota.end), 'minute')
               )
+              const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
+              const isAfterEndDayMinute = endDay && endDateTime.isAfter(endDay, 'minute')
+
               const remaining = get(currentQuota, 'remaining')
               const isMakefull = !isNil(remaining) && remaining <= 0
               const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
-
-              const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
-              const isAfterEndDayMinute = endDay && endDateTime.isAfter(endDay, 'minute')
-              const isDisabled = isBeforeStartDayMinute || isAfterEndDayMinute || isMakefull
-              const isSelectable = !isDisabled
+              
+              const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute
+              const isDisabled = !isSelectable || isMakefull
               const isSelected = startDateTime.isSame(value?.[0], 'minute') && endDateTime.isSame(value?.[1], 'minute')
 
               const status = {
@@ -66,10 +68,14 @@ const TimeSectionList: React.FC<any> = (props) => {
                   onClick={isDisabled ? undefined : onChange.bind(null, [startDateTime, endDateTime])}
                 >
                   <ReservationCell className={`${prefixCls}-cell`} status={status}>
-                    <div>
-                      <div>{formatTimeRange(section.range)}</div>
-                      <div>{section.date.format('MM-DD')}</div>
-                    </div>
+                    <CellStatus
+                      isSelectable={isSelectable}
+                      isSelected={isSelected}
+                      isMakefull={isMakefull}
+                      timeSection={section}
+                      remaining={remaining}
+                      remainingMaxThreshold={MAX_SHOW_QUOTA}
+                    />
                   </ReservationCell>
                 </div>
               )
@@ -93,4 +99,4 @@ const TimeSectionList: React.FC<any> = (props) => {
   return <React.Fragment>{child}</React.Fragment>
 }
 
-export default TimeSectionList
+export default React.memo(TimeSectionList)

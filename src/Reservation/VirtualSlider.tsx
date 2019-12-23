@@ -127,10 +127,10 @@ const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
 
     const current = moment()
     const repeatOften = () => {
-      const sss = moment().diff(current, 'milliseconds')
+      const diff = moment().diff(current, 'milliseconds')
       requestID = window.requestAnimationFrame(repeatOften)
 
-      if (sss >= SPEED) {
+      if (diff >= SPEED) {
         setDisplayIdxs(gainDislayIdxs(idx))
         setSliderState({ position: -width, transition: undefined, animating: false })
         window.cancelAnimationFrame(requestID)
