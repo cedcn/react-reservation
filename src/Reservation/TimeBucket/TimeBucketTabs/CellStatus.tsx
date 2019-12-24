@@ -2,22 +2,23 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { isNil } from 'lodash'
-import { formatRemainingQuota } from '../utils'
-import styles from '../styles/timeBuckets'
+import { formatRemainingQuota, TimeSection, formatTimeRange } from '../../utils'
+import styles from '../../styles/timeBucketTabs'
 
 interface CellStatusProps {
   isSelectable: boolean
   isSelected: boolean
   isMakefull: boolean
   remaining?: number | null
+  timeSection: TimeSection
   remainingMaxThreshold: number
 }
 
-const TimeBucketsCellStatus: React.FC<CellStatusProps> = (props) => {
-  const { isSelectable, isSelected, isMakefull, remaining, remainingMaxThreshold } = props
+const CellStatus: React.FC<CellStatusProps> = (props) => {
+  const { isSelectable, isSelected, isMakefull, timeSection, remaining, remainingMaxThreshold } = props
 
   const selectedIcon = (
-    <div css={styles.cellStatusContent}>
+    <div>
       <svg width="20px" height="13px" viewBox="0 0 161 112" version="1.1">
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g fill="#fff">
@@ -33,7 +34,7 @@ const TimeBucketsCellStatus: React.FC<CellStatusProps> = (props) => {
 
   const gainContent = () => {
     if (isSelectable && isMakefull) {
-      return <div>约满</div>
+      return '约满'
     }
 
     if (isSelectable && isSelected) {
@@ -49,9 +50,10 @@ const TimeBucketsCellStatus: React.FC<CellStatusProps> = (props) => {
 
   return (
     <div className="reservation-cell__status" css={styles.cellStatus}>
-      {content}
+      {formatTimeRange(timeSection.range)}
+      <div css={styles.cellStatusContent}>{content}</div>
     </div>
   )
 }
 
-export default TimeBucketsCellStatus
+export default CellStatus

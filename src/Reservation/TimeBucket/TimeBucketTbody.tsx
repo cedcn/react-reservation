@@ -6,18 +6,18 @@ import { map } from 'lodash'
 import cx from 'classnames'
 import { find, get, isNil } from 'lodash'
 import { gainDateTimeRange, gainCellCls, WeekDay, formatTimeRange, isNotCheckedFun } from '../utils'
-import TimeBucketsCellStatus from './TimeBucketsCellStatus'
+import TimeBucketCellStatus from './CellStatus'
 import ReservationCell from '../ReservationCell'
-import { TimeBucketsTableProps } from './TimeBucketsTable'
+import { TimeBucketTableProps } from './TimeBucketTable'
 import comss from '../styles'
-import styles from '../styles/timeBuckets'
+import styles from '../styles/timeBucket'
 
-export interface TimeBucketsTbodyProps extends TimeBucketsTableProps {
+export interface TimeBucketTbodyProps extends TimeBucketTableProps {
   width?: number
 }
 
 const MAX_SHOW_QUOTA = 99
-const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
+const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
   const {
     value,
     weekDays,
@@ -86,7 +86,7 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
                   onClick={isDisabled ? undefined : onChange.bind(null, [startDateTime, endDateTime])}
                 >
                   <ReservationCell className={`${prefixCls}-reservation-cell`} status={status}>
-                    <TimeBucketsCellStatus
+                    <TimeBucketCellStatus
                       isSelectable={isSelectable}
                       isSelected={isSelected}
                       isMakefull={isMakefull}
@@ -104,4 +104,4 @@ const TimeBucketsTbody: React.FC<TimeBucketsTbodyProps> = (props) => {
   )
 }
 
-export default React.memo(TimeBucketsTbody)
+export default React.memo(TimeBucketTbody)

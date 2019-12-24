@@ -4,14 +4,14 @@ import React, { useState } from 'react'
 import { floor, find } from 'lodash'
 import useResize from '../../useResize'
 import VirtualSlider from '../../VirtualSlider'
-import { TimeBucketsTableCommonProps } from '../../interface'
+import { TimeBucketTableCommonProps } from '../../interface'
 import { isNotCheckedFun, gainCurrentDay } from '../../utils'
 import TimeSectionList from './TimeSectionList'
 import WeekList from './WeekList'
 import styles from '../../styles'
 
-export type TimeBucketsTabsProps = TimeBucketsTableCommonProps
-const TimeBucketsTabs: React.FC<TimeBucketsTabsProps> = (props) => {
+export type TimeBucketTabsProps = TimeBucketTableCommonProps
+const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
   const {
     prefixCls,
     toNext,
@@ -109,4 +109,4 @@ const TimeBucketsTabs: React.FC<TimeBucketsTabsProps> = (props) => {
   )
 }
 
-export default TimeBucketsTabs
+export default TimeBucketTabs

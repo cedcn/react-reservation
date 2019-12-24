@@ -6,7 +6,7 @@ import { map, isNil, find, get } from 'lodash'
 import ReservationCell from '../../ReservationCell'
 import { gainTimeSections, formatTimeRange, gainCellCls, gainDateTimeRange } from '../../utils'
 import CellStatus from './CellStatus'
-import styles from '../../styles/timeBucketsTabs'
+import styles from '../../styles/timeBucketTabs'
 
 const MAX_SHOW_QUOTA = 99
 const TimeSectionList: React.FC<any> = (props) => {

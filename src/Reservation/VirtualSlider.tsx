@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import  usePrevious  from './usePrevious'
+import usePrevious from './usePrevious'
 import moment from 'moment'
 import { isFunction, isNil, isEqual } from 'lodash'
 import { swipeStart as swipeStartUtil, swipeMove as swipeMoveUtil, swipeEnd as swipeEndUtil } from './inner-slider'
 import useMergeState from './useMergeState'
 
-interface TimeBucketsSliderProps {
+interface VirtualSliderProps {
   idx: number
   className?: string
   children?: (options: { displayIdxs: number[] }) => React.ReactNode
@@ -29,7 +29,7 @@ const gainDislayIdxs = (idx: number) => {
 }
 
 const SPEED = 300
-const VirtualSlider: React.FC<TimeBucketsSliderProps> = (props) => {
+const VirtualSlider: React.FC<VirtualSliderProps> = (props) => {
   const { className, idx, width, children, toNext, toLast } = props
   const [displayIdxs, setDisplayIdxs] = useState<any>(gainDislayIdxs(idx))
   const [scrolling, setScrolling] = useState<boolean>(false)

@@ -4,7 +4,7 @@ import React from 'react'
 import { Moment } from 'moment'
 import styles from '../styles'
 
-interface TimeBucketsHeaderProps {
+interface TimeBucketHeaderProps {
   prefixCls?: string
   startWeekDay?: Moment
   endWeekDay?: Moment
@@ -14,7 +14,7 @@ interface TimeBucketsHeaderProps {
   toNext: () => void
 }
 
-const TimeBucketsHeader: React.FC<TimeBucketsHeaderProps> = (props) => {
+const TimeBucketHeader: React.FC<TimeBucketHeaderProps> = (props) => {
   const { prefixCls, startWeekDay, endWeekDay, toLast, toNext, canToLast, canToNext } = props
 
   return (
@@ -46,4 +46,4 @@ const TimeBucketsHeader: React.FC<TimeBucketsHeaderProps> = (props) => {
   )
 }
 
-export default TimeBucketsHeader
+export default TimeBucketHeader

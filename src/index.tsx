@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
-import ReservationCalendar, { ReservationTimeBuckets } from './Reservation'
+import ReservationCalendar, { ReservationTimeBucket } from './Reservation'
 import 'normalize.css'
 import './index.css'
 
@@ -25,7 +25,7 @@ ReactDOM.render(
     <h2>Specified days</h2>
     <ReservationCalendar days={[moment('2020-04-03'), moment('2020-02-04')]} />
     <h2>Time Bucket</h2>
-    <ReservationTimeBuckets
+    <ReservationTimeBucket
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
       ranges={[
         { start: [10, 10], end: [11, 20] },
@@ -35,7 +35,7 @@ ReactDOM.render(
       ]}
     />
     <h2>Time Bucket with quotas</h2>
-    <ReservationTimeBuckets
+    <ReservationTimeBucket
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03'), disabledDays: [moment('2020-02-07')] }}
       ranges={[
         { start: [10, 10], end: [11, 20] },
@@ -50,7 +50,7 @@ ReactDOM.render(
       ]}
     />
     <h2>Time Bucket list</h2>
-    <ReservationTimeBuckets
+    <ReservationTimeBucket
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
       ranges={[
         { start: [10, 10], end: [11, 20] },
@@ -61,7 +61,7 @@ ReactDOM.render(
       mode="tabs"
     />
     <h2>Time Bucket list with quotas</h2>
-    <ReservationTimeBuckets
+    <ReservationTimeBucket
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03'), disabledDays: [moment('2020-02-07')] }}
       ranges={[
         { start: [10, 10], end: [11, 20] },

@@ -5,10 +5,10 @@ import { map } from 'lodash'
 import moment from 'moment'
 import cx from 'classnames'
 import { gainWeekDays, gainCurrentDay, isSameDay, isNotCheckedFun } from '../../utils'
-import styles from '../../styles/timeBucketsTabs'
-import { TimeBucketsTabsProps } from './'
+import styles from '../../styles/timeBucketTabs'
+import { TimeBucketTabsProps } from './'
 
-interface WeekListProps extends TimeBucketsTabsProps {
+interface WeekListProps extends TimeBucketTabsProps {
   displayIdxs: number[]
   width?: number
   currentDayIdx: number

@@ -4,15 +4,15 @@ import React, { useMemo } from 'react'
 import { map } from 'lodash'
 import cx from 'classnames'
 import useResize from '../useResize'
-import TimeBucketsTbody from './TimeBucketsTbody'
+import TimeBucketTbody from './TimeBucketTbody'
 import moment from 'moment'
 import VirtualSlider from '../VirtualSlider'
-import { TimeBucketsTableCommonProps } from '../interface'
+import { TimeBucketTableCommonProps } from '../interface'
 import { gainWeekDays } from '../utils'
 import comss from '../styles'
-import styles from '../styles/timeBuckets'
+import styles from '../styles/timeBucket'
 
-const TimeBucketsList: React.FC<any> = (props) => {
+const TimeBucketList: React.FC<any> = (props) => {
   const {
     displayIdxs,
     prefixCls,
@@ -57,7 +57,7 @@ const TimeBucketsList: React.FC<any> = (props) => {
           setCurrentWeekIdx,
         }
 
-        return <TimeBucketsTbody key={key} {...tBodyProps} />
+        return <TimeBucketTbody key={key} {...tBodyProps} />
       }),
     [
       prefixCls,
@@ -78,8 +78,8 @@ const TimeBucketsList: React.FC<any> = (props) => {
   return <React.Fragment>{child}</React.Fragment>
 }
 
-export interface TimeBucketsTableProps extends TimeBucketsTableCommonProps {}
-const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
+export interface TimeBucketTableProps extends TimeBucketTableCommonProps {}
+const TimeBucketTable: React.FC<TimeBucketTableProps> = (props) => {
   const { prefixCls, weekDays, currentWeekIdx, toNext, toLast } = props
 
   const isCurrentWeek = currentWeekIdx === 0
@@ -121,7 +121,7 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
             toNext={toNext}
             toLast={toLast}
           >
-            {({ displayIdxs }) => <TimeBucketsList {...props} width={width} displayIdxs={displayIdxs} />}
+            {({ displayIdxs }) => <TimeBucketList {...props} width={width} displayIdxs={displayIdxs} />}
           </VirtualSlider>
         )}
       </div>
@@ -129,4 +129,4 @@ const TimeBucketsTable: React.FC<TimeBucketsTableProps> = (props) => {
   )
 }
 
-export default TimeBucketsTable
+export default TimeBucketTable

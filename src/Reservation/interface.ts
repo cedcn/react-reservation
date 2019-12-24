@@ -49,7 +49,7 @@ export interface CalendarTableCommonProps {
 }
 
 //
-export type TimeBucketsValue = [Moment, Moment] | null | undefined
+export type TimeBucketValue = [Moment, Moment] | null | undefined
 
 export interface TimeRange {
   start: [number, number]
@@ -62,28 +62,28 @@ export interface TimeBucketQuota {
   remaining: number
 }
 
-export interface TimeBuckets {
+export interface TimeBucket {
   prefixCls?: string
-  value: TimeBucketsValue
-  onChange: (value: TimeBucketsValue) => void
+  value: TimeBucketValue
+  onChange: (value: TimeBucketValue) => void
   days?: Days
   ranges: TimeRange[]
   mode?: 'tabs' | 'table'
   quotas?: TimeBucketQuota[]
 }
 
-export interface TimeBucketsTableCommonProps {
+export interface TimeBucketTableCommonProps {
   currentWeekIdx: number
   prefixCls: string
   startDay: Moment
   endDay?: Moment
-  value: TimeBucketsValue
+  value: TimeBucketValue
   weekDays: WeekDay[]
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays
   setCurrentWeekIdx: any
   disabledDays?: Moment[]
-  onChange: (value: TimeBucketsValue) => void
+  onChange: (value: TimeBucketValue) => void
   ranges: TimeRange[]
   toNext: () => boolean
   toLast: () => boolean

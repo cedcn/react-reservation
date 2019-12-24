@@ -2,16 +2,16 @@
 import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
 import moment, { Moment } from 'moment'
-import TimeBucketsHeader from './TimeBucketsHeader'
-import TimeBucketsTable from './TimeBucketsTable'
-import TimeBucketsTabs from './TimeBucketsTabs'
+import TimeBucketHeader from './TimeBucketHeader'
+import TimeBucketTable from './TimeBucketTable'
+import TimeBucketTabs from './TimeBucketTabs'
 import { map, first, last, get } from 'lodash'
-import { TimeBuckets as TimeBucketsType, isSpecifiedDays } from '../interface'
+import { TimeBucket as TimeBucketType, isSpecifiedDays } from '../interface'
 import { WeekDay, gainWeekDays } from '../utils'
 import styles from '../styles'
 
-type TimeBucketsProps = TimeBucketsType
-const TimeBuckets: React.FC<TimeBucketsProps> = (props) => {
+type TimeBucketProps = TimeBucketType
+const TimeBucket: React.FC<TimeBucketProps> = (props) => {
   let canToNext = true
   let canToLast = true
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
@@ -79,7 +79,7 @@ const TimeBuckets: React.FC<TimeBucketsProps> = (props) => {
 
   return (
     <div className={prefixCls} css={styles.reservation}>
-      <TimeBucketsHeader
+      <TimeBucketHeader
         prefixCls={prefixCls}
         startWeekDay={startWeekDay}
         endWeekDay={endWeekDay}
@@ -88,9 +88,9 @@ const TimeBuckets: React.FC<TimeBucketsProps> = (props) => {
         toNext={toNextWeek}
         toLast={toLastWeek}
       />
-      {mode === 'tabs' ? <TimeBucketsTabs {...commonProps} /> : <TimeBucketsTable {...commonProps} />}
+      {mode === 'tabs' ? <TimeBucketTabs {...commonProps} /> : <TimeBucketTable {...commonProps} />}
     </div>
   )
 }
 
-export default TimeBuckets
+export default TimeBucket
