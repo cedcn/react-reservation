@@ -8,7 +8,7 @@ import TimeBucketTabs from './TimeBucketTabs'
 import { map, first, last, get } from 'lodash'
 import { TimeBucket as TimeBucketType, isSpecifiedDays } from '../interface'
 import { WeekDay, gainWeekDays } from '../utils'
-import styles from '../styles'
+import comss from '../styles'
 
 type TimeBucketProps = TimeBucketType
 const TimeBucket: React.FC<TimeBucketProps> = (props) => {
@@ -78,7 +78,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
   }
 
   return (
-    <div className={prefixCls} css={styles.reservation}>
+    <div className={prefixCls} css={comss.reservation}>
       <TimeBucketHeader
         prefixCls={prefixCls}
         startWeekDay={startWeekDay}

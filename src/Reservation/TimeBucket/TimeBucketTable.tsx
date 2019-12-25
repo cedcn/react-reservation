@@ -12,7 +12,12 @@ import { gainWeekDays } from '../utils'
 import comss from '../styles'
 import styles from '../styles/timeBucket'
 
-const TimeBucketList: React.FC<any> = (props) => {
+interface TimeBucketListProps extends TimeBucketTableProps {
+  displayIdxs: number[]
+  width: number
+}
+
+const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
   const {
     displayIdxs,
     prefixCls,
@@ -62,12 +67,12 @@ const TimeBucketList: React.FC<any> = (props) => {
     [
       prefixCls,
       displayIdxs,
-      currentWeekIdx,
       width,
       value?.[0]?.format(),
       value?.[1]?.format(),
       disabledDays,
       specifiedDays,
+      disabledWeeks,
       startDay.format(),
       endDay && endDay.format(),
       ranges,

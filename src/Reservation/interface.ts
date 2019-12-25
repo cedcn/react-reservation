@@ -27,7 +27,7 @@ export interface CalendarQuota {
 
 export interface Calendar {
   prefixCls?: string
-  value: CalendarValue
+  value?: CalendarValue
   onChange: (value: CalendarValue) => void
   days?: Days
   quotas?: CalendarQuota[]
@@ -38,7 +38,7 @@ export interface CalendarTableCommonProps {
   prefixCls: string
   startDay: Moment
   endDay?: Moment
-  value: CalendarValue
+  value?: CalendarValue
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
@@ -64,7 +64,7 @@ export interface TimeBucketQuota {
 
 export interface TimeBucket {
   prefixCls?: string
-  value: TimeBucketValue
+  value?: TimeBucketValue
   onChange: (value: TimeBucketValue) => void
   days?: Days
   ranges: TimeRange[]
@@ -77,7 +77,7 @@ export interface TimeBucketTableCommonProps {
   prefixCls: string
   startDay: Moment
   endDay?: Moment
-  value: TimeBucketValue
+  value?: TimeBucketValue
   weekDays: WeekDay[]
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays

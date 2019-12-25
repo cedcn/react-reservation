@@ -1,32 +1,43 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
+import { Moment } from 'moment'
 import useResize from '../useResize'
 import { map } from 'lodash'
 import CalendarTHead from './CalendarTHead'
 import CalendarTBody from './CalendarTBody'
 import VirtualSlider from '../VirtualSlider'
-import { CalendarTableCommonProps } from '../interface'
+import { CalendarTableCommonProps, CalendarValue, WeekCode, SpecifiedDays, CalendarQuota } from '../interface'
 import { gainMonthDays } from '../utils'
 import styles from '../styles'
 
-export interface CalendarTableProps extends CalendarTableCommonProps {}
-const CalendarList: React.FC<any> = (props) => {
+export interface CalendarListProps {
+  displayIdxs: number[]
+  width?: number
+  prefixCls: string
+  startDay: Moment
+  endDay?: Moment
+  value?: CalendarValue
+  disabledWeeks?: WeekCode[]
+  specifiedDays?: SpecifiedDays
+  disabledDays?: Moment[]
+  onChange: (value: CalendarValue) => void
+  quotas?: CalendarQuota[]
+}
+
+const CalendarList: React.FC<CalendarListProps> = (props) => {
   const {
     displayIdxs,
     prefixCls,
     value,
     width,
     startDay,
-    toNext,
-    toLast,
     disabledWeeks,
     specifiedDays,
     disabledDays,
     onChange,
     endDay,
     quotas,
-    currentMonthIdx,
   } = props
 
   const child = useMemo(
@@ -39,13 +50,10 @@ const CalendarList: React.FC<any> = (props) => {
           prefixCls,
           startDay,
           endDay,
-          currentMonthIdx,
           disabledWeeks,
           specifiedDays,
           disabledDays,
           monthDays,
-          toNext,
-          toLast,
           onChange,
           firstMonthDay,
           lastMonthDay,
@@ -59,18 +67,21 @@ const CalendarList: React.FC<any> = (props) => {
     [
       displayIdxs,
       prefixCls,
-      value && value.format(),
+      value?.format(),
+      startDay.format(),
+      endDay?.format(),
       width,
       disabledWeeks,
       disabledDays,
       specifiedDays,
-      onChange,
       quotas,
     ]
   )
 
   return <React.Fragment>{child}</React.Fragment>
 }
+
+interface CalendarTableProps extends CalendarTableCommonProps {}
 
 const CalendarTable: React.FC<CalendarTableProps> = (props) => {
   const {

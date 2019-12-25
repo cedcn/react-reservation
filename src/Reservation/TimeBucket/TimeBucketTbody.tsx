@@ -83,7 +83,13 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
                   className={gainCellCls(`${prefixCls}-td`, status)}
                   key={tdIndex}
                   css={comss.td}
-                  onClick={isDisabled ? undefined : onChange.bind(null, [startDateTime, endDateTime])}
+                  onClick={
+                    isDisabled
+                      ? undefined
+                      : isSelected
+                      ? onChange.bind(null, null)
+                      : onChange.bind(null, [startDateTime, endDateTime])
+                  }
                 >
                   <ReservationCell className={`${prefixCls}-reservation-cell`} status={status}>
                     <TimeBucketCellStatus

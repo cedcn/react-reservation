@@ -5,14 +5,15 @@ import { get } from 'lodash'
 const useResize = (): [(instance: HTMLDivElement | null) => void, number] => {
   const [width, setWidth] = useState(0)
   const config = { attributes: false, childList: true, subtree: true }
-  let current: HTMLElement
+  let current: HTMLElement | undefined
 
-  const resizeHandler = () => {
+  const resizeHandler = useCallback(() => {
     const nWidth = get(current, 'clientWidth', 0)
+
     if (nWidth !== width) {
       setWidth(nWidth)
     }
-  }
+  }, [current, width])
 
   const [mutObserver] = useState(
     typeof MutationObserver !== 'undefined' ? new MutationObserver(resizeHandler) : undefined
@@ -34,7 +35,7 @@ const useResize = (): [(instance: HTMLDivElement | null) => void, number] => {
 
   useEffect(() => {
     resizeHandler()
-  }, [0])
+  }, [])
 
   return [ref, width]
 }

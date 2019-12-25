@@ -13,17 +13,25 @@ import {
   isNotCheckedFun,
 } from '../utils'
 import { find, get, isNil } from 'lodash'
+import { CalendarValue, WeekCode, SpecifiedDays, CalendarQuota } from '../interface'
 import ReservationCell from '../ReservationCell'
 import CalendarCellStatus from './CalendarCellStatus'
-import { CalendarTableProps } from './CalendarTable'
 import styles from '../styles'
 
 const getTitleString = (value: Moment) => value.format('LL')
 
-export interface CalendarTBodyProps extends CalendarTableProps {
-  width: number
+export interface CalendarTBodyProps {
+  width?: number
+  prefixCls: string
+  startDay: Moment
+  endDay?: Moment
+  value?: CalendarValue
+  disabledWeeks?: WeekCode[]
+  specifiedDays?: SpecifiedDays
+  disabledDays?: Moment[]
+  onChange: (value: CalendarValue) => void
   className?: string
-  quota?: any[]
+  quotas?: CalendarQuota[]
   isLoadingQuota?: boolean
   firstMonthDay: Moment
   monthDays: MonthDay[]
@@ -69,7 +77,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
 
       const currentQuota = find(quotas, (quota) => !!isSameDay(current, moment(quota.day)))
       const remaining = get(currentQuota, 'remaining')
-      
+
       const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
 
       const isSelectable = !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked
@@ -100,7 +108,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       dateCells.push(
         <div
           key={current.format('YYYY-MM-DD')}
-          onClick={isDisabled ? undefined : onChange.bind(null, current)}
+          onClick={isDisabled ? undefined : isSelected ? onChange.bind(null, null) : onChange.bind(null, current)}
           role="gridcell"
           title={getTitleString(current)}
           css={styles.td}

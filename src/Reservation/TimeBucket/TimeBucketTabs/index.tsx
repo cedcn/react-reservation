@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { floor, find } from 'lodash'
 import useResize from '../../useResize'
 import VirtualSlider from '../../VirtualSlider'
-import { TimeBucketTableCommonProps } from '../../interface'
+import { TimeBucketTableCommonProps, TimeBucketValue } from '../../interface'
 import { isNotCheckedFun, gainCurrentDay } from '../../utils'
 import TimeSectionList from './TimeSectionList'
 import WeekList from './WeekList'
@@ -97,7 +97,7 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
               {...props}
               width={width}
               displayIdxs={displayIdxs}
-              onChange={(value: any) => {
+              onChange={(value: TimeBucketValue) => {
                 setCurrentWeekIdx(floor(currentDayIdx / 7))
                 onChange(value)
               }}
