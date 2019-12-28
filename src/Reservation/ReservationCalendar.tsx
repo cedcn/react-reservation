@@ -5,7 +5,7 @@ import { Moment } from 'moment'
 import React, { useState, useEffect } from 'react'
 import Calendar from './Calendar'
 import { isEqual } from 'lodash'
-import { CalendarValue, Theme, Days, CalendarQuota } from './interface'
+import { CalendarValue, Theme, Days, CalendarQuota, CalendarCellRenderFun } from './interface'
 
 const defaultTheme = { borderColor: '#eee' }
 export interface ReservationCalendarProps {
@@ -17,10 +17,11 @@ export interface ReservationCalendarProps {
   days?: Days
   quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
   advance?: number | boolean
+  cellRender?: CalendarCellRenderFun
 }
 
 const ReservationCalendar: React.FC<ReservationCalendarProps> = (props) => {
-  const { theme = defaultTheme, days, prefixCls, quotas, advance } = props
+  const { theme = defaultTheme, ...rest } = props
 
   const v = typeof props.value === 'undefined' ? props.defaultValue : props.value
   const [value, setValue] = useState<CalendarValue>(v)
@@ -38,7 +39,7 @@ const ReservationCalendar: React.FC<ReservationCalendarProps> = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Calendar value={value} onChange={onChange} days={days} prefixCls={prefixCls} quotas={quotas} advance={advance} />
+      <Calendar value={value} onChange={onChange} {...rest} />
     </ThemeProvider>
   )
 }

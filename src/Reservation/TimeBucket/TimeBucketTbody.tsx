@@ -32,6 +32,7 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
     onChange,
     quotas,
     advance,
+    cellRender,
   } = props
 
   return (
@@ -57,7 +58,7 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
               )
               const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
               const isAfterEndDayMinute = !!endDay && endDateTime.isAfter(endDay, 'minute')
-              
+
               const remaining = get(currentQuota, 'remaining')
               const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
               const isPast = isPastFun(startDateTime, advance)
@@ -93,15 +94,19 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
                       : onChange.bind(null, [startDateTime, endDateTime])
                   }
                 >
-                  <ReservationCell className={`${prefixCls}-reservation-cell`} status={status}>
-                    <TimeBucketCellStatus
-                      isSelectable={isSelectable}
-                      isSelected={isSelected}
-                      isMakefull={isMakefull}
-                      remaining={remaining}
-                      remainingMaxThreshold={MAX_SHOW_QUOTA}
-                    />
-                  </ReservationCell>
+                  {cellRender ? (
+                    cellRender({ section: { range: timeRange, date: current }, status, remaining })
+                  ) : (
+                    <ReservationCell className={`${prefixCls}-reservation-cell`} status={status}>
+                      <TimeBucketCellStatus
+                        isSelectable={isSelectable}
+                        isSelected={isSelected}
+                        isMakefull={isMakefull}
+                        remaining={remaining}
+                        remainingMaxThreshold={MAX_SHOW_QUOTA}
+                      />
+                    </ReservationCell>
+                  )}
                 </div>
               )
             })}

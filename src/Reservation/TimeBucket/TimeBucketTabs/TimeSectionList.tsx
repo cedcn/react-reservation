@@ -26,7 +26,8 @@ const TimeSectionList: React.FC<TimeSectionListProps> = (props) => {
     endDay,
     ranges,
     quotas,
-    advance
+    advance,
+    cellRender,
   } = props
 
   const child = useMemo(
@@ -50,6 +51,7 @@ const TimeSectionList: React.FC<TimeSectionListProps> = (props) => {
                 advance={advance}
                 prefixCls={prefixCls}
                 onChange={onChange}
+                cellRender={cellRender}
               />
             ))}
           </div>

@@ -14,7 +14,7 @@ import {
   isPastFun,
 } from '../utils'
 import { find, get, isNil } from 'lodash'
-import { CalendarValue, WeekCode, SpecifiedDays, CalendarQuota } from '../interface'
+import { CalendarValue, WeekCode, SpecifiedDays, CalendarQuota, CalendarCellRenderFun } from '../interface'
 import ReservationCell from '../ReservationCell'
 import CalendarCellStatus from './CalendarCellStatus'
 import styles from '../styles'
@@ -36,6 +36,7 @@ export interface CalendarTBodyProps {
   firstMonthDay: Moment
   monthDays: MonthDay[]
   advance?: number | boolean
+  cellRender?: CalendarCellRenderFun
 }
 
 const MAX_SHOW_QUOTA = 99
@@ -55,6 +56,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     onChange,
     quotas,
     advance,
+    cellRender,
   } = props
 
   const today = moment()
@@ -113,21 +115,24 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         <div
           key={current.format('YYYY-MM-DD')}
           onClick={isDisabled ? undefined : isSelected ? onChange.bind(null, null) : onChange.bind(null, current)}
-          role="gridcell"
           title={getTitleString(current)}
           css={styles.td}
           className={gainCellCls(`${prefixCls}-td`, status)}
         >
-          <ReservationCell className={`${prefixCls}-cell`} status={status}>
-            <CalendarCellStatus
-              isSelectable={isSelectable}
-              isSelected={isSelected}
-              isMakefull={isMakefull}
-              remaining={remaining}
-              remainingMaxThreshold={MAX_SHOW_QUOTA}
-              current={current}
-            />
-          </ReservationCell>
+          {cellRender ? (
+            cellRender({ date: current, status, remaining })
+          ) : (
+            <ReservationCell className={`${prefixCls}-cell`} status={status}>
+              <CalendarCellStatus
+                isSelectable={isSelectable}
+                isSelected={isSelected}
+                isMakefull={isMakefull}
+                remaining={remaining}
+                remainingMaxThreshold={MAX_SHOW_QUOTA}
+                current={current}
+              />
+            </ReservationCell>
+          )}
         </div>
       )
 

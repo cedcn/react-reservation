@@ -4,7 +4,7 @@ import { Moment } from 'moment'
 import { ThemeProvider } from 'emotion-theming'
 import React, { useState, useEffect } from 'react'
 import TimeBucket from './TimeBucket'
-import { TimeBucketValue, Theme, TimeRange, Days, TimeBucketQuota } from './interface'
+import { TimeBucketValue, Theme, TimeRange, Days, TimeBucketQuota, TimeBucketCellRenderFun } from './interface'
 
 const defaultTheme = { borderColor: '#eee' }
 export interface ReservationTimeBucketProps {
@@ -18,10 +18,11 @@ export interface ReservationTimeBucketProps {
   onChange?: (value: TimeBucketValue) => void
   quotas?: TimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => TimeBucketQuota[])
   advance?: number | boolean
+  cellRender?: TimeBucketCellRenderFun
 }
 
 const ReservationTimeBucket: React.FC<ReservationTimeBucketProps> = (props) => {
-  const { theme = defaultTheme, prefixCls, days, ranges, mode, quotas, advance } = props
+  const { theme = defaultTheme, ...rest } = props
 
   const v = typeof props.value === 'undefined' ? props.defaultValue : props.value
   const [value, setValue] = useState<TimeBucketValue>(v)
@@ -36,16 +37,7 @@ const ReservationTimeBucket: React.FC<ReservationTimeBucketProps> = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <TimeBucket
-        value={value}
-        onChange={onChange}
-        prefixCls={prefixCls}
-        days={days}
-        ranges={ranges}
-        mode={mode}
-        quotas={quotas}
-        advance={advance}
-      />
+      <TimeBucket value={value} onChange={onChange} {...rest} />
     </ThemeProvider>
   )
 }

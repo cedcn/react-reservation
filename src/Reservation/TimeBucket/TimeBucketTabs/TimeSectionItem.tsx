@@ -7,7 +7,7 @@ import ReservationCell from '../../ReservationCell'
 import { gainCellCls, gainDateTimeRange, TimeSection, isPastFun } from '../../utils'
 import CellStatus from './CellStatus'
 import styles from '../../styles/timeBucketTabs'
-import { TimeBucketQuota, TimeBucketValue } from '../../interface'
+import { TimeBucketQuota, TimeBucketValue, TimeBucketCellRenderFun } from '../../interface'
 
 interface TimeSectionItemProps {
   section: TimeSection
@@ -19,11 +19,12 @@ interface TimeSectionItemProps {
   onChange: (value: TimeBucketValue) => void
   isNotChecked: boolean
   advance?: number | boolean
+  cellRender?: TimeBucketCellRenderFun
 }
 
 const MAX_SHOW_QUOTA = 99
 const TimeSectionItem: React.FC<TimeSectionItemProps> = (props) => {
-  const { section, quotas, startDay, endDay, value, prefixCls, onChange, isNotChecked, advance } = props
+  const { section, quotas, startDay, endDay, value, prefixCls, onChange, isNotChecked, advance, cellRender } = props
 
   const [startDateTime, endDateTime] = gainDateTimeRange(section.date, section.range)
   const currentQuota = find(
@@ -62,16 +63,20 @@ const TimeSectionItem: React.FC<TimeSectionItemProps> = (props) => {
           : onChange.bind(null, [startDateTime, endDateTime])
       }
     >
-      <ReservationCell className={`${prefixCls}-cell`} status={status} height={50}>
-        <CellStatus
-          isSelectable={isSelectable}
-          isSelected={isSelected}
-          isMakefull={isMakefull}
-          timeSection={section}
-          remaining={remaining}
-          remainingMaxThreshold={MAX_SHOW_QUOTA}
-        />
-      </ReservationCell>
+      {cellRender ? (
+        cellRender({ section, remaining, status })
+      ) : (
+        <ReservationCell className={`${prefixCls}-cell`} status={status} height={50}>
+          <CellStatus
+            isSelectable={isSelectable}
+            isSelected={isSelected}
+            isMakefull={isMakefull}
+            timeSection={section}
+            remaining={remaining}
+            remainingMaxThreshold={MAX_SHOW_QUOTA}
+          />
+        </ReservationCell>
+      )}
     </div>
   )
 }

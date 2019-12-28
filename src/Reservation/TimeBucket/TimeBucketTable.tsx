@@ -36,6 +36,7 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
     ranges,
     quotas,
     advance,
+    cellRender,
   } = props
 
   const child = useMemo(
@@ -62,6 +63,7 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
           quotas,
           setCurrentWeekIdx,
           advance,
+          cellRender,
         }
 
         return <TimeBucketTbody key={key} {...tBodyProps} />
@@ -114,8 +116,7 @@ const TimeBucketTable: React.FC<TimeBucketTableProps> = (props) => {
             role="column"
             className={cx(`${prefixCls}-th`, `${prefixCls}-column`)}
             css={[comss.th, styles.column]}
-          >
-          </div>
+          ></div>
           {weekDaysEls}
         </div>
       </div>

@@ -1,8 +1,26 @@
+import { ReactNode } from 'react'
 import { Moment } from 'moment'
 import { isArray } from 'lodash'
-import { WeekDay } from './utils'
+import { WeekDay, TimeSection } from './utils'
 
 export type WeekCode = 0 | 1 | 2 | 3 | 4 | 5 | 6
+
+export interface CellStatus {
+  isMakefull?: boolean
+  isALittleRemaining?: boolean
+  isSelectable?: boolean
+  isBeforeStartDayMinute?: boolean
+  isAfterEndDayMinute?: boolean
+  isBeforeStartDay?: boolean
+  isAfterEndDay?: boolean
+  isSelected?: boolean
+  isNotChecked?: boolean
+  isToday?: boolean
+  isStartDate?: boolean
+  isEndDate?: boolean
+  isLastMonthDay?: boolean
+  isNextMonthDay?: boolean
+}
 
 export type Theme = any
 
@@ -24,6 +42,15 @@ export interface CalendarQuota {
   day: Moment
   remaining: number
 }
+export type CalendarCellRenderFun = ({
+  date,
+  status,
+  remaining,
+}: {
+  date: Moment
+  status: CellStatus
+  remaining?: number
+}) => ReactNode
 
 export interface Calendar {
   prefixCls?: string
@@ -32,6 +59,7 @@ export interface Calendar {
   days?: Days
   advance?: number | boolean
   quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
+  cellRender?: CalendarCellRenderFun
 }
 
 export interface CalendarTableCommonProps {
@@ -48,6 +76,7 @@ export interface CalendarTableCommonProps {
   toLast: () => boolean
   quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
   advance?: number | boolean
+  cellRender?: CalendarCellRenderFun
 }
 
 //
@@ -64,6 +93,16 @@ export interface TimeBucketQuota {
   remaining: number
 }
 
+export type TimeBucketCellRenderFun = ({
+  section,
+  status,
+  remaining,
+}: {
+  section: TimeSection
+  status: CellStatus
+  remaining?: number
+}) => ReactNode
+
 export interface TimeBucket {
   prefixCls?: string
   value?: TimeBucketValue
@@ -73,6 +112,7 @@ export interface TimeBucket {
   mode?: 'tabs' | 'table'
   quotas?: TimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => TimeBucketQuota[])
   advance?: number | boolean
+  cellRender?: TimeBucketCellRenderFun
 }
 
 export interface TimeBucketTableCommonProps {
@@ -92,23 +132,7 @@ export interface TimeBucketTableCommonProps {
   toLast: () => boolean
   quotas?: TimeBucketQuota[]
   advance?: number | boolean
-}
-
-export interface CellStatus {
-  isMakefull?: boolean
-  isALittleRemaining?: boolean
-  isSelectable?: boolean
-  isBeforeStartDayMinute?: boolean
-  isAfterEndDayMinute?: boolean
-  isBeforeStartDay?: boolean
-  isAfterEndDay?: boolean
-  isSelected?: boolean
-  isNotChecked?: boolean
-  isToday?: boolean
-  isStartDate?: boolean
-  isEndDate?: boolean
-  isLastMonthDay?: boolean
-  isNextMonthDay?: boolean
+  cellRender?: TimeBucketCellRenderFun
 }
 
 export function isSpecifiedDays(days?: Days): days is SpecifiedDays {

@@ -7,7 +7,14 @@ import { map, isFunction, first, last } from 'lodash'
 import CalendarTHead from './CalendarTHead'
 import CalendarTBody from './CalendarTBody'
 import VirtualSlider from '../VirtualSlider'
-import { CalendarTableCommonProps, CalendarValue, WeekCode, SpecifiedDays, CalendarQuota } from '../interface'
+import {
+  CalendarTableCommonProps,
+  CalendarValue,
+  WeekCode,
+  SpecifiedDays,
+  CalendarQuota,
+  CalendarCellRenderFun,
+} from '../interface'
 import { gainMonthDays } from '../utils'
 import styles from '../styles'
 
@@ -24,6 +31,7 @@ export interface CalendarListProps {
   onChange: (value: CalendarValue) => void
   quotas?: CalendarQuota[]
   advance?: number | boolean
+  cellRender?: CalendarCellRenderFun
 }
 
 const CalendarList: React.FC<CalendarListProps> = (props) => {
@@ -40,6 +48,7 @@ const CalendarList: React.FC<CalendarListProps> = (props) => {
     endDay,
     quotas,
     advance,
+    cellRender,
   } = props
 
   const child = useMemo(
@@ -63,6 +72,7 @@ const CalendarList: React.FC<CalendarListProps> = (props) => {
           value,
           quotas,
           advance,
+          cellRender,
         }
 
         return <CalendarTBody key={key} {...tBodyProps} />
@@ -102,6 +112,7 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
     onChange,
     quotas,
     advance,
+    cellRender,
   } = props
   const [viewEl, width] = useResize()
   const { monthDays } = gainMonthDays(startDay, currentMonthIdx)
@@ -136,6 +147,7 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
                 prefixCls={prefixCls}
                 quotas={quotaList}
                 advance={advance}
+                cellRender={cellRender}
               />
             )}
           </VirtualSlider>

@@ -26,7 +26,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     return true
   }
 
-  const { prefixCls = 'rV', days, value, onChange, quotas, advance } = props
+  const { prefixCls = 'rV', days, value, onChange, quotas, advance, cellRender } = props
   const today = moment()
 
   let startDay: Moment | null | undefined
@@ -67,6 +67,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     toNext: toNextMonth,
     quotas,
     advance,
+    cellRender,
   }
 
   return (
