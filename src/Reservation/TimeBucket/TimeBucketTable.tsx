@@ -35,6 +35,7 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
     setCurrentWeekIdx,
     ranges,
     quotas,
+    advance,
   } = props
 
   const child = useMemo(
@@ -60,6 +61,7 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
           ranges,
           quotas,
           setCurrentWeekIdx,
+          advance,
         }
 
         return <TimeBucketTbody key={key} {...tBodyProps} />
@@ -77,6 +79,7 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
       endDay && endDay.format(),
       ranges,
       quotas,
+      advance,
     ]
   )
 

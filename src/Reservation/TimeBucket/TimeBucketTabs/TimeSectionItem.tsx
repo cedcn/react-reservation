@@ -4,7 +4,7 @@ import moment, { Moment } from 'moment'
 import React from 'react'
 import { isNil, find, get } from 'lodash'
 import ReservationCell from '../../ReservationCell'
-import { gainCellCls, gainDateTimeRange, TimeSection } from '../../utils'
+import { gainCellCls, gainDateTimeRange, TimeSection, isPastFun } from '../../utils'
 import CellStatus from './CellStatus'
 import styles from '../../styles/timeBucketTabs'
 import { TimeBucketQuota, TimeBucketValue } from '../../interface'
@@ -18,11 +18,12 @@ interface TimeSectionItemProps {
   prefixCls?: string
   onChange: (value: TimeBucketValue) => void
   isNotChecked: boolean
+  advance?: number | boolean
 }
 
 const MAX_SHOW_QUOTA = 99
 const TimeSectionItem: React.FC<TimeSectionItemProps> = (props) => {
-  const { section, quotas, startDay, endDay, value, prefixCls, onChange, isNotChecked } = props
+  const { section, quotas, startDay, endDay, value, prefixCls, onChange, isNotChecked, advance } = props
 
   const [startDateTime, endDateTime] = gainDateTimeRange(section.date, section.range)
   const currentQuota = find(
@@ -35,8 +36,8 @@ const TimeSectionItem: React.FC<TimeSectionItemProps> = (props) => {
   const remaining = get(currentQuota, 'remaining')
   const isMakefull = !isNil(remaining) && remaining <= 0
   const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
-
-  const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked
+  const isPast = isPastFun(startDateTime, advance)
+  const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked && !isPast
   const isDisabled = !isSelectable || isMakefull
   const isSelected = startDateTime.isSame(value?.[0], 'minute') && endDateTime.isSame(value?.[1], 'minute')
 

@@ -25,7 +25,7 @@ const gainTimeBucketQuotas = () => {
 ReactDOM.render(
   <div>
     <h2>Repeat </h2>
-    <ReservationCalendar />
+    <ReservationCalendar advance />
     <ReservationCalendar quotas={gainCalendarQuotas} />
     <h2>Repeat, set disabled weeks and set disabled days</h2>
     <ReservationCalendar days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }} />
@@ -42,6 +42,16 @@ ReactDOM.render(
         { start: [13, 30], end: [15, 30] },
         { start: [15, 30], end: [20, 30] },
       ]}
+    />
+    <h2>Time Bucket with quotas</h2>
+    <ReservationTimeBucket
+      ranges={[
+        { start: [10, 10], end: [11, 20] },
+        { start: [11, 30], end: [13, 30] },
+        { start: [17, 30], end: [20, 30] },
+        { start: [15, 30], end: [20, 30] },
+      ]}
+      advance
     />
     <h2>Time Bucket with quotas</h2>
     <ReservationTimeBucket
@@ -100,6 +110,7 @@ ReactDOM.render(
         { start: moment('2020-02-04 11:30'), end: moment('2020-02-04 13:30'), remaining: 0 },
         { start: moment('2020-02-06 13:30'), end: moment('2020-02-06 15:30'), remaining: 32 },
       ]}
+      advance
     />
   </div>,
   document.getElementById('root')

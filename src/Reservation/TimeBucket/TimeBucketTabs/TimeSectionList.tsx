@@ -26,6 +26,7 @@ const TimeSectionList: React.FC<TimeSectionListProps> = (props) => {
     endDay,
     ranges,
     quotas,
+    advance
   } = props
 
   const child = useMemo(
@@ -46,6 +47,7 @@ const TimeSectionList: React.FC<TimeSectionListProps> = (props) => {
                 endDay={endDay}
                 isNotChecked={isNotChecked}
                 value={value}
+                advance={advance}
                 prefixCls={prefixCls}
                 onChange={onChange}
               />

@@ -2,6 +2,7 @@ import moment, { Moment } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from './constants'
 import { TimeRange, SpecifiedDays, WeekCode, CellStatus } from './interface'
 import { isNil, map, isEmpty, findIndex, includes } from 'lodash'
+import { isNumber, isBoolean } from 'util'
 
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
 export const isSameMonth = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'month')
@@ -149,6 +150,28 @@ export const isNotCheckedFun = (
   }
 
   return isNotChecked
+}
+
+export const isPastFun = (day: Moment, advance?: number | boolean): boolean => {
+  if (isNil(advance)) {
+    return false
+  }
+
+  if (isBoolean(advance)) {
+    if (advance) {
+      return moment().isSameOrAfter(day, 'minute')
+    } else {
+      return false
+    }
+  }
+
+  if (isNumber(advance)) {
+    return moment()
+      .add(advance, 'minute')
+      .isSameOrAfter(day)
+  }
+
+  return false
 }
 
 export const gainCellCls = (baseCls: string, options?: CellStatus): string => {

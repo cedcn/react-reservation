@@ -11,6 +11,7 @@ import {
   gainCellCls,
   MonthDay,
   isNotCheckedFun,
+  isPastFun,
 } from '../utils'
 import { find, get, isNil } from 'lodash'
 import { CalendarValue, WeekCode, SpecifiedDays, CalendarQuota } from '../interface'
@@ -34,6 +35,7 @@ export interface CalendarTBodyProps {
   quotas?: CalendarQuota[]
   firstMonthDay: Moment
   monthDays: MonthDay[]
+  advance?: number | boolean
 }
 
 const MAX_SHOW_QUOTA = 99
@@ -52,6 +54,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     disabledDays,
     onChange,
     quotas,
+    advance,
   } = props
 
   const today = moment()
@@ -69,6 +72,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       const isToday = !!isSameDay(current, today)
       const isStartDate = !!isSameDay(current, startDay)
       const isEndDate = !!isSameDay(current, endDay)
+
       const isLastMonthDay = beforeCurrentMonthYear(current, firstMonthDay)
       const isNextMonthDay = afterCurrentMonthYear(current, firstMonthDay)
       const isBeforeStartDay = current.isBefore(startDay, 'days')
@@ -76,10 +80,11 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
 
       const currentQuota = find(quotas, (quota) => !!isSameDay(current, moment(quota.day)))
       const remaining = get(currentQuota, 'remaining')
-
       const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
+      const isPast = isPastFun(current, advance)
 
-      const isSelectable = !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked
+      const isSelectable =
+        !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked && !isPast
       const isMakefull = !isNil(remaining) && remaining <= 0
       const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
       const isDisabled = !isSelectable || isMakefull

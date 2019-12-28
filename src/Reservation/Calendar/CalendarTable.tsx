@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import { Moment } from 'moment'
 import useResize from '../useResize'
-import { map, isFunction, first, get, last } from 'lodash'
+import { map, isFunction, first, last } from 'lodash'
 import CalendarTHead from './CalendarTHead'
 import CalendarTBody from './CalendarTBody'
 import VirtualSlider from '../VirtualSlider'
@@ -23,6 +23,7 @@ export interface CalendarListProps {
   disabledDays?: Moment[]
   onChange: (value: CalendarValue) => void
   quotas?: CalendarQuota[]
+  advance?: number | boolean
 }
 
 const CalendarList: React.FC<CalendarListProps> = (props) => {
@@ -38,6 +39,7 @@ const CalendarList: React.FC<CalendarListProps> = (props) => {
     onChange,
     endDay,
     quotas,
+    advance,
   } = props
 
   const child = useMemo(
@@ -60,6 +62,7 @@ const CalendarList: React.FC<CalendarListProps> = (props) => {
           width,
           value,
           quotas,
+          advance,
         }
 
         return <CalendarTBody key={key} {...tBodyProps} />
@@ -75,6 +78,7 @@ const CalendarList: React.FC<CalendarListProps> = (props) => {
       disabledDays,
       specifiedDays,
       quotas,
+      advance,
     ]
   )
 
@@ -97,9 +101,11 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
     disabledDays,
     onChange,
     quotas,
+    advance,
   } = props
   const [viewEl, width] = useResize()
   const { monthDays } = gainMonthDays(startDay, currentMonthIdx)
+
   const startMonthDay = first(monthDays)?.date
   const endMonthDay = last(monthDays)?.date
   const quotaList = isFunction(quotas) ? startMonthDay && endMonthDay && quotas(startMonthDay, endMonthDay) : quotas
@@ -129,6 +135,7 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
                 width={width}
                 prefixCls={prefixCls}
                 quotas={quotaList}
+                advance={advance}
               />
             )}
           </VirtualSlider>

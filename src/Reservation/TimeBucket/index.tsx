@@ -28,7 +28,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     return true
   }
 
-  const { prefixCls = 'rT', days, value, onChange, ranges, mode = 'table', quotas } = props
+  const { prefixCls = 'rT', days, value, onChange, ranges, mode = 'table', quotas, advance } = props
   const today = moment()
 
   let startDay: Moment | null | undefined
@@ -77,6 +77,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     toLast: toLastWeek,
     toNext: toNextWeek,
     quotas: quotaList,
+    advance,
   }
 
   return (

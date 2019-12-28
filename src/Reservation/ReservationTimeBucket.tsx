@@ -17,10 +17,11 @@ export interface ReservationTimeBucketProps {
   ranges: TimeRange[]
   onChange?: (value: TimeBucketValue) => void
   quotas?: TimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => TimeBucketQuota[])
+  advance?: number | boolean
 }
 
 const ReservationTimeBucket: React.FC<ReservationTimeBucketProps> = (props) => {
-  const { theme = defaultTheme, prefixCls, days, ranges, mode, quotas } = props
+  const { theme = defaultTheme, prefixCls, days, ranges, mode, quotas, advance } = props
 
   const v = typeof props.value === 'undefined' ? props.defaultValue : props.value
   const [value, setValue] = useState<TimeBucketValue>(v)
@@ -43,6 +44,7 @@ const ReservationTimeBucket: React.FC<ReservationTimeBucketProps> = (props) => {
         ranges={ranges}
         mode={mode}
         quotas={quotas}
+        advance={advance}
       />
     </ThemeProvider>
   )

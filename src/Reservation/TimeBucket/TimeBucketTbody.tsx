@@ -5,7 +5,7 @@ import moment from 'moment'
 import { map } from 'lodash'
 import cx from 'classnames'
 import { find, get, isNil } from 'lodash'
-import { gainDateTimeRange, gainCellCls, WeekDay, formatTimeRange, isNotCheckedFun } from '../utils'
+import { gainDateTimeRange, gainCellCls, WeekDay, formatTimeRange, isNotCheckedFun, isPastFun } from '../utils'
 import TimeBucketCellStatus from './CellStatus'
 import ReservationCell from '../ReservationCell'
 import { TimeBucketTableProps } from './TimeBucketTable'
@@ -31,6 +31,7 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
     width,
     onChange,
     quotas,
+    advance,
   } = props
 
   return (
@@ -56,11 +57,12 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
               )
               const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
               const isAfterEndDayMinute = !!endDay && endDateTime.isAfter(endDay, 'minute')
-
+              
               const remaining = get(currentQuota, 'remaining')
               const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
+              const isPast = isPastFun(startDateTime, advance)
 
-              const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked
+              const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked && !isPast
               const isMakefull = !isNil(remaining) && remaining <= 0
               const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
               const isDisabled = !isSelectable || isMakefull
