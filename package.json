@@ -1,8 +1,22 @@
 {
   "name": "react-reservation",
   "version": "1.1.10-beta.5",
-  "description": "",
+  "description": "React Reservation",
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cedcn/react-reservation.git"
+  },
+  "homepage": "https://github.com/Cedcn/react-reservation",
+  "keywords": [
+    "reservation",
+    "calendar",
+    "time bucket",
+    "预约",
+    "在线预约",
+    "预约日历",
+    "时间段预约"
+  ],
   "module": "esm/index.js",
   "typings": "types",
   "scripts": {
