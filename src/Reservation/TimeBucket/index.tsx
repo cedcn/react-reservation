@@ -5,7 +5,7 @@ import moment, { Moment } from 'moment'
 import TimeBucketHeader from './TimeBucketHeader'
 import TimeBucketTable from './TimeBucketTable'
 import TimeBucketTabs from './TimeBucketTabs'
-import { map, first, last, get } from 'lodash'
+import { map, first, last, isFunction } from 'lodash'
 import { TimeBucket as TimeBucketType, isSpecifiedDays } from '../interface'
 import { WeekDay, gainWeekDays } from '../utils'
 import comss from '../styles'
@@ -53,8 +53,10 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
 
   const weekDays: WeekDay[] = gainWeekDays(startMonthDay, currentWeekIdx)
 
-  const startWeekDay = get(first(weekDays), 'date')
-  const endWeekDay = get(last(weekDays), 'date')
+  const startWeekDay = first(weekDays)?.date
+  const endWeekDay = last(weekDays)?.date
+
+  const quotaList = isFunction(quotas) ? startWeekDay && endWeekDay && quotas(startWeekDay, endWeekDay) : quotas
 
   canToLast = startMonthDay.isBefore(startWeekDay, 'week')
   canToNext = !endMonthDay || (endMonthDay && endMonthDay.isAfter(endWeekDay, 'week'))
@@ -74,7 +76,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     setCurrentWeekIdx,
     toLast: toLastWeek,
     toNext: toNextWeek,
-    quotas,
+    quotas: quotaList,
   }
 
   return (

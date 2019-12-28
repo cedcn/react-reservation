@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import { Moment } from 'moment'
 import useResize from '../useResize'
-import { map } from 'lodash'
+import { map, isFunction, first, get, last } from 'lodash'
 import CalendarTHead from './CalendarTHead'
 import CalendarTBody from './CalendarTBody'
 import VirtualSlider from '../VirtualSlider'
@@ -99,6 +99,11 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
     quotas,
   } = props
   const [viewEl, width] = useResize()
+  const { monthDays } = gainMonthDays(startDay, currentMonthIdx)
+  const startMonthDay = first(monthDays)?.date
+  const endMonthDay = last(monthDays)?.date
+  const quotaList = isFunction(quotas) ? startMonthDay && endMonthDay && quotas(startMonthDay, endMonthDay) : quotas
+
   return (
     <div className={`${prefixCls}-table`} css={styles.table}>
       <CalendarTHead prefixCls={prefixCls} value={value} />
@@ -123,7 +128,7 @@ const CalendarTable: React.FC<CalendarTableProps> = (props) => {
                 value={value}
                 width={width}
                 prefixCls={prefixCls}
-                quotas={quotas}
+                quotas={quotaList}
               />
             )}
           </VirtualSlider>

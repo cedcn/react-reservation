@@ -32,7 +32,6 @@ export interface CalendarTBodyProps {
   onChange: (value: CalendarValue) => void
   className?: string
   quotas?: CalendarQuota[]
-  isLoadingQuota?: boolean
   firstMonthDay: Moment
   monthDays: MonthDay[]
 }

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
+import { Moment } from 'moment'
 import React, { useState, useEffect } from 'react'
 import Calendar from './Calendar'
 import { isEqual } from 'lodash'
@@ -14,7 +15,7 @@ export interface ReservationCalendarProps {
   value?: CalendarValue
   onChange?: (value: CalendarValue) => void
   days?: Days
-  quotas?: CalendarQuota[]
+  quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
 }
 
 const ReservationCalendar: React.FC<ReservationCalendarProps> = (props) => {

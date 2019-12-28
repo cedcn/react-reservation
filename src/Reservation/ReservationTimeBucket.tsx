@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+import { Moment } from 'moment'
 import { ThemeProvider } from 'emotion-theming'
 import React, { useState, useEffect } from 'react'
 import TimeBucket from './TimeBucket'
@@ -15,7 +16,7 @@ export interface ReservationTimeBucketProps {
   days?: Days
   ranges: TimeRange[]
   onChange?: (value: TimeBucketValue) => void
-  quotas?: TimeBucketQuota[]
+  quotas?: TimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => TimeBucketQuota[])
 }
 
 const ReservationTimeBucket: React.FC<ReservationTimeBucketProps> = (props) => {

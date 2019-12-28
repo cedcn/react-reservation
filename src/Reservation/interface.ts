@@ -30,7 +30,7 @@ export interface Calendar {
   value?: CalendarValue
   onChange: (value: CalendarValue) => void
   days?: Days
-  quotas?: CalendarQuota[]
+  quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
 }
 
 export interface CalendarTableCommonProps {
@@ -45,7 +45,7 @@ export interface CalendarTableCommonProps {
   onChange: (value: CalendarValue) => void
   toNext: () => boolean
   toLast: () => boolean
-  quotas?: CalendarQuota[]
+  quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
 }
 
 //
@@ -69,7 +69,7 @@ export interface TimeBucket {
   days?: Days
   ranges: TimeRange[]
   mode?: 'tabs' | 'table'
-  quotas?: TimeBucketQuota[]
+  quotas?: TimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => TimeBucketQuota[])
 }
 
 export interface TimeBucketTableCommonProps {
