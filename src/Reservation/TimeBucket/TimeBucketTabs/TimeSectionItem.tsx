@@ -17,11 +17,12 @@ interface TimeSectionItemProps {
   value?: TimeBucketValue
   prefixCls?: string
   onChange: (value: TimeBucketValue) => void
+  isNotChecked: boolean
 }
 
 const MAX_SHOW_QUOTA = 99
 const TimeSectionItem: React.FC<TimeSectionItemProps> = (props) => {
-  const { section, quotas, startDay, endDay, value, prefixCls, onChange } = props
+  const { section, quotas, startDay, endDay, value, prefixCls, onChange, isNotChecked } = props
 
   const [startDateTime, endDateTime] = gainDateTimeRange(section.date, section.range)
   const currentQuota = find(
@@ -35,7 +36,7 @@ const TimeSectionItem: React.FC<TimeSectionItemProps> = (props) => {
   const isMakefull = !isNil(remaining) && remaining <= 0
   const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
 
-  const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute
+  const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked
   const isDisabled = !isSelectable || isMakefull
   const isSelected = startDateTime.isSame(value?.[0], 'minute') && endDateTime.isSame(value?.[1], 'minute')
 
@@ -60,7 +61,7 @@ const TimeSectionItem: React.FC<TimeSectionItemProps> = (props) => {
           : onChange.bind(null, [startDateTime, endDateTime])
       }
     >
-      <ReservationCell className={`${prefixCls}-cell`} status={status}>
+      <ReservationCell className={`${prefixCls}-cell`} status={status} height={50}>
         <CellStatus
           isSelectable={isSelectable}
           isSelected={isSelected}

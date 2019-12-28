@@ -21,7 +21,6 @@ const weekTab = ({
   ${isDisabled &&
     css`
       opacity: 0.5;
-      cursor: no-drop;
     `}
 
   ${isActive &&

@@ -8,13 +8,14 @@ interface ReservationCellProps {
   className?: string
   status: CellStatus
   remaining?: number
+  height?: number
 }
 
 const ReservationCell: React.FC<ReservationCellProps> = (props) => {
-  const { children, className, status } = props
+  const { children, className, status, height } = props
 
   return (
-    <div className={className} css={(theme) => styles.cell(theme, status)}>
+    <div className={className} css={(theme) => styles.cell(theme, status, height)}>
       {children}
     </div>
   )

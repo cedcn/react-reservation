@@ -56,10 +56,6 @@ const WeekList: React.FC<WeekListProps> = (props) => {
               return (
                 <div
                   onClick={() => {
-                    if (isDisabled) {
-                      return
-                    }
-
                     setCurrentDayIdx(currentWeekIdx * 7 + weekDay.date.day())
                   }}
                   key={weekDay.date.format()}
@@ -84,4 +80,4 @@ const WeekList: React.FC<WeekListProps> = (props) => {
   return <React.Fragment>{child}</React.Fragment>
 }
 
-export default React.memo(WeekList) 
+export default React.memo(WeekList)

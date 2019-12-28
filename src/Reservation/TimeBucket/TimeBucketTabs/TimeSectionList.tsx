@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import { map } from 'lodash'
-import { gainTimeSections } from '../../utils'
+import { gainTimeSections, isNotCheckedFun } from '../../utils'
 import TimeSectionItem from './TimeSectionItem'
 import styles from '../../styles/timeBucketTabs'
 import { TimeBucketTabsProps } from './'
@@ -32,7 +32,8 @@ const TimeSectionList: React.FC<TimeSectionListProps> = (props) => {
     () =>
       map(displayIdxs, (idx) => {
         const timeSections = gainTimeSections(startDay, idx, ranges)
-        const key = timeSections[0].date.format()
+        const key = timeSections[0].date.format('YYYY-MM-DD')
+        const isNotChecked = isNotCheckedFun(timeSections[0].date, { specifiedDays, disabledWeeks, disabledDays })
 
         return (
           <div className={`${prefixCls}-time-section-list`} css={styles.timeSectionList} style={{ width }} key={key}>
@@ -43,6 +44,7 @@ const TimeSectionList: React.FC<TimeSectionListProps> = (props) => {
                 quotas={quotas}
                 startDay={startDay}
                 endDay={endDay}
+                isNotChecked={isNotChecked}
                 value={value}
                 prefixCls={prefixCls}
                 onChange={onChange}

@@ -62,7 +62,9 @@ ReactDOM.render(
     />
     <h2>Time Bucket list with quotas</h2>
     <ReservationTimeBucket
-      days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03'), disabledDays: [moment('2020-02-07')] }}
+      days={{
+        endDay: moment('2020-05-03'),
+      }}
       ranges={[
         { start: [10, 10], end: [11, 20] },
         { start: [11, 30], end: [13, 30] },

@@ -61,7 +61,7 @@ const VirtualSlider: React.FC<VirtualSliderProps> = (props) => {
     swipeLeft: null,
     animating: false,
     position: -width,
-    transition: undefined,
+    transition: 'none',
   })
 
   const prevIdx = usePrevious(idx)
@@ -132,7 +132,7 @@ const VirtualSlider: React.FC<VirtualSliderProps> = (props) => {
 
       if (diff >= SPEED) {
         setDisplayIdxs(gainDislayIdxs(idx))
-        setSliderState({ position: -width, transition: undefined, animating: false })
+        setSliderState({ position: -width, transition: 'none', animating: false })
         window.cancelAnimationFrame(requestID)
       }
     }
@@ -158,14 +158,14 @@ const VirtualSlider: React.FC<VirtualSliderProps> = (props) => {
   }, [idx, width])
 
   useEffect(() => {
-    setSliderState({ position: -width, transition: undefined, animating: false })
+    setSliderState({ position: -width, transition: 'none', animating: false })
   }, [width])
 
   const style = {
     transform: `translate3d(${sliderState.position + Number(sliderState.swipeLeft)}px, 0px, 0px)`,
     WebkitTransform: `-webkit-translate3d(${sliderState.position + Number(sliderState.swipeLeft)}px, 0px, 0px)`,
-    transition: isNil(sliderState.swipeLeft) ? sliderState.transition : undefined,
-    WebkitTransition: isNil(sliderState.swipeLeft) ? sliderState.transition : undefined,
+    transition: isNil(sliderState.swipeLeft) ? sliderState.transition : 'none',
+    WebkitTransition: isNil(sliderState.swipeLeft) ? sliderState.transition : 'none',
   }
 
   return (

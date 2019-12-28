@@ -83,7 +83,7 @@ const thead = css`
   padding: 0 6px;
 `
 
-const cell = (theme: Theme, status: CellStatus) => {
+const cell = (theme: Theme, status: CellStatus, height?: number) => {
   let cellCss = mixins.lineGrayCell
 
   if (status.isBeforeStartDay || status.isAfterEndDay) {
@@ -111,8 +111,8 @@ const cell = (theme: Theme, status: CellStatus) => {
   }
 
   return css`
-    ${cellCss}
-    height: 45px;
+    ${cellCss};
+    height: ${height || 45}px;
     display: flex;
     justify-content: center;
     align-items: center;
