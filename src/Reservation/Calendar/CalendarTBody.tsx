@@ -150,7 +150,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       className={cx(`${prefixCls}-tbody`, className)}
       css={styles.tbody}
       style={{ width }}
-      title={firstMonthDay.format('YYYY年MM月')}
+      title={firstMonthDay.format('YYYY-MM')}
     >
       {tableHtml}
     </div>

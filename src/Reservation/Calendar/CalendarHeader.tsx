@@ -16,7 +16,7 @@ interface CalendarHeaderProps {
 const CalendarHeader: React.FC<CalendarHeaderProps> = (props) => {
   const monthYearElement = () => {
     const { currentDay } = props
-    return <span>{currentDay.format('YYYY年MM月')}</span>
+    return <span>{currentDay.format('YYYY-MM')}</span>
   }
 
   const { prefixCls, toLast, toNext, canToLast, canToNext } = props
@@ -27,10 +27,10 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = (props) => {
         <a
           className={`${prefixCls}-header__arrow ${prefixCls}-header__prev-arrow`}
           onClick={() => toLast()}
-          title="上一月"
+          title="Prev"
           css={(theme) => [styles.headerArrow(), styles.headerPrevArrow()]}
         >
-          上一月
+          Prev
         </a>
       )}
       <div className={`${prefixCls}-header__label`} css={styles.headerLabel}>
@@ -40,10 +40,10 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = (props) => {
         <a
           className={`${prefixCls}-header__arrow ${prefixCls}-header__next-arrow`}
           onClick={() => toNext()}
-          title="下一月"
+          title="next"
           css={(theme) => [styles.headerArrow(), styles.headerNextArrow()]}
         >
-          下一月
+          Next
         </a>
       )}
     </div>

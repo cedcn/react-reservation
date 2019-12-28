@@ -23,10 +23,10 @@ const TimeBucketHeader: React.FC<TimeBucketHeaderProps> = (props) => {
         <a
           className={`${prefixCls}-header__arrow ${prefixCls}-header__prev-arrow`}
           onClick={() => toLast()}
-          title="上一周"
+          title="Prev"
           css={(theme) => [comss.headerArrow(), comss.headerPrevArrow()]}
         >
-          上一周
+          Prev
         </a>
       )}
       <div className={`${prefixCls}-header__label`} css={comss.headerLabel}>
@@ -36,10 +36,10 @@ const TimeBucketHeader: React.FC<TimeBucketHeaderProps> = (props) => {
         <a
           className={`${prefixCls}-header__arrow ${prefixCls}-header__next-arrow`}
           onClick={() => toNext()}
-          title="下一周"
+          title="Next"
           css={(theme) => [comss.headerArrow(), comss.headerNextArrow()]}
         >
-          下一周
+          Next
         </a>
       )}
     </div>

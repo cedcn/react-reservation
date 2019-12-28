@@ -4,7 +4,9 @@ import moment from 'moment'
 import ReservationCalendar, { ReservationTimeBucket } from './Reservation'
 import 'normalize.css'
 import './index.css'
+// import 'moment/locale/zh-cn';
 
+// moment.locale('zh-cn')
 const gainCalendarQuotas = () => {
   return [
     { day: moment().add(1, 'day'), remaining: 1 },

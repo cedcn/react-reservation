@@ -115,7 +115,6 @@ const TimeBucketTable: React.FC<TimeBucketTableProps> = (props) => {
             className={cx(`${prefixCls}-th`, `${prefixCls}-column`)}
             css={[comss.th, styles.column]}
           >
-            <span>时段/日期</span>
           </div>
           {weekDaysEls}
         </div>
