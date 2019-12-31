@@ -4,7 +4,7 @@ import moment from 'moment'
 import ReservationCalendar, { ReservationTimeBucket } from './Reservation'
 import 'normalize.css'
 import './index.css'
-// import 'moment/locale/zh-cn';
+import 'moment/locale/zh-cn'
 
 // moment.locale('zh-cn')
 const gainCalendarQuotas = () => {
@@ -27,7 +27,7 @@ const gainTimeBucketQuotas = () => {
 ReactDOM.render(
   <div>
     <h2>Repeat </h2>
-    <ReservationCalendar cellRender={() => <div>123</div>} />
+    {/* <ReservationCalendar cellRender={() => <div>123</div>} />
     <ReservationCalendar advance />
     <ReservationCalendar quotas={gainCalendarQuotas} />
     <h2>Repeat, set disabled weeks and set disabled days</h2>
@@ -36,18 +36,21 @@ ReactDOM.render(
     <ReservationCalendar days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }} />
     <h2>Specified days</h2>
     <ReservationCalendar days={[moment('2020-04-03'), moment('2020-02-04')]} />
-    <h2>Time Bucket</h2>
+    <h2>Time Bucket</h2> */}
     <ReservationTimeBucket
-      days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
+      days={{ startDay: moment('2020-01-05'), endDay: moment('2020-05-03') }}
       ranges={[
-        { start: [10, 10], end: [11, 20] },
-        { start: [11, 30], end: [13, 30] },
-        { start: [13, 30], end: [15, 30] },
-        { start: [15, 30], end: [20, 30] },
+        { start: [10, 0], end: [11, 0] },
+        { start: [11, 0], end: [12, 0] },
+        { start: [12, 0], end: [13, 0] },
+        { start: [13, 0], end: [14, 0] },
+        { start: [14, 0], end: [15, 0] },
+        { start: [15, 0], end: [16, 0] },
+        { start: [16, 0], end: [17, 0] },
       ]}
-      cellRender={() => <div>456</div>}
+      mode="tabs"
     />
-    <ReservationTimeBucket
+    {/* <ReservationTimeBucket
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
       ranges={[
         { start: [10, 10], end: [11, 20] },
@@ -134,7 +137,7 @@ ReactDOM.render(
         { start: moment('2020-02-06 13:30'), end: moment('2020-02-06 15:30'), remaining: 32 },
       ]}
       advance
-    />
+    /> */}
   </div>,
   document.getElementById('root')
 )

@@ -4,7 +4,7 @@ import React, { useMemo } from 'react'
 import { map } from 'lodash'
 import moment from 'moment'
 import cx from 'classnames'
-import { gainWeekDays, gainCurrentDay, isSameDay, isNotCheckedFun } from '../../utils'
+import { gainWeekDays, gainDayByDayIdx, isSameDay, isNotCheckedFun, gainDayIdxByDay } from '../../utils'
 import styles from '../../styles/timeBucketTabs'
 import { TimeBucketTabsProps } from './'
 
@@ -26,7 +26,6 @@ const WeekList: React.FC<WeekListProps> = (props) => {
     specifiedDays,
     disabledDays,
     currentDayIdx,
-    currentWeekIdx,
     setCurrentDayIdx,
   } = props
 
@@ -34,7 +33,7 @@ const WeekList: React.FC<WeekListProps> = (props) => {
     () =>
       map(displayIdxs, (idx) => {
         const weekDaysItem = gainWeekDays(startDay, idx)
-        const currentDay = gainCurrentDay(startDay, currentDayIdx)
+        const currentDay = gainDayByDayIdx(startDay, currentDayIdx)
 
         const key = weekDaysItem[0].date.format()
 
@@ -56,7 +55,7 @@ const WeekList: React.FC<WeekListProps> = (props) => {
               return (
                 <div
                   onClick={() => {
-                    setCurrentDayIdx(currentWeekIdx * 7 + weekDay.date.day())
+                    setCurrentDayIdx(gainDayIdxByDay(startDay, weekDay.date))
                   }}
                   key={weekDay.date.format()}
                   className={cx(`${prefixCls}-week-tab`, {

@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from './constants'
 import { TimeRange, SpecifiedDays, WeekCode, CellStatus } from './interface'
-import { isNil, map, isEmpty, findIndex, includes } from 'lodash'
+import { isNil, map, isEmpty, findIndex, includes, floor } from 'lodash'
 import { isNumber, isBoolean } from 'util'
 
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
@@ -35,21 +35,33 @@ export const gainWeekDays = (startDay: Moment, weekIdx: number): WeekDay[] => {
   const weekDays: WeekDay[] = []
   const firstDayOfWeek = localeData.firstDayOfWeek()
 
-  for (let dateColIndex = 0; dateColIndex < DATE_COL_COUNT; dateColIndex++) {
-    const index = (firstDayOfWeek + dateColIndex) % (DATE_COL_COUNT + 1)
+  const startDayCode = startDay.day()
+  const d = startDayCode === 0 && firstDayOfWeek >= 1 ? -7 : 0
+
+  for (let dateColIndex = 0; dateColIndex < 7; dateColIndex++) {
     const now = startDay.clone()
-    now.day(index + weekIdx * 7)
+    now.day(dateColIndex + firstDayOfWeek + d + weekIdx * 7)
     weekDays[dateColIndex] = { week: localeData.weekdaysShort(now), date: now.clone().startOf('day') }
   }
 
   return weekDays
 }
 
-export const gainCurrentDay = (startDay: Moment, dayIdx: number) => {
-  const now = startDay.clone()
-  now.day(dayIdx)
+export const gainDayByDayIdx = (startDay: Moment, dayIdx: number) => {
+  return startDay.clone().add(dayIdx, 'days')
+}
 
-  return now
+export const gainWeekIdxByDayIdx = (startDay: Moment, dayIdx: number) => {
+  const localeData = startDay.localeData()
+  const firstDayOfWeek = localeData.firstDayOfWeek()
+  const startDayCode = startDay.day()
+  const d = startDayCode === 0 && firstDayOfWeek >= 1 ? -7 : 0
+
+  return floor((dayIdx + startDayCode - d - firstDayOfWeek) / 7)
+}
+
+export const gainDayIdxByDay = (startDay: Moment, day: Moment) => {
+  return day.diff(startDay, 'days')
 }
 
 export interface TimeSection {
@@ -57,7 +69,7 @@ export interface TimeSection {
   date: Moment
 }
 export const gainTimeSections = (startDay: Moment, dayIdx: number, ranges: TimeRange[]): TimeSection[] => {
-  const now = gainCurrentDay(startDay, dayIdx)
+  const now = gainDayByDayIdx(startDay, dayIdx)
 
   return map(ranges, (range) => ({ range, date: now }))
 }

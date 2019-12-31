@@ -48,26 +48,25 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     disabledDays = days?.disabledDays
   }
 
-  const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay : today
-  const endMonthDay = endDay ? endDay.endOf('day') : undefined
+  if (!startDay || (startDay && startDay.isBefore(today, 'minute'))) {
+    startDay = today
+  }
 
-  const weekDays: WeekDay[] = gainWeekDays(startMonthDay, currentWeekIdx)
-
+  const weekDays: WeekDay[] = gainWeekDays(startDay, currentWeekIdx)
   const startWeekDay = first(weekDays)?.date
   const endWeekDay = last(weekDays)?.date
-
   const quotaList = isFunction(quotas) ? startWeekDay && endWeekDay && quotas(startWeekDay, endWeekDay) : quotas
 
-  canToLast = startMonthDay.isBefore(startWeekDay, 'week')
-  canToNext = !endMonthDay || (endMonthDay && endMonthDay.isAfter(endWeekDay, 'week'))
+  canToLast = startDay.isBefore(startWeekDay, 'week')
+  canToNext = !endDay || (endDay && endDay.isAfter(endWeekDay, 'week'))
 
   const commonProps = {
     prefixCls,
     currentWeekIdx,
     weekDays,
     ranges,
-    startDay: startMonthDay,
-    endDay: endMonthDay,
+    startDay,
+    endDay,
     disabledWeeks,
     disabledDays,
     specifiedDays,

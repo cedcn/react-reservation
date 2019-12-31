@@ -1,53 +1,31 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
-import { floor, find } from 'lodash'
 import useResize from '../../useResize'
 import VirtualSlider from '../../VirtualSlider'
 import { TimeBucketTableCommonProps, TimeBucketValue } from '../../interface'
-import { isNotCheckedFun, gainCurrentDay } from '../../utils'
+import { gainDayByDayIdx, gainWeekIdxByDayIdx } from '../../utils'
 import TimeSectionList from './TimeSectionList'
 import WeekList from './WeekList'
 import styles from '../../styles'
 
 export type TimeBucketTabsProps = TimeBucketTableCommonProps
 const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
-  const {
-    prefixCls,
-    toNext,
-    toLast,
-    currentWeekIdx,
-    startDay,
-    endDay,
-    disabledWeeks,
-    specifiedDays,
-    disabledDays,
-    setCurrentWeekIdx,
-    onChange,
-    weekDays,
-  } = props
+  const { prefixCls, toNext, toLast, currentWeekIdx, startDay, endDay, setCurrentWeekIdx, onChange } = props
 
   const [viewEl, width] = useResize()
   let canToNextDay = true
   let canToLastDay = true
-  const defaultActiveWeekDay = find(weekDays, (weekDay) => {
-    if (weekDay.date.isBefore(startDay, 'day')) {
-      return false
-    }
 
-    const isNotChecked = isNotCheckedFun(weekDay.date, { specifiedDays, disabledWeeks, disabledDays })
-    return !isNotChecked
-  })
-
-  const [currentDayIdx, setCurrentDayIdx] = useState(defaultActiveWeekDay ? defaultActiveWeekDay.date.day() : 0)
-  const currentDay = gainCurrentDay(startDay, currentDayIdx)
+  const [currentDayIdx, setCurrentDayIdx] = useState(0)
+  const currentDay = gainDayByDayIdx(startDay, currentDayIdx)
 
   const toNextDay = (): boolean => {
     if (!canToNextDay) return false
 
     const targetCurrentDayIdx = currentDayIdx + 1
     setCurrentDayIdx(targetCurrentDayIdx)
-    setCurrentWeekIdx(floor(targetCurrentDayIdx / 7))
+    setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, targetCurrentDayIdx))
     return true
   }
 
@@ -56,7 +34,7 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
 
     const targetCurrentDayIdx = currentDayIdx - 1
     setCurrentDayIdx(targetCurrentDayIdx)
-    setCurrentWeekIdx(floor(targetCurrentDayIdx / 7))
+    setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, targetCurrentDayIdx))
     return true
   }
   canToLastDay = startDay.isBefore(currentDay, 'day')
@@ -98,7 +76,7 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
               width={width}
               displayIdxs={displayIdxs}
               onChange={(value: TimeBucketValue) => {
-                setCurrentWeekIdx(floor(currentDayIdx / 7))
+                setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, currentDayIdx))
                 onChange(value)
               }}
             />
