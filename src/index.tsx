@@ -38,7 +38,7 @@ ReactDOM.render(
     <ReservationCalendar days={[moment('2020-04-03'), moment('2020-02-04')]} />
     <h2>Time Bucket</h2> */}
     <ReservationTimeBucket
-      days={{ startDay: moment('2020-01-05'), endDay: moment('2020-05-03') }}
+      days={{ startDay: moment('2020-01-05'), endDay: moment('2020-02-03 16: 00') }}
       ranges={[
         { start: [10, 0], end: [11, 0] },
         { start: [11, 0], end: [12, 0] },

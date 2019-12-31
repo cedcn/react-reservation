@@ -61,7 +61,7 @@ export const gainWeekIdxByDayIdx = (startDay: Moment, dayIdx: number) => {
 }
 
 export const gainDayIdxByDay = (startDay: Moment, day: Moment) => {
-  return day.diff(startDay, 'days')
+  return day.diff(startDay.startOf('days'), 'days')
 }
 
 export interface TimeSection {
@@ -140,9 +140,16 @@ export const gainDateTimeRange = (current: Moment, timeRange: TimeRange): [Momen
 }
 
 export const formatTimeRange = (timeRange: TimeRange): string => {
+  const now = moment()
   const { start: startTime, end: endTime } = timeRange
 
-  return `${startTime[0]}:${startTime[1]}-${endTime[0]}:${endTime[1]}`
+  return `${now
+    .hour(startTime[0])
+    .minute(startTime[1])
+    .format('HH:mm')}-${now
+    .hour(endTime[0])
+    .minute(endTime[1])
+    .format('HH:mm')}`
 }
 
 export const isNotCheckedFun = (

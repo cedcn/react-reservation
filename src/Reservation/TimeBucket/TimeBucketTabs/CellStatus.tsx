@@ -50,6 +50,7 @@ const CellStatus: React.FC<CellStatusProps> = (props) => {
 
   return (
     <div className="reservation-cell__status" css={styles.cellStatus}>
+      {/* <div>{timeSection.date.format('MM-DD')}</div> */}
       {formatTimeRange(timeSection.range)}
       <div css={styles.cellStatusContent}>{content}</div>
     </div>
