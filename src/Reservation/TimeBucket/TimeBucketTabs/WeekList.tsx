@@ -27,6 +27,10 @@ const WeekList: React.FC<WeekListProps> = (props) => {
     disabledDays,
     currentDayIdx,
     setCurrentDayIdx,
+    value,
+    ranges,
+    quotas,
+    advance,
   } = props
 
   const child = useMemo(
@@ -73,7 +77,24 @@ const WeekList: React.FC<WeekListProps> = (props) => {
           </div>
         )
       }),
-    [displayIdxs, width, currentDayIdx, setCurrentDayIdx]
+    [
+      prefixCls,
+      displayIdxs,
+      width,
+      value?.[0]?.format(),
+      value?.[1]?.format(),
+      disabledDays,
+      specifiedDays,
+      disabledWeeks,
+      startDay.format(),
+      endDay && endDay.format(),
+      ranges,
+      quotas,
+      advance,
+      moment.locale(),
+      currentDayIdx,
+      setCurrentDayIdx,
+    ]
   )
 
   return <React.Fragment>{child}</React.Fragment>

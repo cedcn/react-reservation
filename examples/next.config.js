@@ -1,6 +1,7 @@
 const debug = process.env.NODE_ENV !== 'production'
+const withCSS = require('@zeit/next-css')
 
-module.exports = {
+const config = {
   exportPathMap: function() {
     return {
       '/': { page: '/' },
@@ -11,3 +12,5 @@ module.exports = {
     linkPrefix: !debug ? '/react-reservation' : '',
   },
 }
+
+module.exports = withCSS(config)

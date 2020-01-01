@@ -35,24 +35,24 @@ const VirtualSlider: React.FC<VirtualSliderProps> = (props) => {
   const [scrolling, setScrolling] = useState<boolean>(false)
   let clickable = true
 
-  useEffect(() => {
-    let scrollingTimeout: any
+  // useEffect(() => {
+  //   let scrollingTimeout: any
 
-    const handleScrollEnd = () => {
-      setScrolling(false)
-    }
+  //   const handleScrollEnd = () => {
+  //     setScrolling(false)
+  //   }
 
-    const handleScroll = () => {
-      setScrolling(true)
-      clearTimeout(scrollingTimeout)
-      scrollingTimeout = setTimeout(() => handleScrollEnd(), 150)
-    }
+  //   const handleScroll = () => {
+  //     setScrolling(true)
+  //     clearTimeout(scrollingTimeout)
+  //     scrollingTimeout = setTimeout(() => handleScrollEnd(), 150)
+  //   }
 
-    window.document.addEventListener('scroll', handleScroll, false)
-    return () => {
-      window.document.removeEventListener('scroll', handleScroll, false)
-    }
-  }, [0])
+  //   window.document.addEventListener('scroll', handleScroll, false)
+  //   return () => {
+  //     window.document.removeEventListener('scroll', handleScroll, false)
+  //   }
+  // }, [0])
 
   const [sliderState, setSliderState] = useMergeState<SliderState>({
     dragging: false,

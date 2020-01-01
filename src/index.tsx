@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 import ReservationCalendar, { ReservationTimeBucket } from './Reservation'
@@ -24,9 +24,39 @@ const gainTimeBucketQuotas = () => {
   ]
 }
 
+const Com: React.FC<any> = () => {
+  const [locale, setLocale] = useState('zh-cn')
+
+  const onLocaleChange = (locale: string) => {
+    setLocale(locale)
+  }
+  moment.locale(locale)
+
+  return (
+    <div>
+      <button onClick={() => onLocaleChange('en')}>英文</button>
+      <button onClick={() => onLocaleChange('zh-cn')}>中文</button>
+      <ReservationTimeBucket
+        days={{ startDay: moment('2020-01-05'), endDay: moment('2020-02-03 16: 00') }}
+        ranges={[
+          { start: [10, 0], end: [11, 0] },
+          { start: [11, 0], end: [12, 0] },
+          { start: [12, 0], end: [13, 0] },
+          { start: [13, 0], end: [14, 0] },
+          { start: [14, 0], end: [15, 0] },
+          { start: [15, 0], end: [16, 0] },
+          { start: [16, 0], end: [17, 0] },
+        ]}
+        mode="tabs"
+      />
+    </div>
+  )
+}
+
 ReactDOM.render(
   <div>
     <h2>Repeat </h2>
+    <Com />
     {/* <ReservationCalendar cellRender={() => <div>123</div>} />
     <ReservationCalendar advance />
     <ReservationCalendar quotas={gainCalendarQuotas} />
@@ -37,19 +67,7 @@ ReactDOM.render(
     <h2>Specified days</h2>
     <ReservationCalendar days={[moment('2020-04-03'), moment('2020-02-04')]} />
     <h2>Time Bucket</h2> */}
-    <ReservationTimeBucket
-      days={{ startDay: moment('2020-01-05'), endDay: moment('2020-02-03 16: 00') }}
-      ranges={[
-        { start: [10, 0], end: [11, 0] },
-        { start: [11, 0], end: [12, 0] },
-        { start: [12, 0], end: [13, 0] },
-        { start: [13, 0], end: [14, 0] },
-        { start: [14, 0], end: [15, 0] },
-        { start: [15, 0], end: [16, 0] },
-        { start: [16, 0], end: [17, 0] },
-      ]}
-      mode="tabs"
-    />
+
     {/* <ReservationTimeBucket
       days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }}
       ranges={[

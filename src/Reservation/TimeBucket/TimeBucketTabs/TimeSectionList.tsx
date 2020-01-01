@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
+import moment from 'moment'
 import { map } from 'lodash'
 import { gainTimeSections, isNotCheckedFun } from '../../utils'
 import TimeSectionItem from './TimeSectionItem'
@@ -58,17 +59,20 @@ const TimeSectionList: React.FC<TimeSectionListProps> = (props) => {
         )
       }),
     [
+      prefixCls,
       displayIdxs,
       width,
-      prefixCls,
-      startDay.format(),
-      disabledWeeks,
-      disabledDays,
-      specifiedDays,
       value?.[0]?.format(),
       value?.[1]?.format(),
+      disabledDays,
+      specifiedDays,
+      disabledWeeks,
+      startDay.format(),
+      endDay && endDay.format(),
       ranges,
       quotas,
+      advance,
+      moment.locale(),
     ]
   )
 

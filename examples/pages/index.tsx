@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
+import { Radio } from 'antd'
 import ReservationCalendar, { ReservationTimeBucket } from 'react-reservation'
 import Head from 'next/head'
 import { NextPage } from 'next'
+import 'antd/dist/antd.css'
 import 'moment/locale/zh-cn'
 
-moment.locale('zh-cn')
 const gainCalendarQuotas = () => {
   return [
     { day: moment().add(1, 'day'), remaining: 1 },
@@ -24,6 +25,13 @@ const gainTimeBucketQuotas = () => {
 }
 
 const IndexPage: NextPage = () => {
+  const [locale, setLocale] = useState('zh-cn')
+
+  const onLocaleChange = (e: any) => {
+    setLocale(e.target.value)
+  }
+
+  moment.locale(locale)
   return (
     <div>
       <Head>
@@ -45,6 +53,13 @@ const IndexPage: NextPage = () => {
           }
         `}</style>
         <div className="container">
+          <br />
+          <div>
+            <Radio.Group onChange={onLocaleChange} defaultValue={locale}>
+              <Radio.Button value="zh-cn">中文</Radio.Button>
+              <Radio.Button value="en">英文</Radio.Button>
+            </Radio.Group>
+          </div>
           <h1>Reservation</h1>
           <div>
             <h2>Repeat </h2>

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
-import { Moment } from 'moment'
+import moment, { Moment } from 'moment'
 import useResize from '../useResize'
 import { map, isFunction, first, last } from 'lodash'
 import CalendarTHead from './CalendarTHead'
@@ -89,6 +89,7 @@ const CalendarList: React.FC<CalendarListProps> = (props) => {
       specifiedDays,
       quotas,
       advance,
+      moment.locale(),
     ]
   )
 

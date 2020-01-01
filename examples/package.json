@@ -9,12 +9,12 @@
     "deploy": "rm -rf ./out && next build && next export && touch out/.nojekyll && gh-pages -t -d out"
   },
   "dependencies": {
+    "antd": "^3.26.5",
     "lodash": "^4.17.15",
     "next": "latest",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-reservation": "1.1.10-beta.5",
-    "react-select": "^3.0.4"
+    "react-reservation": "1.1.10-beta.6"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.137",
@@ -22,6 +22,7 @@
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/react-select": "^3.0.2",
+    "@zeit/next-css": "^1.0.1",
     "babel-plugin-transform-define": "^2.0.0",
     "gh-pages": "^2.1.1",
     "typescript": "^3.7.2"
