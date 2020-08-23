@@ -18,16 +18,18 @@ const notInMonthCell = css`
   opacity: 0.5;
 `
 
-const selectedCell = css`
-  background-color: #ff6e6e;
-  font-weight: 500;
-  color: #fff;
-`
-
 const selectableCell = css`
   background-color: #ccf2da;
   font-weight: 500;
   color: #05510e;
+  cursor: pointer;
+`
+
+const selectedCell = css`
+  ${selectableCell}
+  background-color: #ff6e6e;
+  font-weight: 500;
+  color: #fff;
 `
 
 const barelyCell = css`
