@@ -7,7 +7,7 @@ import { map } from 'lodash'
 import CalendarHeader from '../CalendarHeader'
 import CalendarPanel from '../CalendarPanel'
 import { Days, isSpecifiedDays } from '../../interface'
-import { getDateByArea, today } from '../../utils'
+import { getDateByArea, today, Offset } from '../../utils'
 import { CellRendererProps } from '../CalendarCell'
 
 // calendar
@@ -27,8 +27,8 @@ export interface CalendarProps {
   isMultiple?: boolean
   toggleOff?: boolean
   days?: Days
-  advance?: number | boolean
-  area?: any
+  advance?: Offset | boolean
+  area?: Offset
   quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota>
   cellRenderer?: React.ComponentType<CellRendererProps>
   isMinShort?: boolean

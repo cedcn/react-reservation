@@ -4,6 +4,7 @@ import { ThemeProvider } from 'emotion-theming'
 import { Moment } from 'moment'
 import React, { useState, useEffect } from 'react'
 import ByDay from './ByDay'
+import { Offset } from './utils'
 import { isEqual } from 'lodash'
 import { Theme, Days, CalendarQuota } from './interface'
 
@@ -18,7 +19,7 @@ export interface ReservationByDayProps {
   onChange?: (value?: Value) => void
   days?: Days
   quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
-  advance?: number | boolean
+  advance?: Offset | boolean
   isMultiple?: boolean
 }
 

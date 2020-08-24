@@ -5,8 +5,8 @@ import moment, { Moment } from 'moment'
 import TimeBucketTable from './TimeBucketTable'
 import TimeBucketTabs from './TimeBucketTabs'
 import { map } from 'lodash'
-import { isSpecifiedDays, Days, TimeBucketValue } from '../interface'
-import { today } from '../utils'
+import { isSpecifiedDays, Days, TimeBucketValue, TimeSection } from '../interface'
+import { today, Offset } from '../utils'
 import comss from '../styles'
 
 interface TimeBucketProps {
@@ -15,8 +15,8 @@ interface TimeBucketProps {
   value?: TimeBucketValue
   onChange: (value?: TimeBucketValue) => void
   mode?: 'tabs' | 'table'
-  ranges: any
-  advance?: number | boolean
+  ranges: TimeSection[]
+  advance?: Offset | boolean
 }
 
 const TimeBucket: React.FC<TimeBucketProps> = (props) => {

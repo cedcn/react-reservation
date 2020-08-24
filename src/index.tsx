@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
+import { OffsetUnit } from './Reservation/utils'
 import ReservationByDay, { ReservationByTimeBucket } from './Reservation'
 import 'normalize.css'
 import './index.css'
@@ -61,21 +62,34 @@ const Com: React.FC<any> = () => {
     setLocale(locale)
   }
   moment.locale(locale)
+  moment.locale('zh-cn')
 
   return (
     <div>
       <button onClick={() => onLocaleChange('en')}>英文</button>
       <button onClick={() => onLocaleChange('zh-cn')}>中文</button>
-
-      <ReservationByDay isMultiple />
-      <ReservationByDay advance />
+      <h2>默认</h2>
       <ReservationByDay />
-      <h2>Repeat, set disabled weeks and set disabled days</h2>
-      <ReservationByDay days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }} />
-      <h2>Repeat, set start day and set end day</h2>
-      <ReservationByDay days={{ startDay: moment('2020-02-03'), endDay: moment('2020-05-03') }} />
-      <h2>Specified days</h2>
-      <ReservationByDay days={[moment('2020-04-03'), moment('2020-02-04')]} />
+      <h2>支持多选</h2>
+      <ReservationByDay isMultiple />
+      <h2>提前预约</h2>
+      <ReservationByDay advance />
+      <ReservationByDay advance={{ value: 2, unit: OffsetUnit.Day }} />
+      <h2>指定开始时间</h2>
+      <h5>开始时间在当天之后</h5>
+      <ReservationByDay days={{ startDay: moment().add(60, 'day') }} />
+      <h5>开始时间在当天之前</h5>
+      <ReservationByDay days={{ startDay: moment().subtract(60, 'day') }} />
+      <ReservationByDay days={{ startDay: moment().subtract(60, 'day') }} advance />
+      <h2>指定开始时间和结束时间</h2>
+      <ReservationByDay days={{ startDay: moment().add(60, 'day'), endDay: moment().add(100, 'day') }} />
+      <h2>禁用某些Week和禁用某些天</h2>
+      <ReservationByDay
+        days={{ disabledWeeks: [0, 6], disabledDays: [moment().add(3, 'day'), moment().add(4, 'day')] }}
+      />
+      <h2>限定指定哪些天可预约</h2>
+      <ReservationByDay days={[moment().subtract(60, 'day'), moment().add(0, 'day'), moment().add(100, 'day')]} />
+
       <ReservationByTimeBucket
         days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }}
         ranges={[

@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { map } from 'lodash'
-import { isNotCheckedFun, gainDayByDayIdx } from '../../utils'
+import { isNotCheckedFun, gainDayByDayIdx, Offset } from '../../utils'
 import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection } from '../../interface'
 import TimeBucketList from './TimeBucketList'
 
@@ -20,7 +20,7 @@ interface TImeBucketViewerProps {
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
   quotas?: any
-  advance?: number | boolean
+  advance?: Offset | boolean
   isMultiple?: boolean
 }
 

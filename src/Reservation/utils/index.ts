@@ -1,18 +1,20 @@
 import moment, { Moment, unitOfTime } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from '../constants'
 import { SpecifiedDays, WeekCode, TimeSection, TimeRange } from '../interface'
-import { isNil, map, isEmpty, findIndex, includes, floor, isBoolean, isNumber } from 'lodash'
+import { isNil, map, isEmpty, findIndex, includes, floor, isBoolean, isNumber, isObject } from 'lodash'
+import 'moment/locale/zh-cn'
 
 export enum OffsetUnit {
   Day = 'day',
   Hour = 'hour',
 }
 
-export type Area = {
-  offset: number
+export type Offset = {
+  value: number
   unit: OffsetUnit
 }
 
+moment.locale('zh-cn')
 export const today = moment()
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
 export const isSameMonth = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'month')
@@ -85,6 +87,7 @@ export type MonthDays = {
 
 export const gainMonthDays = (startDay: Moment, monthIdx: number): MonthDays => {
   const localeData = startDay.localeData()
+  console.log('localeData', localeData)
   const monthDays: MonthDay[] = []
   const currentDay = startDay.clone().month(monthIdx + startDay.month())
 
@@ -169,7 +172,7 @@ export const isNotCheckedFun = (
   return isNotChecked
 }
 
-export const isExpireFun = (day: Moment, advance?: number | boolean): boolean => {
+export const isExpireFun = (day: Moment, advance?: Offset | boolean): boolean => {
   if (isNil(advance)) {
     return false
   }
@@ -182,22 +185,22 @@ export const isExpireFun = (day: Moment, advance?: number | boolean): boolean =>
     }
   }
 
-  if (isNumber(advance)) {
+  if (isObject(advance)) {
     return moment()
-      .add(advance, 'minute')
+      .add(advance.value, advance.unit)
       .isSameOrAfter(day)
   }
 
   return false
 }
 
-export const getDateByArea = (area: Area, direction: 'before' | 'after' = 'after') => {
-  const { unit, offset } = area
+export const getDateByArea = (area: Offset, direction: 'before' | 'after' = 'after') => {
+  const { unit, value } = area
 
   if (direction === 'after') {
-    return moment().add(offset, unit)
+    return moment().add(value, unit)
   }
-  return moment().subtract(offset, unit)
+  return moment().subtract(value, unit)
 }
 
 export const isSameRange = (range1?: TimeRange, range2?: TimeRange, granularity?: unitOfTime.StartOf): boolean =>

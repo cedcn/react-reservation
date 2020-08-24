@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import { Moment } from 'moment'
 import { map } from 'lodash'
-import { getTimeRangeBySection } from '../../utils'
+import { getTimeRangeBySection, Offset } from '../../utils'
 import { TimeBucketValue, TimeSection } from '../../interface'
 import TimeRangeItem, { ItemChildrenResult } from '../TimeRangeItem'
 import TimeBucketCell from '../TimeBucketCell'
@@ -19,7 +19,7 @@ interface TimeBucketListProps {
   ranges: TimeSection[]
   onChange: (value?: TimeBucketValue) => void
   quotas?: any
-  advance?: number | boolean
+  advance?: Offset | boolean
   isMultiple?: boolean
   isNotChecked: boolean
 }

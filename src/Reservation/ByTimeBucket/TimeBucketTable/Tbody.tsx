@@ -4,7 +4,7 @@ import React from 'react'
 import { Moment } from 'moment'
 import { map } from 'lodash'
 import cx from 'classnames'
-import { WeekDay, formatTimeSection, isNotCheckedFun, getTimeRangeBySection } from '../../utils'
+import { WeekDay, formatTimeSection, isNotCheckedFun, getTimeRangeBySection, Offset } from '../../utils'
 import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays } from '../../interface'
 import TimeRangeItem, { ItemChildrenResult } from '../TimeRangeItem'
 import TimeBucketCell from './Cell'
@@ -22,7 +22,7 @@ export interface TimeBucketTbodyProps {
   startDay: Moment
   endDay?: Moment
   onChange: (value?: TimeBucketValue) => void
-  advance?: number | boolean
+  advance?: Offset | boolean
   isMultiple?: boolean
 }
 

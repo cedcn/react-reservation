@@ -4,6 +4,7 @@ import { Moment } from 'moment'
 import { ThemeProvider } from 'emotion-theming'
 import React, { useState, useEffect } from 'react'
 import ByTimeBucket from './ByTimeBucket'
+import { Offset } from './utils'
 import { TimeBucketValue, Theme, Days, TimeBucketQuota, TimeSection } from './interface'
 
 const defaultTheme = { borderColor: '#eee' }
@@ -17,7 +18,7 @@ export interface ReservationTimeBucketProps {
   ranges: TimeSection[]
   onChange?: (value?: TimeBucketValue) => void
   quotas?: TimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => TimeBucketQuota[])
-  advance?: number | boolean
+  advance?: Offset | boolean
 }
 
 const ReservationTimeBucket: React.FC<ReservationTimeBucketProps> = (props) => {

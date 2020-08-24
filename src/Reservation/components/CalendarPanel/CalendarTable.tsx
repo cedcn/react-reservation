@@ -6,7 +6,7 @@ import { map, isArray } from 'lodash'
 import CalendarTBody from './CalendarTBody'
 import { WeekCode, SpecifiedDays, CalendarQuota } from '../../interface'
 import { CalendarValue } from '../Calendar'
-import { gainMonthDays } from '../../utils'
+import { gainMonthDays, Offset } from '../../utils'
 import { CellRendererProps } from '../CalendarCell'
 
 export interface CalendarListProps {
@@ -21,7 +21,7 @@ export interface CalendarListProps {
   disabledDays?: Moment[]
   onChange?: (value?: CalendarValue | null) => void
   quotas?: CalendarQuota[]
-  advance?: number | boolean
+  advance?: Offset | boolean
   cellRenderer?: React.ComponentType<CellRendererProps>
   isMultiple?: boolean
 }
@@ -48,6 +48,7 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
     () =>
       map(displayIdxs, (idx) => {
         const { monthDays, firstMonthDay, lastMonthDay } = gainMonthDays(startDay, idx)
+        console.log('monthDays', monthDays)
         const key = firstMonthDay.format('YYYY-MM')
         const startTime = firstMonthDay.format()
         const endTime = lastMonthDay.format()
@@ -82,10 +83,9 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
       width,
       disabledWeeks,
       disabledDays,
-      specifiedDays,
+      map(specifiedDays, (item) => item.format()).join(''),
       quotas,
       advance,
-      moment.locale(),
     ]
   )
 

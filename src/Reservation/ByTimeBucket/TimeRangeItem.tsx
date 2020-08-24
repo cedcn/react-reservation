@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Moment } from 'moment'
 import { some, cloneDeep, isEqual, filter, isFunction, isNil } from 'lodash'
-import { isExpireFun, isSameRange } from '../utils'
+import { isExpireFun, isSameRange, Offset } from '../utils'
 import { TimeBucketValue, TimeBucketQuota, isListTimeBucket, TimeRange } from '../interface'
 
 export interface TimeRangeItemProps {
@@ -13,7 +13,7 @@ export interface TimeRangeItemProps {
   startDay: Moment
   endDay?: Moment
   isLoadingQuota?: boolean
-  advance?: number | boolean
+  advance?: Offset | boolean
   isMultiple?: boolean
   isNotChecked?: boolean
 }

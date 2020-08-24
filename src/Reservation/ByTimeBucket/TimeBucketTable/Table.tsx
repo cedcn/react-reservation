@@ -4,7 +4,7 @@ import React, { useMemo } from 'react'
 import { Moment } from 'moment'
 import { map } from 'lodash'
 import TimeBucketTbody from './Tbody'
-import { gainWeekDays, WeekDay } from '../../utils'
+import { gainWeekDays, WeekDay, Offset } from '../../utils'
 import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays } from '../../interface'
 
 interface TimeBucketListProps {
@@ -20,7 +20,7 @@ interface TimeBucketListProps {
   startDay: Moment
   endDay?: Moment
   onChange: (value?: TimeBucketValue) => void
-  advance?: number | boolean
+  advance?: Offset | boolean
   isMultiple?: boolean
   quotas?: any
   currentWeekIdx: number

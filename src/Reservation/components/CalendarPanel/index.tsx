@@ -8,6 +8,7 @@ import CalendarTHead from './CalendarTHead'
 import VirtualSlider from '../VirtualSlider'
 import CalendarTable from './CalendarTable'
 import { CellRendererProps } from '../CalendarCell'
+import { Offset } from '../../utils'
 import * as styles from './styles'
 
 // calendar
@@ -29,7 +30,7 @@ export interface CalendarPanelProps {
   isMinShort?: boolean
   isMultiple?: boolean
   toggleOff?: boolean
-  advance?: number | boolean
+  advance?: Offset | boolean
   cellRenderer?: React.ComponentType<CellRendererProps>
 }
 

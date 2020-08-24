@@ -12,6 +12,7 @@ import {
   MonthDay,
   today,
   isNotCheckedFun,
+  Offset,
 } from '../../utils'
 import { CalendarValue } from '../Calendar'
 import { SpecifiedDays, CalendarQuota, WeekCode } from '../../interface'
@@ -33,7 +34,7 @@ export interface CalendarTBodyProps {
   quotas?: CalendarQuota[]
   firstMonthDay: Moment
   monthDays: MonthDay[]
-  advance?: number | boolean
+  advance?: Offset | boolean
   cellRenderer?: React.ComponentType<CellRendererProps>
   isMultiple?: boolean
   toggleOff?: boolean

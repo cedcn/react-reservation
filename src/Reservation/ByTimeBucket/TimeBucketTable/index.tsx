@@ -6,7 +6,7 @@ import cx from 'classnames'
 import useResize from '../../utils/useResize'
 import moment, { Moment } from 'moment'
 import VirtualSlider from '../../components/VirtualSlider'
-import { gainWeekDays, WeekDay } from '../../utils'
+import { gainWeekDays, WeekDay, Offset } from '../../utils'
 import TimeBucketHeader from '../../components/TimeBucketHeader'
 import TimeBucketTable from './Table'
 import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays } from '../../interface'
@@ -22,7 +22,7 @@ export interface TimeBucketViewerProps {
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
   onChange: (value?: TimeBucketValue) => void
-  advance?: number | boolean
+  advance?: Offset | boolean
   isMultiple?: boolean
 }
 
