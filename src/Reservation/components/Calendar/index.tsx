@@ -6,9 +6,9 @@ import cx from 'classnames'
 import { map } from 'lodash'
 import CalendarHeader from '../CalendarHeader'
 import CalendarPanel from '../CalendarPanel'
-import { Days, isSpecifiedDays } from '../../interface'
-import { getDateByArea, today, Offset } from '../../utils'
-import { CellRendererProps } from '../CalendarCell'
+import { Days, isSpecifiedDays, Offset } from '../../interface'
+import { getDateByArea, today } from '../../utils'
+import { CalendarCellProps } from '../CalendarCell'
 
 // calendar
 export type CalendarValue = Moment | Moment[] | null
@@ -30,7 +30,7 @@ export interface CalendarProps {
   advance?: Offset | boolean
   area?: Offset
   quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota>
-  cellRenderer?: React.ComponentType<CellRendererProps>
+  cellRenderer?: React.ComponentType<CalendarCellProps>
   isMinShort?: boolean
 }
 

@@ -4,8 +4,8 @@ import React, { useMemo } from 'react'
 import { Moment } from 'moment'
 import { map } from 'lodash'
 import TimeBucketTbody from './Tbody'
-import { gainWeekDays, WeekDay, Offset } from '../../utils'
-import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays } from '../../interface'
+import { gainWeekDays, WeekDay } from '../../utils'
+import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset } from '../../interface'
 
 interface TimeBucketListProps {
   displayIdxs: number[]

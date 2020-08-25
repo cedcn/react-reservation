@@ -1,7 +1,18 @@
 import { Moment, MomentInput } from 'moment'
 import { isArray } from 'lodash'
+import { CalendarQuota } from './components/Calendar'
+import { CalendarCellProps } from './components/CalendarCell'
 
 export type WeekCode = 0 | 1 | 2 | 3 | 4 | 5 | 6
+export enum OffsetUnit {
+  Day = 'day',
+  Hour = 'hour',
+  Month = 'month',
+}
+export type Offset = {
+  value: number
+  unit: OffsetUnit
+}
 
 export type Theme = any
 
@@ -15,19 +26,12 @@ export interface RepeatDaysByWeek {
 }
 export type Days = SpecifiedDays | RepeatDaysByWeek
 
-//
-export type CalendarValue = Moment | null
-
 export function isSpecifiedDays(days?: Days): days is SpecifiedDays {
   return isArray(days)
 }
 
-export interface CalendarQuota {
-  day: MomentInput
-  remaining: number
-}
-
-/// new ------
+export type ByDayQuota = CalendarQuota
+export type ByDayCellProps = CalendarCellProps
 
 export type TimeUnit = [number, number]
 export type TimeSection = { start: TimeUnit; end: TimeUnit }
@@ -39,27 +43,25 @@ export function isListTimeBucket(value: TimeBucketValue): value is TimeRange[] {
   return isArray(value) && (value.length <= 0 || isArray(value[0]))
 }
 
-export interface TimeBucketQuota {
+export interface ByTimeBucketQuota {
   start: MomentInput
   end: MomentInput
   remaining: number
 }
 
-export interface CellRendererProps {
+export interface ByTimeBucketCellProps {
   prefixCls: string
   isSelected: boolean
   isToday: boolean
-  isStartDate: boolean
-  isEndDate: boolean
-  isBeforeStartDay: boolean
-  isAfterEndDay: boolean
-  isLastMonthDay: boolean
-  isNextMonthDay: boolean
+  isBeforeStartDayMinute: boolean
+  isAfterEndDayMinute: boolean
   isMakefull: boolean
   isSelectable: boolean
   isNotChecked: boolean
   currentDay: Moment
   remaining?: number
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, isDisabled?: boolean, isSelected?: boolean) => void
+  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, isDisabled?: boolean, isSelected?: boolean) => void
   className?: string
+  startTime: Moment
+  endTime: Moment
 }

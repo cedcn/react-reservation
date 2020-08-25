@@ -12,12 +12,11 @@ import {
   MonthDay,
   today,
   isNotCheckedFun,
-  Offset,
 } from '../../utils'
-import { CalendarValue } from '../Calendar'
-import { SpecifiedDays, CalendarQuota, WeekCode } from '../../interface'
+import { CalendarValue, CalendarQuota } from '../Calendar'
+import { SpecifiedDays, WeekCode, Offset } from '../../interface'
 import { find, get, isUndefined, isArray, cloneDeep, filter, isEqual, isNil, some } from 'lodash'
-import CellRenderer, { CellRendererProps } from '../CalendarCell'
+import CellRenderer, { CalendarCellProps } from '../CalendarCell'
 import * as styles from './styles'
 
 export interface CalendarTBodyProps {
@@ -35,7 +34,7 @@ export interface CalendarTBodyProps {
   firstMonthDay: Moment
   monthDays: MonthDay[]
   advance?: Offset | boolean
-  cellRenderer?: React.ComponentType<CellRendererProps>
+  cellRenderer?: React.ComponentType<CalendarCellProps>
   isMultiple?: boolean
   toggleOff?: boolean
 }

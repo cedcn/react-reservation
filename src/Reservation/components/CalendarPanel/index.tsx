@@ -6,14 +6,11 @@ import useResize from '../../utils/useResize'
 import { WeekCode, SpecifiedDays } from '../../interface'
 import CalendarTHead from './CalendarTHead'
 import VirtualSlider from '../VirtualSlider'
+import { CalendarValue } from '../Calendar'
 import CalendarTable from './CalendarTable'
-import { CellRendererProps } from '../CalendarCell'
-import { Offset } from '../../utils'
+import { CalendarCellProps } from '../CalendarCell'
+import { Offset } from '../../interface'
 import * as styles from './styles'
-
-// calendar
-export type CalendarValue = Moment | Moment[]
-export type CalendarChangeFunc<T> = (value?: T) => void
 
 export interface CalendarPanelProps {
   prefixCls: string
@@ -31,7 +28,7 @@ export interface CalendarPanelProps {
   isMultiple?: boolean
   toggleOff?: boolean
   advance?: Offset | boolean
-  cellRenderer?: React.ComponentType<CellRendererProps>
+  cellRenderer?: React.ComponentType<CalendarCellProps>
 }
 
 const Calendar: React.FC<CalendarPanelProps> = (props) => {

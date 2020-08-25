@@ -1,18 +1,8 @@
 import moment, { Moment, unitOfTime } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from '../constants'
-import { SpecifiedDays, WeekCode, TimeSection, TimeRange } from '../interface'
-import { isNil, map, isEmpty, findIndex, includes, floor, isBoolean, isNumber, isObject } from 'lodash'
+import { SpecifiedDays, WeekCode, TimeSection, TimeRange, Offset } from '../interface'
+import { isNil, isEmpty, findIndex, includes, floor, isBoolean, isObject } from 'lodash'
 import 'moment/locale/zh-cn'
-
-export enum OffsetUnit {
-  Day = 'day',
-  Hour = 'hour',
-}
-
-export type Offset = {
-  value: number
-  unit: OffsetUnit
-}
 
 moment.locale('zh-cn')
 export const today = moment()

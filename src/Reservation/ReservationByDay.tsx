@@ -4,9 +4,8 @@ import { ThemeProvider } from 'emotion-theming'
 import { Moment } from 'moment'
 import React, { useState, useEffect } from 'react'
 import ByDay from './ByDay'
-import { Offset } from './utils'
 import { isEqual } from 'lodash'
-import { Theme, Days, CalendarQuota } from './interface'
+import { Theme, Days, ByDayQuota, ByDayCellProps, Offset } from './interface'
 
 export type Value = Moment | Moment[] | null
 
@@ -18,9 +17,11 @@ export interface ReservationByDayProps {
   value?: Value
   onChange?: (value?: Value) => void
   days?: Days
-  quotas?: CalendarQuota[] | ((startDay: Moment, endDay: Moment) => CalendarQuota[])
+  quotas?: ByDayQuota[] | ((startDay: Moment, endDay: Moment) => ByDayQuota[])
   advance?: Offset | boolean
   isMultiple?: boolean
+  area?: Offset
+  cellRenderer?: React.ComponentType<ByDayCellProps>
 }
 
 const ReservationByDay: React.FC<ReservationByDayProps> = (props) => {

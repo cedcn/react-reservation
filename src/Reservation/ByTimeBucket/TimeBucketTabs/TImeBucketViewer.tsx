@@ -3,8 +3,8 @@ import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { map } from 'lodash'
-import { isNotCheckedFun, gainDayByDayIdx, Offset } from '../../utils'
-import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection } from '../../interface'
+import { isNotCheckedFun, gainDayByDayIdx } from '../../utils'
+import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection, Offset } from '../../interface'
 import TimeBucketList from './TimeBucketList'
 
 interface TImeBucketViewerProps {

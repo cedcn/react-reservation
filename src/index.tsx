@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
-import { OffsetUnit } from './Reservation/utils'
+import { OffsetUnit } from './Reservation/interface'
 import ReservationByDay, { ReservationByTimeBucket } from './Reservation'
 import 'normalize.css'
 import './index.css'
@@ -89,6 +89,11 @@ const Com: React.FC<any> = () => {
       />
       <h2>限定指定哪些天可预约</h2>
       <ReservationByDay days={[moment().subtract(60, 'day'), moment().add(0, 'day'), moment().add(100, 'day')]} />
+      <h2>自定义 Cell Renderer</h2>
+      <ReservationByDay cellRenderer={({ currentDay }) => <span>{currentDay.format('DD')}</span>} />
+      <h2>限定可预约的范围</h2>
+      <ReservationByDay area={{ value: 2, unit: OffsetUnit.Month }} />
+      <ReservationByDay advance area={{ value: 2, unit: OffsetUnit.Day }} />
 
       <ReservationByTimeBucket
         days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }}

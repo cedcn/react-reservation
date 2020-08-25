@@ -1,27 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { Moment } from 'moment'
 import cx from 'classnames'
+import { ByTimeBucketCellProps } from '../../../interface'
 import CellStatus from '../../../components/CellStatus'
 import * as styles from './styles'
 
-export interface CellRendererProps {
-  prefixCls: string
-  isSelected: boolean
-  isToday: boolean
-  isBeforeStartDayMinute: boolean
-  isAfterEndDayMinute: boolean
-  isMakefull: boolean
-  isSelectable: boolean
-  isNotChecked: boolean
-  currentDay: Moment
-  remaining?: number
-  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, isDisabled?: boolean, isSelected?: boolean) => void
-  className?: string
-}
-
-const CellRenderer: React.FC<CellRendererProps> = (props) => {
+const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
   const {
     isBeforeStartDayMinute,
     isAfterEndDayMinute,

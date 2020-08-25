@@ -6,7 +6,7 @@ import cx from 'classnames'
 import CellStatus from '../CellStatus'
 import * as styles from './styles'
 
-export interface CellRendererProps {
+export interface CalendarCellProps {
   prefixCls: string
   isSelected: boolean
   isToday: boolean
@@ -25,7 +25,7 @@ export interface CellRendererProps {
   className?: string
 }
 
-const CellRenderer: React.FC<CellRendererProps> = (props) => {
+const CellRenderer: React.FC<CalendarCellProps> = (props) => {
   const {
     isToday,
     isStartDate,

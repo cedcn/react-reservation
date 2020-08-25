@@ -4,10 +4,10 @@ import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { map, isArray } from 'lodash'
 import CalendarTBody from './CalendarTBody'
-import { WeekCode, SpecifiedDays, CalendarQuota } from '../../interface'
-import { CalendarValue } from '../Calendar'
-import { gainMonthDays, Offset } from '../../utils'
-import { CellRendererProps } from '../CalendarCell'
+import { WeekCode, SpecifiedDays, Offset } from '../../interface'
+import { CalendarValue, CalendarQuota } from '../Calendar'
+import { gainMonthDays } from '../../utils'
+import { CalendarCellProps } from '../CalendarCell'
 
 export interface CalendarListProps {
   displayIdxs: number[]
@@ -22,7 +22,7 @@ export interface CalendarListProps {
   onChange?: (value?: CalendarValue | null) => void
   quotas?: CalendarQuota[]
   advance?: Offset | boolean
-  cellRenderer?: React.ComponentType<CellRendererProps>
+  cellRenderer?: React.ComponentType<CalendarCellProps>
   isMultiple?: boolean
 }
 

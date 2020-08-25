@@ -4,8 +4,8 @@ import React from 'react'
 import { Moment } from 'moment'
 import { map } from 'lodash'
 import cx from 'classnames'
-import { WeekDay, formatTimeSection, isNotCheckedFun, getTimeRangeBySection, Offset } from '../../utils'
-import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays } from '../../interface'
+import { WeekDay, formatTimeSection, isNotCheckedFun, getTimeRangeBySection } from '../../utils'
+import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset } from '../../interface'
 import TimeRangeItem, { ItemChildrenResult } from '../TimeRangeItem'
 import TimeBucketCell from './Cell'
 import * as styles from './styles'
@@ -99,6 +99,8 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
                           isNotChecked={isNotChecked}
                           currentDay={current}
                           onClick={onClick}
+                          startTime={startTime}
+                          endTime={endTime}
                         />
                       </span>
                     )

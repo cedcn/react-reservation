@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react'
 import { Moment } from 'moment'
 import { some, cloneDeep, isEqual, filter, isFunction, isNil } from 'lodash'
-import { isExpireFun, isSameRange, Offset } from '../utils'
-import { TimeBucketValue, TimeBucketQuota, isListTimeBucket, TimeRange } from '../interface'
+import { isExpireFun, isSameRange } from '../utils'
+import { TimeBucketValue, ByTimeBucketQuota, isListTimeBucket, TimeRange, Offset } from '../interface'
 
 export interface TimeRangeItemProps {
   value?: TimeBucketValue
   timeRange: TimeRange
-  quota?: TimeBucketQuota
+  quota?: ByTimeBucketQuota
   onChange: (value?: TimeBucketValue) => void
   current?: Moment
   startDay: Moment
