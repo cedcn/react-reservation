@@ -86,6 +86,7 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
       map(specifiedDays, (item) => item.format()).join(''),
       quotas,
       advance,
+      moment.locale(),
     ]
   )
 

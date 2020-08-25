@@ -6,7 +6,7 @@ import TimeBucketTable from './TimeBucketTable'
 import TimeBucketTabs from './TimeBucketTabs'
 import { map } from 'lodash'
 import { isSpecifiedDays, Days, TimeBucketValue, TimeSection, Offset } from '../interface'
-import { today } from '../utils'
+import { getNow } from '../utils'
 import comss from '../styles'
 
 interface TimeBucketProps {
@@ -38,7 +38,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     disabledWeeks = days?.disabledWeeks
     disabledDays = days?.disabledDays
   }
-
+  const today = getNow()
   if (!startDay || (startDay && startDay.isBefore(today, 'minute'))) {
     startDay = today
   }

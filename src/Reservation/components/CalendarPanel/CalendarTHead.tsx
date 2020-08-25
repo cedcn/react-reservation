@@ -48,4 +48,4 @@ const CalendarTHead: React.FC<CalendarTHeadProps> = (props) => {
   )
 }
 
-export default React.memo(CalendarTHead)
+export default CalendarTHead

@@ -62,7 +62,6 @@ const Com: React.FC<any> = () => {
     setLocale(locale)
   }
   moment.locale(locale)
-  moment.locale('zh-cn')
 
   return (
     <div>
@@ -70,8 +69,10 @@ const Com: React.FC<any> = () => {
       <button onClick={() => onLocaleChange('zh-cn')}>中文</button>
       <h2>默认</h2>
       <ReservationByDay />
+      <ReservationByDay defaultValue={moment().add(1, 'day')} />
       <h2>支持多选</h2>
       <ReservationByDay isMultiple />
+      <ReservationByDay isMultiple defaultValue={[moment().add(1, 'day'), moment().add(3, 'day')]} />
       <h2>提前预约</h2>
       <ReservationByDay advance />
       <ReservationByDay advance={{ value: 2, unit: OffsetUnit.Day }} />

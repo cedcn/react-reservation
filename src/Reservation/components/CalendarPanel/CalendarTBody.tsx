@@ -10,7 +10,7 @@ import {
   isSameDay,
   isExpireFun,
   MonthDay,
-  today,
+  getNow,
   isNotCheckedFun,
 } from '../../utils'
 import { CalendarValue, CalendarQuota } from '../Calendar'
@@ -104,7 +104,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
 
     for (let jIndex = 0; jIndex < DATE_COL_COUNT; jIndex++) {
       const current = monthDays[passed].date
-
+      const today = getNow()
       const isToday = isSameDay(current, today)
       const isStartDate = isSameDay(current, startDay)
       const isEndDate = isSameDay(current, endDay)

@@ -2,9 +2,8 @@
 import { jsx } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
 import { Moment } from 'moment'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ByDay from './ByDay'
-import { isEqual } from 'lodash'
 import { Theme, Days, ByDayQuota, ByDayCellProps, Offset } from './interface'
 
 export type Value = Moment | Moment[] | null
@@ -27,19 +26,18 @@ export interface ReservationByDayProps {
 const ReservationByDay: React.FC<ReservationByDayProps> = (props) => {
   const { theme = defaultTheme, ...rest } = props
 
-  const v = typeof props.value === 'undefined' ? props.defaultValue : props.value
-  const [value, setValue] = useState<Value | undefined>(v)
+  const [value, setValue] = useState<Value | undefined>(props.defaultValue)
+  const [prevValue, setPrevValue] = useState<Value | undefined>(null)
+
+  if ('value' in props && props.value !== prevValue) {
+    setValue(value)
+    setPrevValue(value)
+  }
 
   const onChange = (value?: Value) => {
     setValue(value)
-    props.onChange && props.onChange(value)
+    props.onChange?.(value)
   }
-
-  useEffect(() => {
-    if (!isEqual(props.value, value)) {
-      setValue(props.value)
-    }
-  }, [props.value])
 
   return (
     <ThemeProvider theme={theme}>

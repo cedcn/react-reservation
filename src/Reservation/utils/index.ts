@@ -2,10 +2,8 @@ import moment, { Moment, unitOfTime } from 'moment'
 import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from '../constants'
 import { SpecifiedDays, WeekCode, TimeSection, TimeRange, Offset } from '../interface'
 import { isNil, isEmpty, findIndex, includes, floor, isBoolean, isObject } from 'lodash'
-import 'moment/locale/zh-cn'
 
-moment.locale('zh-cn')
-export const today = moment()
+export const getNow = () => moment()
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
 export const isSameMonth = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'month')
 

@@ -7,7 +7,7 @@ import { map } from 'lodash'
 import CalendarHeader from '../CalendarHeader'
 import CalendarPanel from '../CalendarPanel'
 import { Days, isSpecifiedDays, Offset } from '../../interface'
-import { getDateByArea, today } from '../../utils'
+import { getDateByArea, getNow } from '../../utils'
 import { CalendarCellProps } from '../CalendarCell'
 
 // calendar
@@ -66,6 +66,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     disabledDays = days?.disabledDays
   }
 
+  const today = getNow()
   const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay.startOf('day') : today.startOf('day')
   let endMonthDay = endDay ? endDay.endOf('day') : undefined
   if (area) {
