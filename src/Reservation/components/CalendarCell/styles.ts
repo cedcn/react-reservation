@@ -46,6 +46,8 @@ const cell = (theme: any, status: Status, height?: number) => {
     align-items: center;
     border-radius: 7px;
     transition: all 0.2s;
+    position: relative;
+    flex-direction: column;
   `
 }
 

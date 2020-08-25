@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core'
+import { jsx, InterpolationWithTheme } from '@emotion/core'
 import React from 'react'
 import { isNil } from 'lodash'
 import cx from 'classnames'
@@ -26,10 +26,11 @@ interface CellStatusProps {
   isMakefull: boolean
   remaining?: number | null
   remainingMaxThreshold?: number
+  className?: string
 }
 
 const CellStatus: React.FC<CellStatusProps> = React.memo((props) => {
-  const { prefixCls, isSelectable, isSelected, isMakefull, remaining, remainingMaxThreshold = 10000 } = props
+  const { prefixCls, isSelectable, isSelected, isMakefull, remaining, className, remainingMaxThreshold = 10000 } = props
 
   const gainContent = () => {
     if (isSelectable && isMakefull) {
@@ -41,7 +42,7 @@ const CellStatus: React.FC<CellStatusProps> = React.memo((props) => {
     }
 
     if (isSelectable) {
-      return isNil(remaining) || remaining >= remainingMaxThreshold ? '' : `余(${formatRemainingQuota(remaining)})`
+      return isNil(remaining) || remaining >= remainingMaxThreshold ? '可约' : `余(${formatRemainingQuota(remaining)})`
     }
   }
 
@@ -52,7 +53,7 @@ const CellStatus: React.FC<CellStatusProps> = React.memo((props) => {
   }
 
   return (
-    <div className={cx(`${prefixCls}-cell-status`)} css={styles.cellStatus}>
+    <div className={cx(`${prefixCls}-cell-status`, className)} css={ styles.cellStatus}>
       {content}
     </div>
   )

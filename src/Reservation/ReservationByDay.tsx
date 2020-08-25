@@ -20,6 +20,7 @@ export interface ReservationByDayProps {
   advance?: Offset | boolean
   isMultiple?: boolean
   area?: Offset
+  isMinShort?: boolean
   cellRenderer?: React.ComponentType<ByDayCellProps>
 }
 

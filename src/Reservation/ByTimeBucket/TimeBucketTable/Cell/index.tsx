@@ -38,13 +38,13 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
           styles.cell(theme, {
             isSelected,
             isSelectable,
-            isLineGray: isNotChecked,
+            isLineGray: isNotChecked || isBeforeStartDayMinute || isAfterEndDayMinute,
             isMakeFull: isMakefull,
-            isInvalid: isBeforeStartDayMinute || isAfterEndDayMinute,
           })
         }
       >
         <CellStatus
+          css={styles.status}
           isSelectable={isSelectable}
           isSelected={!!isSelected}
           remaining={remaining}

@@ -48,7 +48,6 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
     () =>
       map(displayIdxs, (idx) => {
         const { monthDays, firstMonthDay, lastMonthDay } = gainMonthDays(startDay, idx)
-        console.log('monthDays', monthDays)
         const key = firstMonthDay.format('YYYY-MM')
         const startTime = firstMonthDay.format()
         const endTime = lastMonthDay.format()

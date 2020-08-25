@@ -50,8 +50,12 @@ const cell = (theme: any, status: Status, height?: number) => {
   `
 }
 
+const status = css`
+  font-size: 14px;
+`
+
 const wrapper = css`
   padding: 4px;
 `
 
-export { cell, wrapper }
+export { cell, wrapper, status }

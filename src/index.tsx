@@ -70,6 +70,7 @@ const Com: React.FC<any> = () => {
       <h2>默认</h2>
       <ReservationByDay />
       <ReservationByDay defaultValue={moment().add(1, 'day')} />
+      <ReservationByDay isMinShort />
       <h2>支持多选</h2>
       <ReservationByDay isMultiple />
       <ReservationByDay isMultiple defaultValue={[moment().add(1, 'day'), moment().add(3, 'day')]} />
@@ -96,8 +97,8 @@ const Com: React.FC<any> = () => {
       <ReservationByDay area={{ value: 2, unit: OffsetUnit.Month }} />
       <ReservationByDay advance area={{ value: 2, unit: OffsetUnit.Day }} />
 
+      <h2>默认</h2>
       <ReservationByTimeBucket
-        days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }}
         ranges={[
           { start: [10, 10], end: [11, 20] },
           { start: [11, 30], end: [13, 30] },
@@ -120,7 +121,7 @@ const Com: React.FC<any> = () => {
 }
 
 ReactDOM.render(
-  <div style={{ maxWidth: 900, marginLeft: 'auto', marginRight: 'auto' }}>
+  <div style={{ maxWidth: 700, marginLeft: 'auto', marginRight: 'auto' }}>
     <h2>Repeat </h2>
     <Com />
     {/* <ReservationCalendar cellRender={() => <div>123</div>} />

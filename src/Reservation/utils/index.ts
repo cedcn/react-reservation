@@ -75,7 +75,6 @@ export type MonthDays = {
 
 export const gainMonthDays = (startDay: Moment, monthIdx: number): MonthDays => {
   const localeData = startDay.localeData()
-  console.log('localeData', localeData)
   const monthDays: MonthDay[] = []
   const currentDay = startDay.clone().month(monthIdx + startDay.month())
 
