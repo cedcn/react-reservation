@@ -2,10 +2,10 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { Moment } from 'moment'
-import { map } from 'lodash'
+import { map, isUndefined } from 'lodash'
 import cx from 'classnames'
 import { WeekDay, formatTimeSection, isNotCheckedFun, getTimeRangeBySection } from '../../utils'
-import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset } from '../../interface'
+import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset, ByTimeBucketCellProps } from '../../interface'
 import TimeRangeItem, { ItemChildrenResult } from '../TimeRangeItem'
 import TimeBucketCell from './Cell'
 import * as styles from './styles'
@@ -24,6 +24,7 @@ export interface TimeBucketTbodyProps {
   onChange: (value?: TimeBucketValue) => void
   advance?: Offset | boolean
   isMultiple?: boolean
+  cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
 const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
@@ -38,6 +39,7 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
     startDay,
     endDay,
     width,
+    cellRenderer: CustomCellRenderer,
     onChange,
     advance,
     isMultiple,
@@ -86,22 +88,28 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
                   }: ItemChildrenResult) => {
                     const isSelectable = !isDisabled
 
+                    const cellRendererProps = {
+                      prefixCls,
+                      isSelected,
+                      isToday: false,
+                      isBeforeStartDayMinute,
+                      isAfterEndDayMinute,
+                      isMakefull,
+                      isSelectable,
+                      isNotChecked,
+                      currentDay: current,
+                      onClick,
+                      startTime,
+                      endTime,
+                    }
+
                     return (
                       <span css={styles.td}>
-                        <TimeBucketCell
-                          prefixCls={prefixCls}
-                          isSelected={isSelected}
-                          isToday={false}
-                          isBeforeStartDayMinute={isBeforeStartDayMinute}
-                          isAfterEndDayMinute={isAfterEndDayMinute}
-                          isMakefull={isMakefull}
-                          isSelectable={isSelectable}
-                          isNotChecked={isNotChecked}
-                          currentDay={current}
-                          onClick={onClick}
-                          startTime={startTime}
-                          endTime={endTime}
-                        />
+                        {isUndefined(CustomCellRenderer) ? (
+                          <TimeBucketCell {...cellRendererProps} />
+                        ) : (
+                          <CustomCellRenderer {...cellRendererProps} />
+                        )}
                       </span>
                     )
                   }}

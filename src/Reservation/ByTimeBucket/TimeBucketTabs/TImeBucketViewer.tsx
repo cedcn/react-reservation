@@ -4,7 +4,7 @@ import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { map } from 'lodash'
 import { isNotCheckedFun, gainDayByDayIdx } from '../../utils'
-import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection, Offset } from '../../interface'
+import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../../interface'
 import TimeBucketList from './TimeBucketList'
 
 interface TImeBucketViewerProps {
@@ -22,6 +22,7 @@ interface TImeBucketViewerProps {
   quotas?: any
   advance?: Offset | boolean
   isMultiple?: boolean
+  cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
 const TImeBucketViewer: React.FC<TImeBucketViewerProps> = (props) => {
@@ -40,6 +41,7 @@ const TImeBucketViewer: React.FC<TImeBucketViewerProps> = (props) => {
     quotas,
     advance,
     isMultiple,
+    cellRenderer,
   } = props
 
   const child = useMemo(
@@ -63,6 +65,7 @@ const TImeBucketViewer: React.FC<TImeBucketViewerProps> = (props) => {
             currentDay={currentDay}
             width={width}
             prefixCls={prefixCls}
+            cellRenderer={cellRenderer}
           />
         )
       }),
@@ -79,6 +82,8 @@ const TImeBucketViewer: React.FC<TImeBucketViewerProps> = (props) => {
       ranges,
       quotas,
       advance,
+      isMultiple,
+      cellRenderer,
       moment.locale(),
     ]
   )

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 import { OffsetUnit } from './Reservation/interface'
-import ReservationByDay, { ReservationByTimeBucket } from './Reservation'
+import ReservationByDay, { ReservationByTimeBucket, TimeSection } from './Reservation'
 import 'normalize.css'
 import './index.css'
 import 'moment/locale/zh-cn'
@@ -55,6 +55,13 @@ const quotaRequest = (start: string, end: string) =>
     ])
   })
 
+const ranges: TimeSection[] = [
+  { start: [10, 10], end: [11, 20] },
+  { start: [11, 30], end: [13, 30] },
+  { start: [13, 30], end: [15, 30] },
+  { start: [15, 30], end: [20, 30] },
+]
+
 const Com: React.FC<any> = () => {
   const [locale, setLocale] = useState('zh-cn')
 
@@ -67,7 +74,7 @@ const Com: React.FC<any> = () => {
     <div>
       <button onClick={() => onLocaleChange('en')}>英文</button>
       <button onClick={() => onLocaleChange('zh-cn')}>中文</button>
-      <h2>默认</h2>
+      {/* <h2>默认</h2>
       <ReservationByDay />
       <ReservationByDay defaultValue={moment().add(1, 'day')} />
       <ReservationByDay isMinShort />
@@ -95,27 +102,86 @@ const Com: React.FC<any> = () => {
       <ReservationByDay cellRenderer={({ currentDay }) => <span>{currentDay.format('DD')}</span>} />
       <h2>限定可预约的范围</h2>
       <ReservationByDay area={{ value: 2, unit: OffsetUnit.Month }} />
-      <ReservationByDay advance area={{ value: 2, unit: OffsetUnit.Day }} />
+      <ReservationByDay advance area={{ value: 2, unit: OffsetUnit.Day }} /> */}
 
-      <h2>默认</h2>
-      <ReservationByTimeBucket
-        ranges={[
-          { start: [10, 10], end: [11, 20] },
-          { start: [11, 30], end: [13, 30] },
-          { start: [13, 30], end: [15, 30] },
-          { start: [15, 30], end: [20, 30] },
-        ]}
-      />
+      {/* <h2>默认</h2>
+      <ReservationByTimeBucket ranges={ranges} />
+
+      <h2>支持多选</h2>
+      <ReservationByTimeBucket ranges={ranges} isMultiple />
       <ReservationByTimeBucket
         days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }}
-        ranges={[
-          { start: [10, 10], end: [11, 20] },
-          { start: [11, 30], end: [13, 30] },
-          { start: [13, 30], end: [15, 30] },
-          { start: [15, 30], end: [20, 30] },
-        ]}
+        ranges={ranges}
+        isMultiple
         mode="tabs"
       />
+
+      <h2>提前预约</h2>
+      <ReservationByTimeBucket ranges={ranges} advance />
+      <ReservationByTimeBucket ranges={ranges} advance={{ value: 12, unit: OffsetUnit.Day }} />
+      <h2>指定开始时间</h2>
+      <ReservationByTimeBucket ranges={ranges} days={{ startDay: moment().add(60, 'day') }} advance />
+      <h5>开始时间在当天之前</h5>
+      <ReservationByTimeBucket ranges={ranges} days={{ startDay: moment().subtract(60, 'day') }} />
+      <h2>指定开始时间和结束时间</h2>
+      <ReservationByTimeBucket
+        ranges={ranges}
+        days={{ startDay: moment().add(60, 'day'), endDay: moment().add(100, 'day') }}
+      />
+      <h2>禁用某些Week和禁用某些天</h2>
+      <ReservationByTimeBucket
+        ranges={ranges}
+        days={{ disabledWeeks: [0, 6], disabledDays: [moment().add(3, 'day'), moment().add(4, 'day')] }}
+      />
+      <h2>自定义 Cell Renderer</h2>
+      <ReservationByTimeBucket
+        ranges={ranges}
+        cellRenderer={({ currentDay }) => <span>{currentDay.format('DD')}</span>}
+      />
+      <h2>限定可预约的范围</h2>
+      <ReservationByTimeBucket ranges={ranges} area={{ value: 2, unit: OffsetUnit.Month }} />
+      <ReservationByTimeBucket ranges={ranges} advance area={{ value: 2, unit: OffsetUnit.Day }} /> */}
+
+      <h2>默认</h2>
+      <ReservationByTimeBucket ranges={ranges} mode="tabs" />
+
+      <h2>支持多选</h2>
+      <ReservationByTimeBucket ranges={ranges} isMultiple mode="tabs" />
+      <ReservationByTimeBucket
+        days={{ disabledWeeks: [0, 6], disabledDays: [moment('2020-04-03')] }}
+        ranges={ranges}
+        isMultiple
+        mode="tabs"
+      />
+
+      <h2>提前预约</h2>
+      <ReservationByTimeBucket ranges={ranges} advance mode="tabs" />
+      <ReservationByTimeBucket ranges={ranges} advance={{ value: 12, unit: OffsetUnit.Day }} mode="tabs" />
+      <h2>指定开始时间</h2>
+      <ReservationByTimeBucket ranges={ranges} days={{ startDay: moment().add(60, 'day') }} advance mode="tabs" />
+      <h5>开始时间在当天之前</h5>
+      <ReservationByTimeBucket ranges={ranges} days={{ startDay: moment().subtract(60, 'day') }} mode="tabs" />
+      <h2>指定开始时间和结束时间</h2>
+      <ReservationByTimeBucket
+        ranges={ranges}
+        mode="tabs"
+        days={{ startDay: moment().add(60, 'day'), endDay: moment().add(100, 'day') }}
+      />
+      <h2>禁用某些Week和禁用某些天</h2>
+      <ReservationByTimeBucket
+        ranges={ranges}
+        mode="tabs"
+        days={{ disabledWeeks: [0, 6], disabledDays: [moment().add(3, 'day'), moment().add(4, 'day')] }}
+      />
+      <h2>自定义 Cell Renderer</h2>
+      <ReservationByTimeBucket
+        ranges={ranges}
+        mode="tabs"
+        cellRenderer={({ currentDay }) => <span>{currentDay.format('DD')}</span>}
+      />
+      <h2>限定可预约的范围</h2>
+      <ReservationByTimeBucket ranges={ranges} area={{ value: 2, unit: OffsetUnit.Month }} mode="tabs" />
+      <ReservationByTimeBucket ranges={ranges} advance area={{ value: 2, unit: OffsetUnit.Day }} mode="tabs" />
     </div>
   )
 }

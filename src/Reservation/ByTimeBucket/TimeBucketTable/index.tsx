@@ -9,7 +9,7 @@ import VirtualSlider from '../../components/VirtualSlider'
 import { gainWeekDays, WeekDay } from '../../utils'
 import TimeBucketHeader from '../../components/TimeBucketHeader'
 import TimeBucketTable from './Table'
-import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset } from '../../interface'
+import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset, ByTimeBucketCellProps } from '../../interface'
 import * as styles from './styles'
 
 export interface TimeBucketViewerProps {
@@ -24,6 +24,7 @@ export interface TimeBucketViewerProps {
   onChange: (value?: TimeBucketValue) => void
   advance?: Offset | boolean
   isMultiple?: boolean
+  cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
 const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
@@ -39,6 +40,7 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
     onChange,
     isMultiple,
     advance,
+    cellRenderer,
   } = props
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
 
@@ -127,6 +129,7 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
                   toLast={toLastWeek}
                   isMultiple={isMultiple}
                   advance={advance}
+                  cellRenderer={cellRenderer}
                 />
               )}
             </VirtualSlider>

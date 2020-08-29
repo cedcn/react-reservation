@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { last, first } from 'lodash'
 import useResize from '../../utils/useResize'
 import VirtualSlider from '../../components/VirtualSlider'
-import { TimeBucketValue, WeekCode, SpecifiedDays, TimeSection } from '../../interface'
+import { TimeBucketValue, WeekCode, SpecifiedDays, TimeSection, ByTimeBucketCellProps } from '../../interface'
 import { gainDayByDayIdx, gainWeekIdxByDayIdx, gainWeekDays, WeekDay } from '../../utils'
 import TImeBucketViewer from './TImeBucketViewer'
 import WeekList from './WeekList'
@@ -22,10 +22,24 @@ export interface TimeBucketTabsProps {
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
   ranges: TimeSection[]
+  isMultiple?: boolean
+  cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
 const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
-  const { prefixCls, disabledWeeks, specifiedDays, disabledDays, startDay, endDay, onChange, ranges, value } = props
+  const {
+    prefixCls,
+    disabledWeeks,
+    specifiedDays,
+    disabledDays,
+    startDay,
+    endDay,
+    onChange,
+    ranges,
+    value,
+    isMultiple,
+    cellRenderer,
+  } = props
 
   const [viewEl, width] = useResize()
 
@@ -128,7 +142,9 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
                 startDay={startDay}
                 endDay={endDay}
                 prefixCls={prefixCls}
+                isMultiple={isMultiple}
                 ranges={ranges}
+                cellRenderer={cellRenderer}
                 onChange={(value?: TimeBucketValue) => {
                   setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, currentDayIdx))
                   onChange(value)

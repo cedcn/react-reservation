@@ -5,7 +5,7 @@ import { Moment } from 'moment'
 import { map } from 'lodash'
 import TimeBucketTbody from './Tbody'
 import { gainWeekDays, WeekDay } from '../../utils'
-import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset } from '../../interface'
+import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset, ByTimeBucketCellProps } from '../../interface'
 
 interface TimeBucketListProps {
   displayIdxs: number[]
@@ -26,6 +26,7 @@ interface TimeBucketListProps {
   currentWeekIdx: number
   toNext: () => boolean
   toLast: () => boolean
+  cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
 const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
@@ -46,6 +47,8 @@ const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
     ranges,
     quotas,
     advance,
+    isMultiple,
+    cellRenderer,
   } = props
 
   const child = useMemo(
@@ -71,6 +74,8 @@ const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
           ranges,
           quotas,
           advance,
+          isMultiple,
+          cellRenderer,
         }
 
         return <TimeBucketTbody key={key} {...tBodyProps} />
@@ -88,6 +93,8 @@ const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
       ranges,
       quotas,
       advance,
+      isMultiple,
+      cellRenderer,
     ]
   )
 

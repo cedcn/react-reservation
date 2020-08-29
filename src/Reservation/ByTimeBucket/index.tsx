@@ -5,8 +5,8 @@ import moment, { Moment } from 'moment'
 import TimeBucketTable from './TimeBucketTable'
 import TimeBucketTabs from './TimeBucketTabs'
 import { map } from 'lodash'
-import { isSpecifiedDays, Days, TimeBucketValue, TimeSection, Offset } from '../interface'
-import { getNow } from '../utils'
+import { isSpecifiedDays, Days, TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../interface'
+import { getNow, getDateByArea } from '../utils'
 import comss from '../styles'
 
 interface TimeBucketProps {
@@ -17,10 +17,24 @@ interface TimeBucketProps {
   mode?: 'tabs' | 'table'
   ranges: TimeSection[]
   advance?: Offset | boolean
+  isMultiple?: boolean
+  area?: Offset
+  cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
 const TimeBucket: React.FC<TimeBucketProps> = (props) => {
-  const { prefixCls = 'rTb', days, value, onChange, ranges, mode = 'table', advance } = props
+  const {
+    prefixCls = 'rTb',
+    days,
+    value,
+    onChange,
+    ranges,
+    mode = 'table',
+    advance,
+    isMultiple,
+    area,
+    cellRenderer,
+  } = props
 
   let startDay: Moment | null | undefined
   let endDay: Moment | null | undefined
@@ -43,6 +57,14 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     startDay = today
   }
 
+  if (area) {
+    const endOffsetDay = getDateByArea(area)
+
+    if (!endDay || (endDay && endDay.isAfter(endOffsetDay, 'minute'))) {
+      endDay = endOffsetDay
+    }
+  }
+
   const commonProps = {
     prefixCls,
     ranges,
@@ -54,6 +76,8 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     value,
     onChange,
     advance,
+    isMultiple,
+    cellRenderer,
   }
 
   return (
