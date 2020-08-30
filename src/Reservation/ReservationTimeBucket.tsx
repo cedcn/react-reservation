@@ -28,6 +28,7 @@ export interface ReservationTimeBucketProps {
   advance?: Offset | boolean
   area?: Offset
   isMultiple?: boolean
+  isMinShort?: boolean
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 

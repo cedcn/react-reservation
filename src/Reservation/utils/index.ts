@@ -185,7 +185,12 @@ export const gainWeekIdxByDayIdx = (startDay: Moment, dayIdx: number) => {
 }
 
 export const gainDayIdxByDay = (startDay: Moment, day: Moment) => {
-  return day.diff(startDay.startOf('days'), 'days')
+  return day.diff(startDay.startOf('day'), 'day')
+}
+
+export const gainWeekIdxByDay = (startDay: Moment, day: Moment) => {
+  const dayIdx = gainDayIdxByDay(startDay, day)
+  return gainWeekIdxByDayIdx(startDay, dayIdx)
 }
 
 export type MonthDay = {

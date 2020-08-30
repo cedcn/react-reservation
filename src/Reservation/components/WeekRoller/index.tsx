@@ -2,12 +2,13 @@
 import { jsx } from '@emotion/core'
 import React, { useEffect, useState } from 'react'
 import { Moment } from 'moment'
+import usePrevious from '../../utils/usePrevious'
 import cx from 'classnames'
-import { first, last } from 'lodash'
+import { first, last, find } from 'lodash'
 import WeekRollerHeader from '../WeekRollerHeader'
 import WeekRollerPanel from '../WeekRollerPanel'
 import { Offset, WeekCode, SpecifiedDays } from '../../interface'
-import { gainWeekDays, WeekDay } from '../../utils'
+import { gainWeekDays, WeekDay, isSameDay, gainWeekIdxByDay } from '../../utils'
 import { WeekRollerCellProps } from '../WeekRollerCell'
 
 export interface WeekRollerProps {
@@ -41,20 +42,24 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
     specifiedDays,
   } = props
 
+  const prevValue = usePrevious(value)
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
   const weekDays: WeekDay[] = gainWeekDays({
     startDay,
+    endDay,
     weekIdx: currentWeekIdx,
     disabledWeeks,
     disabledDays,
     specifiedDays,
-    endDay,
+    advance,
   })
 
   const startWeekDay = first(weekDays)?.date
   const endWeekDay = last(weekDays)?.date
   const canToLastWeek = startDay.isBefore(startWeekDay, 'week')
   const canToNextWeek = !endDay || (endDay && endDay.isAfter(endWeekDay, 'week'))
+
+  const firstAvailableDay = find(weekDays, (day) => !day.meta.isNotChecked && !day.meta.isBeforeStartDay)
 
   const gotoWeek = (offset: number) => {
     setCurrentWeekIdx(currentWeekIdx + offset)
@@ -73,8 +78,16 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
   }
 
   useEffect(() => {
-    onChange?.(startWeekDay)
+    if (startWeekDay && !isSameDay(startWeekDay, value) && firstAvailableDay) {
+      onChange?.(firstAvailableDay.date)
+    }
   }, [currentWeekIdx])
+
+  useEffect(() => {
+    if (value && !isSameDay(value, prevValue)) {
+      setCurrentWeekIdx(gainWeekIdxByDay(startDay, value))
+    }
+  }, [value])
 
   const calendarPanelProps = {
     value,
@@ -101,6 +114,7 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
         endWeekDay={endWeekDay}
         canToLast={canToLastWeek}
         canToNext={canToNextWeek}
+        isMinShort={isMinShort}
         toNext={toNextWeek}
         toLast={toLastWeek}
       />

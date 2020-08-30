@@ -48,10 +48,10 @@ const WeekRollerPanel: React.FC<WeekRollerPanelProps> = (props) => {
   const [viewRef, width] = useResize()
 
   return (
-    <div className={`${prefixCls}-panel`} ref={viewRef} css={styles.panel}>
+    <div className={`${prefixCls}-week-roller`} ref={viewRef} css={styles.panel}>
       {!!width && (
         <VirtualSlider
-          className={`${prefixCls}-week-list-container`}
+          className={`${prefixCls}-week-roller-list`}
           width={width}
           idx={currentWeekIdx}
           toNext={toNext}
@@ -70,6 +70,7 @@ const WeekRollerPanel: React.FC<WeekRollerPanelProps> = (props) => {
               endDay={endDay}
               prefixCls={prefixCls}
               cellRenderer={cellRenderer}
+              isMinShort={isMinShort}
             />
           )}
         </VirtualSlider>

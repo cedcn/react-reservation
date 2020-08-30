@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, InterpolationWithTheme } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import React from 'react'
 import { isNil } from 'lodash'
 import cx from 'classnames'

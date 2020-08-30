@@ -44,15 +44,12 @@ const cell = (theme: any, status: Status, height?: number) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 7px;
     transition: all 0.2s;
     position: relative;
     flex-direction: column;
   `
 }
 
-const wrapper = css`
-  padding: 4px;
-`
+const wrapper = css``
 
 export { cell, wrapper }

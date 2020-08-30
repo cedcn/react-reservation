@@ -24,6 +24,7 @@ export interface TimeBucketViewerProps {
   onChange: (value?: TimeBucketValue) => void
   advance?: Offset | boolean
   isMultiple?: boolean
+  isMinShort?: boolean
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
@@ -38,6 +39,7 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
     specifiedDays,
     disabledDays,
     onChange,
+    isMinShort,
     isMultiple,
     advance,
     cellRenderer,

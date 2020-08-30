@@ -21,6 +21,7 @@ interface WeekRollerPanelProps {
   endDay?: Moment
   cellRenderer?: React.ComponentType<WeekRollerCellProps>
   advance?: Offset | boolean
+  isMinShort?: boolean
 }
 
 const WeekRollerList: React.FC<WeekRollerPanelProps> = (props) => {
@@ -36,6 +37,7 @@ const WeekRollerList: React.FC<WeekRollerPanelProps> = (props) => {
     onChange,
     value,
     advance,
+    isMinShort,
     cellRenderer: CustomCellRenderer,
   } = props
 
@@ -54,7 +56,7 @@ const WeekRollerList: React.FC<WeekRollerPanelProps> = (props) => {
         const key = weekDaysItem[0].date.format()
 
         return (
-          <div style={{ width }} key={key} css={styles.weekTabContainer} className={`${prefixCls}-week-tab-container`}>
+          <div style={{ width }} key={key} css={styles.weekTabContainer} className={`${prefixCls}-week-roller-tab`}>
             {map(weekDaysItem, (weekDay) => {
               const { date, meta } = weekDay
               const { isToday, isStartDay, isEndDay, isBeforeStartDay, isAfterEndDay, isNotChecked } = meta
@@ -76,12 +78,14 @@ const WeekRollerList: React.FC<WeekRollerPanelProps> = (props) => {
                 day: weekDay.date,
                 remaining: undefined,
                 onClick: () => {
+                  if (isDisabled) return
                   onChange?.(weekDay.date)
                 },
+                isMinShort,
               }
 
               return (
-                <span>
+                <span key={date.format()}>
                   {isUndefined(CustomCellRenderer) ? (
                     <WeekRollerCell {...cellRendererProps} />
                   ) : (

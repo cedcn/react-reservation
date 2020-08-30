@@ -20,6 +20,7 @@ export interface WeekRollerCellProps {
   remaining?: number
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, isDisabled?: boolean, isSelected?: boolean) => void
   className?: string
+  isMinShort?: boolean
 }
 
 const CellRenderer: React.FC<WeekRollerCellProps> = (props) => {
@@ -34,6 +35,7 @@ const CellRenderer: React.FC<WeekRollerCellProps> = (props) => {
     onClick,
     day,
     prefixCls,
+    isMinShort,
   } = props
 
   const isMakefull = !isNil(remaining) && remaining <= 0
@@ -63,8 +65,8 @@ const CellRenderer: React.FC<WeekRollerCellProps> = (props) => {
           })
         }
       >
-        <div>{day.localeData().weekdaysShort(day)}</div>
-        <div>{day.format('MM-DD')}</div>
+        <div>{isMinShort ? day.localeData().weekdaysMin(day) : day.localeData().weekdaysShort(day)}</div>
+        <div>{isMinShort ? day.format('DD') : day.format('MM-DD')}</div>
       </div>
     </div>
   )

@@ -19,6 +19,7 @@ interface TimeBucketProps {
   advance?: Offset | boolean
   isMultiple?: boolean
   area?: Offset
+  isMinShort?: boolean
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
@@ -32,6 +33,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     mode = 'table',
     advance,
     isMultiple,
+    isMinShort,
     area,
     cellRenderer,
   } = props
@@ -77,6 +79,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     onChange,
     advance,
     isMultiple,
+    isMinShort,
     cellRenderer,
   }
 
