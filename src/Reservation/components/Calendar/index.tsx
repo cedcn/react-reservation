@@ -1,13 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
-import moment, { Moment, MomentInput } from 'moment'
+import { Moment, MomentInput } from 'moment'
 import cx from 'classnames'
-import { map } from 'lodash'
 import CalendarHeader from '../CalendarHeader'
 import CalendarPanel from '../CalendarPanel'
-import { Days, isSpecifiedDays, Offset } from '../../interface'
-import { getDateByArea, getNow } from '../../utils'
+import { WeekCode, SpecifiedDays, Offset } from '../../interface'
 import { CalendarCellProps } from '../CalendarCell'
 
 // calendar
@@ -26,12 +24,15 @@ export interface CalendarProps {
   className?: string
   isMultiple?: boolean
   toggleOff?: boolean
-  days?: Days
+  disabledWeeks?: WeekCode[]
+  specifiedDays?: SpecifiedDays
+  disabledDays?: Moment[]
   advance?: Offset | boolean
-  area?: Offset
   quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota>
   cellRenderer?: React.ComponentType<CalendarCellProps>
   isMinShort?: boolean
+  startDay: Moment
+  endDay?: Moment
 }
 
 const Calendar: React.FC<CalendarProps> = (props) => {
@@ -40,46 +41,21 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     className,
     isMultiple,
     isMinShort,
-    area,
-    days,
     value,
     advance,
     onChange,
     cellRenderer,
+    startDay,
+    endDay,
+    specifiedDays,
+    disabledWeeks,
+    disabledDays,
   } = props
   const [currentMonthIdx, setCurrentMonthIdx] = useState(0)
 
-  let startDay: Moment | null | undefined
-  let endDay: Moment | null | undefined
-  let disabledWeeks
-  let disabledDays
-  let specifiedDays
-
-  if (isSpecifiedDays(days)) {
-    startDay = moment.min(days)
-    endDay = moment.max(days)
-    specifiedDays = map(days, (day) => day.clone().startOf('day'))
-  } else {
-    startDay = days?.startDay
-    endDay = days?.endDay
-    disabledWeeks = days?.disabledWeeks
-    disabledDays = days?.disabledDays
-  }
-
-  const today = getNow()
-  const startMonthDay = startDay && startDay.isAfter(today, 'minute') ? startDay.startOf('day') : today.startOf('day')
-  let endMonthDay = endDay ? endDay.endOf('day') : undefined
-  if (area) {
-    const endOffsetMonthDay = getDateByArea(area)
-
-    if (!endMonthDay || (endMonthDay && endMonthDay.isAfter(endOffsetMonthDay, 'minute'))) {
-      endMonthDay = endOffsetMonthDay
-    }
-  }
-
-  const currentMonthDay = startMonthDay.clone().month(currentMonthIdx + startMonthDay.month())
-  const canableToLast = startMonthDay.isBefore(currentMonthDay, 'month')
-  const canableToNext = !endMonthDay || (endMonthDay && endMonthDay.isAfter(currentMonthDay, 'month'))
+  const currentMonthDay = startDay.clone().month(currentMonthIdx + startDay.month())
+  const canableToLast = startDay.isBefore(currentMonthDay, 'month')
+  const canableToNext = !endDay || (endDay && endDay.isAfter(currentMonthDay, 'month'))
 
   const gotoMonth = (offset: number) => {
     setCurrentMonthIdx(currentMonthIdx + offset)
@@ -102,8 +78,8 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     prefixCls,
     currentMonthIdx,
     onChange,
-    startDay: startMonthDay,
-    endDay: endMonthDay,
+    startDay,
+    endDay,
     specifiedDays,
     disabledWeeks,
     disabledDays,

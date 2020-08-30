@@ -68,7 +68,7 @@ exports[`renders correctly 1`] = `
 }
 
 <div
-  className="reservation-by-day rV-by-day"
+  className="rV-calendar rV-by-day"
 >
   <div
     className="rV-header emotion-2"
