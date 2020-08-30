@@ -4,15 +4,14 @@ import React from 'react'
 import { isNil } from 'lodash'
 import { Moment } from 'moment'
 import cx from 'classnames'
-import CellStatus from '../CellStatus'
 import * as styles from './styles'
 
 export interface WeekRollerCellProps {
   prefixCls: string
   isSelected: boolean
   isToday: boolean
-  isStartDate: boolean
-  isEndDate: boolean
+  isStartDay: boolean
+  isEndDay: boolean
   isSelectable: boolean
   isBeforeStartDay: boolean
   isAfterEndDay: boolean
@@ -26,8 +25,8 @@ export interface WeekRollerCellProps {
 const CellRenderer: React.FC<WeekRollerCellProps> = (props) => {
   const {
     isToday,
-    isStartDate,
-    isEndDate,
+    isStartDay,
+    isEndDay,
     isSelectable,
     isNotChecked,
     isSelected,
@@ -44,8 +43,8 @@ const CellRenderer: React.FC<WeekRollerCellProps> = (props) => {
       onClick={onClick}
       role="gridcell"
       data-is-today={isToday}
-      data-is-start-day={isStartDate}
-      data-is-end-day={isEndDate}
+      data-is-start-day={isStartDay}
+      data-is-end-day={isEndDay}
       data-is-make-full={isMakefull}
       data-is-selectable={isSelectable}
       data-is-not-checked={isNotChecked}

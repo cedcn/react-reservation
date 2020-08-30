@@ -1,11 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
-import { last, first } from 'lodash'
 import useResize from '../../utils/useResize'
 import VirtualSlider from '../../components/VirtualSlider'
 import { TimeBucketValue, WeekCode, SpecifiedDays, TimeSection, ByTimeBucketCellProps, Offset } from '../../interface'
-import { gainDayByDayIdx, gainWeekIdxByDayIdx, gainWeekDays, WeekDay } from '../../utils'
 import TimeSectionListViewer from '../TimeSectionListViewer'
 import { Moment } from 'moment'
 import * as styles from './styles'

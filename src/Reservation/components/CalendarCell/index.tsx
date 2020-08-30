@@ -11,8 +11,8 @@ export interface CalendarCellProps {
   prefixCls: string
   isSelected: boolean
   isToday: boolean
-  isStartDate: boolean
-  isEndDate: boolean
+  isStartDay: boolean
+  isEndDay: boolean
   isBeforeStartDay: boolean
   isAfterEndDay: boolean
   isLastMonthDay: boolean
@@ -28,8 +28,8 @@ export interface CalendarCellProps {
 const CellRenderer: React.FC<CalendarCellProps> = (props) => {
   const {
     isToday,
-    isStartDate,
-    isEndDate,
+    isStartDay,
+    isEndDay,
     isBeforeStartDay,
     isAfterEndDay,
     isLastMonthDay,
@@ -49,8 +49,8 @@ const CellRenderer: React.FC<CalendarCellProps> = (props) => {
       onClick={onClick}
       role="gridcell"
       data-is-today={isToday}
-      data-is-start-day={isStartDate}
-      data-is-end-day={isEndDate}
+      data-is-start-day={isStartDay}
+      data-is-end-day={isEndDay}
       data-is-before-start-day={isBeforeStartDay}
       data-is-after-end-day={isAfterEndDay}
       data-is-last-month-day={isLastMonthDay}

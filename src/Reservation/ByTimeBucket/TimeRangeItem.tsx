@@ -10,8 +10,8 @@ export interface TimeRangeItemProps {
   quota?: ByTimeBucketQuota
   onChange: (value?: TimeBucketValue) => void
   current?: Moment
-  startDay: Moment
-  endDay?: Moment
+  isBeforeStartDay: boolean
+  isAfterEndDay: boolean
   isLoadingQuota?: boolean
   advance?: Offset | boolean
   isMultiple?: boolean
@@ -21,9 +21,6 @@ export interface TimeRangeItemProps {
 export interface ItemChildrenResult {
   isDisabled: boolean
   isSelected: boolean
-  isExpire: boolean
-  isBeforeStartDayMinute: boolean
-  isAfterEndDayMinute: boolean
   remaining?: number
   startTime: Moment
   endTime: Moment
@@ -34,8 +31,8 @@ const MAX_SHOW_QUOTA = 99
 const TimeRangeItem: React.FC<TimeRangeItemProps> = (props) => {
   const {
     advance,
-    startDay,
-    endDay,
+    isBeforeStartDay,
+    isAfterEndDay,
     quota,
     onChange,
     value,
@@ -47,15 +44,13 @@ const TimeRangeItem: React.FC<TimeRangeItemProps> = (props) => {
   } = props
 
   const [startDateTime, endDateTime] = timeRange
-  const isBeforeStartDayMinute = endDateTime.isBefore(startDay, 'minute')
-  const isAfterEndDayMinute = !!endDay && endDateTime.isAfter(endDay, 'minute')
 
   const remaining = quota?.remaining
   const isMakefull = !isNil(remaining) && remaining <= 0
   const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
   const isExpire = isExpireFun(startDateTime, advance)
 
-  const isSelectable = !isBeforeStartDayMinute && !isAfterEndDayMinute && !isNotChecked && !isExpire
+  const isSelectable = !isBeforeStartDay && !isAfterEndDay && !isNotChecked && !isExpire
   const isDisabled = !isSelectable || isMakefull
 
   const isSelected = value
@@ -99,8 +94,6 @@ const TimeRangeItem: React.FC<TimeRangeItemProps> = (props) => {
     return children({
       isMakefull,
       isDisabled,
-      isBeforeStartDayMinute,
-      isAfterEndDayMinute,
       isSelected,
       isExpire,
       isALittleRemaining,

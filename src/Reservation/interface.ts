@@ -53,8 +53,8 @@ export interface ByTimeBucketCellProps {
   prefixCls: string
   isSelected: boolean
   isToday: boolean
-  isBeforeStartDayMinute: boolean
-  isAfterEndDayMinute: boolean
+  isBeforeStartDay: boolean
+  isAfterEndDay: boolean
   isSelectable: boolean
   isNotChecked: boolean
   day: Moment

@@ -4,17 +4,8 @@ import React, { useCallback } from 'react'
 import moment, { Moment } from 'moment'
 import cx from 'classnames'
 import { DATE_COL_COUNT, DATE_ROW_COUNT } from '../../constants'
-import {
-  beforeCurrentMonthYear,
-  afterCurrentMonthYear,
-  isSameDay,
-  isExpireFun,
-  MonthDay,
-  getNow,
-  isNotCheckedFun,
-} from '../../utils'
+import { isSameDay, MonthDay } from '../../utils'
 import { CalendarValue, CalendarQuota } from '../Calendar'
-import { SpecifiedDays, WeekCode, Offset } from '../../interface'
 import { find, get, isUndefined, isArray, cloneDeep, filter, isEqual, isNil, some } from 'lodash'
 import CellRenderer, { CalendarCellProps } from '../CalendarCell'
 import * as styles from './styles'
@@ -22,18 +13,12 @@ import * as styles from './styles'
 export interface CalendarTBodyProps {
   width: number
   prefixCls: string
-  startDay: Moment
-  endDay?: Moment
   value?: CalendarValue | null
-  disabledWeeks?: WeekCode[]
-  specifiedDays?: SpecifiedDays
-  disabledDays?: Moment[]
   onChange?: (value?: CalendarValue | null) => void
   className?: string
   quotas?: CalendarQuota[]
   firstMonthDay: Moment
   monthDays: MonthDay[]
-  advance?: Offset | boolean
   cellRenderer?: React.ComponentType<CalendarCellProps>
   isMultiple?: boolean
   toggleOff?: boolean
@@ -45,15 +30,9 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     monthDays,
     firstMonthDay,
     value,
-    startDay,
-    endDay,
     width,
-    disabledWeeks = [],
-    specifiedDays,
-    disabledDays,
     onChange,
     quotas,
-    advance,
     isMultiple,
     toggleOff,
     cellRenderer: CustomCellRenderer,
@@ -102,21 +81,23 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     const dateCells = []
 
     for (let jIndex = 0; jIndex < DATE_COL_COUNT; jIndex++) {
-      const current = monthDays[passed].date
-      const today = getNow()
-      const isToday = isSameDay(current, today)
-      const isStartDate = isSameDay(current, startDay)
-      const isEndDate = isSameDay(current, endDay)
+      const { meta, date } = monthDays[passed]
 
-      const isLastMonthDay = beforeCurrentMonthYear(current, firstMonthDay)
-      const isNextMonthDay = afterCurrentMonthYear(current, firstMonthDay)
-      const isBeforeStartDay = current.isBefore(startDay, 'days')
-      const isAfterEndDay = !!endDay && current.isAfter(endDay, 'days')
+      const current = date
+      const {
+        isToday,
+        isStartDay,
+        isEndDay,
+        isLastMonthDay,
+        isNextMonthDay,
+        isBeforeStartDay,
+        isAfterEndDay,
+        isExpire,
+        isNotChecked,
+      } = meta
 
-      const isExpire = isExpireFun(current, advance)
       const currentQuota = find(quotas, (quota) => !!isSameDay(current, moment(quota.day)))
       const remaining = get(currentQuota, 'remaining')
-      const isNotChecked = isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays })
 
       const isSelectable =
         !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked && !isExpire
@@ -132,8 +113,8 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         prefixCls,
         isDisabled,
         isToday,
-        isStartDate,
-        isEndDate,
+        isStartDay,
+        isEndDay,
         isBeforeStartDay,
         isAfterEndDay,
         isLastMonthDay,

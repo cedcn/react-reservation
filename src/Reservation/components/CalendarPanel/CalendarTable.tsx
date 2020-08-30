@@ -47,26 +47,27 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
   const child = useMemo(
     () =>
       map(displayIdxs, (idx) => {
-        const { monthDays, firstMonthDay, lastMonthDay } = gainMonthDays(startDay, idx)
+        const { monthDays, firstMonthDay, lastMonthDay } = gainMonthDays({
+          startDay,
+          monthIdx: idx,
+          disabledWeeks,
+          specifiedDays,
+          disabledDays,
+          advance,
+          endDay,
+        })
         const key = firstMonthDay.format('YYYY-MM')
         const startTime = firstMonthDay.format()
         const endTime = lastMonthDay.format()
 
         const tBodyProps = {
           prefixCls,
-          startDay,
-          endDay,
-          disabledWeeks,
-          specifiedDays,
-          disabledDays,
           monthDays,
           onChange,
           firstMonthDay,
-          lastMonthDay,
           width,
           value,
           quotas,
-          advance,
           cellRenderer,
           isMultiple,
         }

@@ -42,7 +42,15 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
   } = props
 
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
-  const weekDays: WeekDay[] = gainWeekDays(startDay, currentWeekIdx)
+  const weekDays: WeekDay[] = gainWeekDays({
+    startDay,
+    weekIdx: currentWeekIdx,
+    disabledWeeks,
+    disabledDays,
+    specifiedDays,
+    endDay,
+  })
+
   const startWeekDay = first(weekDays)?.date
   const endWeekDay = last(weekDays)?.date
   const canToLastWeek = startDay.isBefore(startWeekDay, 'week')

@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { map } from 'lodash'
-import { isNotCheckedFun, gainDayByDayIdx } from '../../utils'
+import { gainNormalDay } from '../../utils'
 import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../../interface'
 import TimeSectionList from '../TimeSectionList'
 
@@ -47,9 +47,16 @@ const TimeSectionListViewer: React.FC<TimeSectionListViewerProps> = (props) => {
   const child = useMemo(
     () =>
       map(displayIdxs, (idx) => {
-        const currentDay = gainDayByDayIdx(startDay, idx)
+        const { date: currentDay, meta } = gainNormalDay({
+          startDay,
+          dayIdx: idx,
+          specifiedDays,
+          disabledWeeks,
+          disabledDays,
+          endDay,
+        })
+        const { isNotChecked, isBeforeStartDay, isAfterEndDay } = meta
         const key = currentDay.format('YYYY-MM-DD')
-        const isNotChecked = isNotCheckedFun(currentDay, { specifiedDays, disabledWeeks, disabledDays })
 
         return (
           <TimeSectionList
@@ -57,8 +64,8 @@ const TimeSectionListViewer: React.FC<TimeSectionListViewerProps> = (props) => {
             ranges={ranges}
             isNotChecked={isNotChecked}
             value={value}
-            startDay={startDay}
-            endDay={endDay}
+            isBeforeStartDay={isBeforeStartDay}
+            isAfterEndDay={isAfterEndDay}
             onChange={onChange}
             advance={advance}
             isMultiple={isMultiple}

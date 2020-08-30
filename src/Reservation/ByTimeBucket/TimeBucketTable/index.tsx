@@ -44,7 +44,16 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
   } = props
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
 
-  const weekDays: WeekDay[] = gainWeekDays(startDay, currentWeekIdx)
+  const weekDays: WeekDay[] = gainWeekDays({
+    startDay,
+    weekIdx: currentWeekIdx,
+    disabledWeeks,
+    specifiedDays,
+    disabledDays,
+    endDay,
+    advance,
+  })
+
   const startWeekDay = first(weekDays)?.date
   const endWeekDay = last(weekDays)?.date
 
@@ -117,7 +126,6 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
                   width={width}
                   displayIdxs={displayIdxs}
                   value={value}
-                  weekDays={weekDays}
                   ranges={ranges}
                   specifiedDays={specifiedDays}
                   disabledDays={disabledDays}

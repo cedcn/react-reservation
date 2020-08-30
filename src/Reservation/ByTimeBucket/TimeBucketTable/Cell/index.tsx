@@ -9,8 +9,8 @@ import * as styles from './styles'
 
 const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
   const {
-    isBeforeStartDayMinute,
-    isAfterEndDayMinute,
+    isBeforeStartDay,
+    isAfterEndDay,
     isSelectable,
     isNotChecked,
     isSelected,
@@ -24,8 +24,8 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
     <div
       onClick={onClick}
       role="gridcell"
-      data-is-before-start-day-minute={isBeforeStartDayMinute}
-      data-is-after-end-day-minute={isAfterEndDayMinute}
+      data-is-before-start-day={isBeforeStartDay}
+      data-is-after-end-day={isAfterEndDay}
       data-is-make-full={isMakefull}
       data-is-selectable={isSelectable}
       data-is-not-checked={isNotChecked}
@@ -39,7 +39,7 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
           styles.cell(theme, {
             isSelected,
             isSelectable,
-            isLineGray: isNotChecked || isBeforeStartDayMinute || isAfterEndDayMinute,
+            isLineGray: isNotChecked || isBeforeStartDay || isAfterEndDay,
             isMakeFull: isMakefull,
           })
         }

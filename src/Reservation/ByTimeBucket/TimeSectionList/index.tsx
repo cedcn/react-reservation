@@ -13,8 +13,8 @@ interface TimeBucketListProps {
   prefixCls: string
   value?: TimeBucketValue
   width: number
-  startDay: Moment
-  endDay?: Moment
+  isBeforeStartDay: boolean
+  isAfterEndDay: boolean
   currentDay: Moment
   ranges: TimeSection[]
   onChange: (value?: TimeBucketValue) => void
@@ -30,9 +30,9 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
     prefixCls,
     value,
     width,
-    startDay,
+    isBeforeStartDay,
     onChange,
-    endDay,
+    isAfterEndDay,
     ranges,
     quotas,
     advance,
@@ -53,31 +53,22 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
             timeRange={timeRange}
             current={currentDay}
             advance={advance}
-            startDay={startDay}
-            endDay={endDay}
+            isBeforeStartDay={isBeforeStartDay}
+            isAfterEndDay={isAfterEndDay}
             onChange={onChange}
             value={value}
             isMultiple={isMultiple}
             isNotChecked={isNotChecked}
           >
-            {({
-              isDisabled,
-              isSelected,
-              onClick,
-              startTime,
-              endTime,
-              remaining,
-              isBeforeStartDayMinute,
-              isAfterEndDayMinute,
-            }: ItemChildrenResult) => {
+            {({ isDisabled, isSelected, onClick, startTime, endTime, remaining }: ItemChildrenResult) => {
               const isSelectable = !isDisabled
 
               const cellRendererProps = {
                 prefixCls,
                 isSelected,
                 isToday: false,
-                isBeforeStartDayMinute,
-                isAfterEndDayMinute,
+                isBeforeStartDay,
+                isAfterEndDay,
                 isSelectable,
                 isNotChecked,
                 day: currentDay,

@@ -3,8 +3,8 @@ import { jsx } from '@emotion/core'
 import React, { useMemo } from 'react'
 import { map, isUndefined } from 'lodash'
 import moment, { Moment } from 'moment'
-import { gainWeekDays, gainDayByDayIdx, isSameDay, isNotCheckedFun, gainDayIdxByDay, getNow } from '../../utils'
-import { WeekCode, SpecifiedDays } from '../../interface'
+import { gainWeekDays } from '../../utils'
+import { WeekCode, SpecifiedDays, Offset } from '../../interface'
 import WeekRollerCell, { WeekRollerCellProps } from '../WeekRollerCell'
 import * as styles from './styles'
 
@@ -20,6 +20,7 @@ interface WeekRollerPanelProps {
   startDay: Moment
   endDay?: Moment
   cellRenderer?: React.ComponentType<WeekRollerCellProps>
+  advance?: Offset | boolean
 }
 
 const WeekRollerList: React.FC<WeekRollerPanelProps> = (props) => {
@@ -34,38 +35,39 @@ const WeekRollerList: React.FC<WeekRollerPanelProps> = (props) => {
     disabledDays,
     onChange,
     value,
+    advance,
     cellRenderer: CustomCellRenderer,
   } = props
 
   const child = useMemo(
     () =>
       map(displayIdxs, (idx) => {
-        const weekDaysItem = gainWeekDays(startDay, idx)
+        const weekDaysItem = gainWeekDays({
+          startDay,
+          endDay,
+          weekIdx: idx,
+          specifiedDays,
+          disabledWeeks,
+          disabledDays,
+          advance,
+        })
         const key = weekDaysItem[0].date.format()
 
         return (
           <div style={{ width }} key={key} css={styles.weekTabContainer} className={`${prefixCls}-week-tab-container`}>
             {map(weekDaysItem, (weekDay) => {
-              const isToday = isSameDay(weekDay.date, getNow())
-              const isNotChecked = isNotCheckedFun(weekDay.date, {
-                specifiedDays,
-                disabledWeeks,
-                disabledDays,
-              })
+              const { date, meta } = weekDay
+              const { isToday, isStartDay, isEndDay, isBeforeStartDay, isAfterEndDay, isNotChecked } = meta
 
-              const isStartDate = isSameDay(weekDay.date, startDay)
-              const isEndDate = isSameDay(weekDay.date, endDay)
-              const isBeforeStartDay = weekDay.date.isBefore(startDay, 'days')
-              const isAfterEndDay = !!endDay && weekDay.date.isAfter(endDay, 'days')
               const isDisabled = isNotChecked || isBeforeStartDay || isAfterEndDay
-              const isSelected = !!value?.isSame(weekDay.date, 'days')
+              const isSelected = !!value?.isSame(date, 'days')
 
               const cellRendererProps = {
                 prefixCls,
                 isDisabled,
                 isToday,
-                isStartDate,
-                isEndDate,
+                isStartDay,
+                isEndDay,
                 isBeforeStartDay,
                 isAfterEndDay,
                 isSelectable: !isDisabled,

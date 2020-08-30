@@ -70,11 +70,9 @@ const Com: React.FC<any> = () => {
   }
   moment.locale(locale)
 
-  return (
-    <div>
-      <button onClick={() => onLocaleChange('en')}>英文</button>
-      <button onClick={() => onLocaleChange('zh-cn')}>中文</button>
-      {/* <h2>默认</h2>
+  const byDayContent = (
+    <>
+      <h2>默认</h2>
       <ReservationByDay />
       <ReservationByDay defaultValue={moment().add(1, 'day')} />
       <ReservationByDay isMinShort />
@@ -99,12 +97,16 @@ const Com: React.FC<any> = () => {
       <h2>限定指定哪些天可预约</h2>
       <ReservationByDay days={[moment().subtract(60, 'day'), moment().add(0, 'day'), moment().add(100, 'day')]} />
       <h2>自定义 Cell Renderer</h2>
-      <ReservationByDay cellRenderer={({ currentDay }) => <span>{currentDay.format('DD')}</span>} />
+      <ReservationByDay cellRenderer={({ day }) => <span>{day.format('DD')}</span>} />
       <h2>限定可预约的范围</h2>
       <ReservationByDay area={{ value: 2, unit: OffsetUnit.Month }} />
-      <ReservationByDay advance area={{ value: 2, unit: OffsetUnit.Day }} /> */}
+      <ReservationByDay advance area={{ value: 2, unit: OffsetUnit.Day }} />
+    </>
+  )
 
-      {/* <h2>默认</h2>
+  const byTimeBucketTableContent = (
+    <>
+      <h2>默认</h2>
       <ReservationByTimeBucket ranges={ranges} />
 
       <h2>支持多选</h2>
@@ -136,13 +138,19 @@ const Com: React.FC<any> = () => {
       <h2>自定义 Cell Renderer</h2>
       <ReservationByTimeBucket
         ranges={ranges}
-        cellRenderer={({ currentDay }) => <span>{currentDay.format('DD')}</span>}
+        cellRenderer={({ day }) => <span>{day.format('DD')}</span>}
       />
       <h2>限定可预约的范围</h2>
       <ReservationByTimeBucket ranges={ranges} area={{ value: 2, unit: OffsetUnit.Month }} />
-      <ReservationByTimeBucket ranges={ranges} advance area={{ value: 2, unit: OffsetUnit.Day }} /> */}
-
-      <h2>默认</h2>
+      <ReservationByTimeBucket ranges={ranges} advance area={{ value: 2, unit: OffsetUnit.Day }} />
+    </>
+  )
+  return (
+    <div>
+      <button onClick={() => onLocaleChange('en')}>英文</button>
+      <button onClick={() => onLocaleChange('zh-cn')}>中文</button>
+      {byTimeBucketTableContent}
+      {/* <h2>默认</h2>
       <ReservationByTimeBucket ranges={ranges} mode="tabs" />
 
       <h2>支持多选</h2>
@@ -181,7 +189,7 @@ const Com: React.FC<any> = () => {
       />
       <h2>限定可预约的范围</h2>
       <ReservationByTimeBucket ranges={ranges} area={{ value: 2, unit: OffsetUnit.Month }} mode="tabs" />
-      <ReservationByTimeBucket ranges={ranges} advance area={{ value: 2, unit: OffsetUnit.Day }} mode="tabs" />
+      <ReservationByTimeBucket ranges={ranges} advance area={{ value: 2, unit: OffsetUnit.Day }} mode="tabs" /> */}
     </div>
   )
 }

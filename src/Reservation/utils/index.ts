@@ -25,12 +25,77 @@ export const formatRemainingQuota = (remainingQuota: number) => {
   return remainingQuota > MAX_SHOW_QUOTA ? MAX_SHOW_QUOTA + '+' : remainingQuota
 }
 
+export const isExpireFun = (day: Moment, advance?: Offset | boolean): boolean => {
+  if (isNil(advance)) {
+    return false
+  }
+
+  if (isBoolean(advance)) {
+    if (advance) {
+      return moment().isSameOrAfter(day, 'minute')
+    } else {
+      return false
+    }
+  }
+
+  if (isObject(advance)) {
+    return moment()
+      .add(advance.value, advance.unit)
+      .isSameOrAfter(day)
+  }
+
+  return false
+}
+
+export const isNotCheckedFun = (
+  currentDay: Moment,
+  {
+    specifiedDays,
+    disabledWeeks,
+    disabledDays,
+  }: { specifiedDays?: SpecifiedDays; disabledDays?: moment.Moment[]; disabledWeeks?: WeekCode[] }
+) => {
+  let isNotChecked
+  if (!isEmpty(specifiedDays)) {
+    isNotChecked = findIndex(specifiedDays, (day) => isSameDay(day, currentDay)) === -1
+  } else {
+    isNotChecked =
+      includes(disabledWeeks, currentDay.day()) || findIndex(disabledDays, (day) => isSameDay(day, currentDay)) !== -1
+  }
+
+  return isNotChecked
+}
+
 export type WeekDay = {
   week: string
   date: Moment
+  meta: {
+    isToday: boolean
+    isStartDay: boolean
+    isEndDay: boolean
+    isBeforeStartDay: boolean
+    isAfterEndDay: boolean
+    isNotChecked: boolean
+  }
 }
 
-export const gainWeekDays = (startDay: Moment, weekIdx: number): WeekDay[] => {
+export const gainWeekDays = ({
+  startDay,
+  weekIdx,
+  specifiedDays,
+  disabledWeeks,
+  disabledDays,
+  endDay,
+  advance,
+}: {
+  startDay: Moment
+  weekIdx: number
+  endDay?: Moment
+  disabledWeeks?: WeekCode[]
+  specifiedDays?: SpecifiedDays
+  disabledDays?: Moment[]
+  advance?: Offset | boolean
+}): WeekDay[] => {
   const localeData = startDay.localeData()
   const weekDays: WeekDay[] = []
 
@@ -39,14 +104,75 @@ export const gainWeekDays = (startDay: Moment, weekIdx: number): WeekDay[] => {
 
   for (let dateColIndex = 0; dateColIndex < DATE_COL_COUNT; dateColIndex++) {
     const now = firstWeekDay.clone().day(firstWeekDay.day() + dateColIndex)
-    weekDays[dateColIndex] = { week: localeData.weekdaysShort(now), date: now.clone().startOf('day') }
+    const current = now.clone().startOf('day')
+    weekDays[dateColIndex] = {
+      week: localeData.weekdaysShort(now),
+      date: current,
+      meta: {
+        isToday: isSameDay(current, getNow()),
+        isStartDay: isSameDay(current, startDay),
+        isEndDay: isSameDay(current, endDay),
+        isBeforeStartDay: current.isBefore(startDay, 'days'),
+        isAfterEndDay: !!endDay && current.isAfter(endDay, 'days'),
+        isNotChecked: isNotCheckedFun(current, {
+          specifiedDays,
+          disabledWeeks,
+          disabledDays,
+        }),
+      },
+    }
   }
 
   return weekDays
 }
 
-export const gainDayByDayIdx = (startDay: Moment, dayIdx: number) => {
-  return startDay.clone().add(dayIdx, 'days')
+export type NormalDay = {
+  date: Moment
+  meta: {
+    isToday: boolean
+    isStartDay: boolean
+    isEndDay: boolean
+    isBeforeStartDay: boolean
+    isAfterEndDay: boolean
+    isNotChecked: boolean
+    isExpire: boolean
+  }
+}
+
+export const gainNormalDay = ({
+  startDay,
+  endDay,
+  dayIdx,
+  disabledWeeks,
+  specifiedDays,
+  disabledDays,
+  advance,
+}: {
+  startDay: Moment
+  dayIdx: number
+  endDay?: Moment
+  disabledWeeks?: WeekCode[]
+  specifiedDays?: SpecifiedDays
+  disabledDays?: Moment[]
+  advance?: Offset | boolean
+}): NormalDay => {
+  const current = startDay.clone().add(dayIdx, 'days')
+  return {
+    date: current,
+    meta: {
+      isToday: isSameDay(current, getNow()),
+      isStartDay: isSameDay(current, startDay),
+      isEndDay: isSameDay(current, endDay),
+      isBeforeStartDay: current.isBefore(startDay, 'days'),
+      isAfterEndDay: !!endDay && current.isAfter(endDay, 'days'),
+      isExpire: isExpireFun(current, advance),
+      isNotChecked: isNotCheckedFun(current, {
+        specifiedDays,
+        disabledWeeks,
+        disabledDays,
+      }),
+    },
+  }
 }
 
 export const gainWeekIdxByDayIdx = (startDay: Moment, dayIdx: number) => {
@@ -65,6 +191,17 @@ export const gainDayIdxByDay = (startDay: Moment, day: Moment) => {
 export type MonthDay = {
   date: Moment
   month: string
+  meta: {
+    isToday: boolean
+    isStartDay: boolean
+    isEndDay: boolean
+    isLastMonthDay: boolean
+    isNextMonthDay: boolean
+    isBeforeStartDay: boolean
+    isAfterEndDay: boolean
+    isExpire: boolean
+    isNotChecked: boolean
+  }
 }
 
 export type MonthDays = {
@@ -73,7 +210,23 @@ export type MonthDays = {
   lastMonthDay: Moment
 }
 
-export const gainMonthDays = (startDay: Moment, monthIdx: number): MonthDays => {
+export const gainMonthDays = ({
+  startDay,
+  monthIdx,
+  endDay,
+  disabledWeeks,
+  specifiedDays,
+  disabledDays,
+  advance,
+}: {
+  startDay: Moment
+  monthIdx: number
+  endDay?: Moment
+  disabledWeeks?: WeekCode[]
+  specifiedDays?: SpecifiedDays
+  disabledDays?: Moment[]
+  advance?: Offset | boolean
+}): MonthDays => {
   const localeData = startDay.localeData()
   const monthDays: MonthDay[] = []
   const currentDay = startDay.clone().month(monthIdx + startDay.month())
@@ -104,6 +257,17 @@ export const gainMonthDays = (startDay: Moment, monthIdx: number): MonthDays => 
       monthDays.push({
         month: localeData.monthsShort(current),
         date: current,
+        meta: {
+          isToday: isSameDay(current, getNow()),
+          isStartDay: isSameDay(current, startDay),
+          isEndDay: isSameDay(current, endDay),
+          isBeforeStartDay: current.isBefore(startDay, 'days'),
+          isAfterEndDay: !!endDay && current.isAfter(endDay, 'days'),
+          isLastMonthDay: beforeCurrentMonthYear(current, firstMonthDay),
+          isNextMonthDay: afterCurrentMonthYear(current, lastMonthDay),
+          isExpire: isExpireFun(current, advance),
+          isNotChecked: isNotCheckedFun(current, { specifiedDays, disabledWeeks, disabledDays }),
+        },
       })
       passed++
     }
@@ -138,47 +302,6 @@ export const formatTimeSection = (timeSection: TimeSection): string => {
     .hour(endTime[0])
     .minute(endTime[1])
     .format('HH:mm')}`
-}
-
-export const isNotCheckedFun = (
-  currentDay: Moment,
-  {
-    specifiedDays,
-    disabledWeeks,
-    disabledDays,
-  }: { specifiedDays?: SpecifiedDays; disabledDays?: moment.Moment[]; disabledWeeks?: WeekCode[] }
-) => {
-  let isNotChecked
-  if (!isEmpty(specifiedDays)) {
-    isNotChecked = findIndex(specifiedDays, (day) => isSameDay(day, currentDay)) === -1
-  } else {
-    isNotChecked =
-      includes(disabledWeeks, currentDay.day()) || findIndex(disabledDays, (day) => isSameDay(day, currentDay)) !== -1
-  }
-
-  return isNotChecked
-}
-
-export const isExpireFun = (day: Moment, advance?: Offset | boolean): boolean => {
-  if (isNil(advance)) {
-    return false
-  }
-
-  if (isBoolean(advance)) {
-    if (advance) {
-      return moment().isSameOrAfter(day, 'minute')
-    } else {
-      return false
-    }
-  }
-
-  if (isObject(advance)) {
-    return moment()
-      .add(advance.value, advance.unit)
-      .isSameOrAfter(day)
-  }
-
-  return false
 }
 
 export const getDateByArea = (area: Offset, direction: 'before' | 'after' = 'after') => {

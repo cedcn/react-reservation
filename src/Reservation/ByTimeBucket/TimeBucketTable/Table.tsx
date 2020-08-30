@@ -11,7 +11,6 @@ interface TimeBucketListProps {
   displayIdxs: number[]
   width: number
   value?: TimeBucketValue
-  weekDays: WeekDay[]
   ranges: TimeSection[]
   prefixCls: string
   disabledWeeks?: WeekCode[]
@@ -54,7 +53,15 @@ const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
   const child = useMemo(
     () =>
       map(displayIdxs, (idx) => {
-        const weekDaysItem = gainWeekDays(startDay, idx)
+        const weekDaysItem = gainWeekDays({
+          startDay,
+          endDay,
+          weekIdx: idx,
+          disabledWeeks,
+          specifiedDays,
+          disabledDays,
+          advance,
+        })
         const key = weekDaysItem[0].date.format()
 
         const tBodyProps = {
