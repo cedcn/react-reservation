@@ -3,8 +3,8 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import { Moment } from 'moment'
 import { map, isUndefined } from 'lodash'
-import { getTimeRangeBySection } from '../../utils'
-import { TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../../interface'
+import { getTimeRangeBySection, gainWeekByCode } from '../../utils'
+import { TimeBucketValue, SectionRanges, Offset, ByTimeBucketCellProps, isSameSectionRanges } from '../../interface'
 import TimeRangeItem, { ItemChildrenResult } from '../TimeRangeItem'
 import TimeBucketCell from '../TimeBucketCell'
 import * as styles from './styles'
@@ -16,7 +16,7 @@ interface TimeBucketListProps {
   isBeforeStartDay: boolean
   isAfterEndDay: boolean
   currentDay: Moment
-  ranges: TimeSection[]
+  ranges: SectionRanges
   onChange: (value?: TimeBucketValue) => void
   quotas?: any
   advance?: Offset | boolean
@@ -42,9 +42,12 @@ const TimeBucketList: React.FC<TimeBucketListProps> = (props) => {
     cellRenderer: CustomCellRenderer,
   } = props
 
+  const key = gainWeekByCode(currentDay.day())?.key
+  const activeRanges = isSameSectionRanges(ranges) ? ranges : key && ranges[key]
+
   return (
     <div className={`${prefixCls}-time-section-list`} css={styles.timeSectionList} style={{ width }}>
-      {map(ranges, (section, index) => {
+      {map(activeRanges, (section, index) => {
         const timeRange = getTimeRangeBySection(currentDay, section)
 
         return (

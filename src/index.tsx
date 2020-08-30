@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
-import { OffsetUnit } from './Reservation/interface'
+import { OffsetUnit, DiffSectionRanges } from './Reservation/interface'
 import ReservationByDay, { ReservationByTimeBucket, TimeSection } from './Reservation'
 import 'normalize.css'
 import './index.css'
@@ -61,6 +61,28 @@ const ranges: TimeSection[] = [
   { start: [13, 30], end: [15, 30] },
   { start: [15, 30], end: [20, 30] },
 ]
+
+const diffRanges: DiffSectionRanges = {
+  monday: [
+    { start: [10, 10], end: [11, 20] },
+    { start: [11, 30], end: [13, 30] },
+    { start: [13, 30], end: [15, 30] },
+    { start: [15, 30], end: [20, 30] },
+  ],
+  thursday: [
+    { start: [10, 10], end: [11, 20] },
+    { start: [15, 30], end: [20, 30] },
+  ],
+  tuesday: [
+    { start: [10, 10], end: [11, 20] },
+    { start: [13, 30], end: [15, 30] },
+    { start: [15, 30], end: [20, 30] },
+  ],
+  saturday: [
+    { start: [10, 10], end: [11, 20] },
+    { start: [13, 30], end: [15, 30] },
+  ],
+}
 
 const Com: React.FC<any> = () => {
   const [locale, setLocale] = useState('zh-cn')
@@ -195,7 +217,9 @@ const Com: React.FC<any> = () => {
       {/* {byTimeBucketTableContent} */}
       {/* {byTimeBucketTabsContent} */}
       <h2>指定开始时间和结束时间</h2>
-      <ReservationByTimeBucket ranges={ranges} mode="tabs" isMultiple isMinShort />
+      <ReservationByTimeBucket ranges={diffRanges} mode="tabs" isMultiple isMinShort />
+      <h2>指定开始时间和结束时间</h2>
+      <h2>指定开始时间和结束时间</h2>
     </div>
   )
 }

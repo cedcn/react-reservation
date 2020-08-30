@@ -1,7 +1,7 @@
 import moment, { Moment, unitOfTime } from 'moment'
-import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT } from '../constants'
+import { MAX_SHOW_QUOTA, DATE_COL_COUNT, DATE_ROW_COUNT, WeekKey, WEEKS } from '../constants'
 import { SpecifiedDays, WeekCode, TimeSection, TimeRange, Offset } from '../interface'
-import { isNil, isEmpty, findIndex, includes, floor, isBoolean, isObject } from 'lodash'
+import { isNil, isEmpty, findIndex, includes, floor, isBoolean, isObject, find } from 'lodash'
 
 export const getNow = () => moment()
 export const isSameDay = (one: Moment, two?: Moment | null) => one && !!two && one.isSame(two, 'day')
@@ -320,3 +320,6 @@ export const getDateByArea = (area: Offset, direction: 'before' | 'after' = 'aft
 
 export const isSameRange = (range1?: TimeRange, range2?: TimeRange, granularity?: unitOfTime.StartOf): boolean =>
   !!range1?.[0]?.isSame(range2?.[0], granularity) && !!range1?.[1]?.isSame(range2?.[1], granularity)
+
+export const gainWeekByCode = (code: number) => find(WEEKS, (week) => week.code === code)
+export const gainWeekByKey = (key: WeekKey) => find(WEEKS, (week) => week.key === key)

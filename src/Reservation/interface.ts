@@ -36,6 +36,22 @@ export type ByDayCellProps = CalendarCellProps
 export type TimeUnit = [number, number]
 export type TimeSection = { start: TimeUnit; end: TimeUnit }
 
+export type SameSectionRanges = TimeSection[]
+export type DiffSectionRanges = {
+  monday?: TimeSection[]
+  tuesday?: TimeSection[]
+  wednesday?: TimeSection[]
+  thursday?: TimeSection[]
+  friday?: TimeSection[]
+  saturday?: TimeSection[]
+  sunday?: TimeSection[]
+}
+export type SectionRanges = SameSectionRanges | DiffSectionRanges
+
+export function isSameSectionRanges(ranges: SectionRanges): ranges is SameSectionRanges {
+  return isArray(ranges)
+}
+
 export type TimeRange = [Moment, Moment]
 export type TimeBucketValue = TimeRange | TimeRange[] | null
 

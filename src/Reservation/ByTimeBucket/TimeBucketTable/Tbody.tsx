@@ -4,7 +4,7 @@ import React from 'react'
 import { map, isUndefined } from 'lodash'
 import cx from 'classnames'
 import { WeekDay, formatTimeSection, getTimeRangeBySection } from '../../utils'
-import { TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../../interface'
+import { TimeBucketValue, SameSectionRanges, Offset, ByTimeBucketCellProps } from '../../interface'
 import TimeRangeItem, { ItemChildrenResult } from '../TimeRangeItem'
 import TimeBucketCell from './Cell'
 import * as styles from './styles'
@@ -13,7 +13,7 @@ export interface TimeBucketTbodyProps {
   width: number
   value?: TimeBucketValue
   weekDays: WeekDay[]
-  ranges: TimeSection[]
+  ranges: SameSectionRanges
   prefixCls: string
   onChange: (value?: TimeBucketValue) => void
   advance?: Offset | boolean

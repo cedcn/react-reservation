@@ -9,7 +9,7 @@ import {
   Theme,
   Days,
   ByTimeBucketQuota,
-  TimeSection,
+  SectionRanges,
   Offset,
   ByTimeBucketCellProps,
 } from './interface'
@@ -22,7 +22,7 @@ export interface ReservationTimeBucketProps {
   value?: TimeBucketValue
   mode?: 'tabs' | 'table'
   days?: Days
-  ranges: TimeSection[]
+  ranges: SectionRanges
   onChange?: (value?: TimeBucketValue) => void
   quotas?: ByTimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => ByTimeBucketQuota[])
   advance?: Offset | boolean

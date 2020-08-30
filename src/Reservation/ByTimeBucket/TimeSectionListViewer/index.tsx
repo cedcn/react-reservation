@@ -4,7 +4,7 @@ import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { map } from 'lodash'
 import { gainNormalDay } from '../../utils'
-import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../../interface'
+import { WeekCode, SpecifiedDays, TimeBucketValue, SectionRanges, Offset, ByTimeBucketCellProps } from '../../interface'
 import TimeSectionList from '../TimeSectionList'
 
 interface TimeSectionListViewerProps {
@@ -14,7 +14,7 @@ interface TimeSectionListViewerProps {
   width: number
   startDay: Moment
   endDay?: Moment
-  ranges: TimeSection[]
+  ranges: SectionRanges
   onChange: (value?: TimeBucketValue) => void
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays

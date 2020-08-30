@@ -9,7 +9,14 @@ import VirtualSlider from '../../components/VirtualSlider'
 import { gainWeekDays, WeekDay } from '../../utils'
 import WeekRollerHeader from '../../components/WeekRollerHeader'
 import TimeBucketTable from './Table'
-import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset, ByTimeBucketCellProps } from '../../interface'
+import {
+  TimeBucketValue,
+  SameSectionRanges,
+  WeekCode,
+  SpecifiedDays,
+  Offset,
+  ByTimeBucketCellProps,
+} from '../../interface'
 import * as styles from './styles'
 
 export interface TimeBucketViewerProps {
@@ -17,7 +24,7 @@ export interface TimeBucketViewerProps {
   startDay: Moment
   endDay?: Moment
   value?: TimeBucketValue
-  ranges: TimeSection[]
+  ranges: SameSectionRanges
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]

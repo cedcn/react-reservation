@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
 import useResize from '../../utils/useResize'
 import VirtualSlider from '../../components/VirtualSlider'
-import { TimeBucketValue, WeekCode, SpecifiedDays, TimeSection, ByTimeBucketCellProps, Offset } from '../../interface'
+import { TimeBucketValue, WeekCode, SpecifiedDays, SectionRanges, ByTimeBucketCellProps, Offset } from '../../interface'
 import TimeSectionListViewer from '../TimeSectionListViewer'
 import { Moment } from 'moment'
 import { gainDayIdxByDay } from '../../utils'
@@ -19,7 +19,7 @@ export interface TimeBucketTabsProps {
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
-  ranges: TimeSection[]
+  ranges: SectionRanges
   isMultiple?: boolean
   isMinShort?: boolean
   advance?: Offset | boolean

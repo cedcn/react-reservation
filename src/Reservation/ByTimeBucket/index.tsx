@@ -5,7 +5,16 @@ import moment, { Moment } from 'moment'
 import TimeBucketTable from './TimeBucketTable'
 import TimeBucketTabs from './TimeBucketTabs'
 import { map } from 'lodash'
-import { isSpecifiedDays, Days, TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../interface'
+import {
+  isSpecifiedDays,
+  Days,
+  TimeBucketValue,
+  SectionRanges,
+  Offset,
+  ByTimeBucketCellProps,
+  isSameSectionRanges,
+} from '../interface'
+
 import { getNow, getDateByArea } from '../utils'
 import comss from '../styles'
 
@@ -15,7 +24,7 @@ interface TimeBucketProps {
   value?: TimeBucketValue
   onChange: (value?: TimeBucketValue) => void
   mode?: 'tabs' | 'table'
-  ranges: TimeSection[]
+  ranges: SectionRanges
   advance?: Offset | boolean
   isMultiple?: boolean
   area?: Offset
@@ -69,7 +78,6 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
 
   const commonProps = {
     prefixCls,
-    ranges,
     startDay,
     endDay,
     disabledWeeks,
@@ -83,9 +91,23 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     cellRenderer,
   }
 
+  let content
+
+  if (mode === 'tabs') {
+    content = <TimeBucketTabs ranges={ranges} {...commonProps} />
+  }
+
+  if (mode === 'table') {
+    content = isSameSectionRanges(ranges) ? (
+      <TimeBucketTable ranges={ranges} {...commonProps} />
+    ) : (
+      <TimeBucketTabs ranges={ranges} {...commonProps} />
+    )
+  }
+
   return (
     <div className={`${prefixCls}-time-bucket`} css={comss.reservation}>
-      {mode === 'tabs' ? <TimeBucketTabs {...commonProps} /> : <TimeBucketTable {...commonProps} />}
+      {content}
     </div>
   )
 }

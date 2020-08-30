@@ -4,14 +4,21 @@ import React, { useMemo } from 'react'
 import { Moment } from 'moment'
 import { map } from 'lodash'
 import TimeBucketTbody from './Tbody'
-import { gainWeekDays, WeekDay } from '../../utils'
-import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset, ByTimeBucketCellProps } from '../../interface'
+import { gainWeekDays } from '../../utils'
+import {
+  TimeBucketValue,
+  SameSectionRanges,
+  WeekCode,
+  SpecifiedDays,
+  Offset,
+  ByTimeBucketCellProps,
+} from '../../interface'
 
 interface TimeBucketListProps {
   displayIdxs: number[]
   width: number
   value?: TimeBucketValue
-  ranges: TimeSection[]
+  ranges: SameSectionRanges
   prefixCls: string
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays
