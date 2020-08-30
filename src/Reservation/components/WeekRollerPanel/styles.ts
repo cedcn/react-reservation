@@ -58,4 +58,6 @@ const timeSection = css`
   }
 `
 
-export { tabs, weekTab, weekTabContainer, timeSection, cellStatus, cellStatusContent }
+const panel = css``
+
+export { tabs, weekTab, panel, weekTabContainer, timeSection, cellStatus, cellStatusContent }

@@ -76,13 +76,12 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
                   isNotChecked={isNotChecked}
                 >
                   {({
-                    isMakefull,
                     isDisabled,
                     isSelected,
                     onClick,
                     startTime,
                     endTime,
-                    remainingQuota,
+                    remaining,
                     isBeforeStartDayMinute,
                     isAfterEndDayMinute,
                   }: ItemChildrenResult) => {
@@ -94,10 +93,9 @@ const TimeBucketTbody: React.FC<TimeBucketTbodyProps> = (props) => {
                       isToday: false,
                       isBeforeStartDayMinute,
                       isAfterEndDayMinute,
-                      isMakefull,
                       isSelectable,
                       isNotChecked,
-                      currentDay: current,
+                      day: current,
                       onClick,
                       startTime,
                       endTime,

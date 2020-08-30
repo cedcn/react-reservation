@@ -39,7 +39,6 @@ export interface CalendarTBodyProps {
   toggleOff?: boolean
 }
 
-const MAX_SHOW_QUOTA = 99
 const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
   const {
     prefixCls,
@@ -122,7 +121,6 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
       const isSelectable =
         !isLastMonthDay && !isNextMonthDay && !isBeforeStartDay && !isAfterEndDay && !isNotChecked && !isExpire
       const isMakefull = !isNil(remaining) && remaining <= 0
-      const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
       const isDisabled = !isSelectable || isMakefull
       const isSelected = isArray(value) ? some(value, (item) => isSameDay(current, item)) : isSameDay(current, value)
 
@@ -140,11 +138,10 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         isAfterEndDay,
         isLastMonthDay,
         isNextMonthDay,
-        isMakefull,
         isSelectable,
         isNotChecked,
         isSelected,
-        currentDay: current,
+        day: current,
         remaining,
         onClick: onCellClick.bind(null, current, isDisabled, isSelected),
       }

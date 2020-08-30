@@ -4,13 +4,12 @@ import React, { useState } from 'react'
 import { last, first } from 'lodash'
 import useResize from '../../utils/useResize'
 import VirtualSlider from '../../components/VirtualSlider'
-import { TimeBucketValue, WeekCode, SpecifiedDays, TimeSection, ByTimeBucketCellProps } from '../../interface'
+import { TimeBucketValue, WeekCode, SpecifiedDays, TimeSection, ByTimeBucketCellProps, Offset } from '../../interface'
 import { gainDayByDayIdx, gainWeekIdxByDayIdx, gainWeekDays, WeekDay } from '../../utils'
-import TImeBucketViewer from './TImeBucketViewer'
-import WeekList from './WeekList'
+import TimeSectionListViewer from '../TimeSectionListViewer'
 import { Moment } from 'moment'
-import TimeBucketHeader from '../../components/TimeBucketHeader'
 import * as styles from './styles'
+import WeekRoller from '../../components/WeekRoller'
 
 export interface TimeBucketTabsProps {
   prefixCls: string
@@ -23,6 +22,7 @@ export interface TimeBucketTabsProps {
   disabledDays?: Moment[]
   ranges: TimeSection[]
   isMultiple?: boolean
+  advance?: Offset | boolean
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
@@ -39,29 +39,24 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
     value,
     isMultiple,
     cellRenderer,
+    advance,
   } = props
 
   const [viewEl, width] = useResize()
 
   const [currentDayIdx, setCurrentDayIdx] = useState(0)
-  const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
+  const [currentDay, setCurrentDay] = useState<Moment>(startDay)
 
-  const currentDay = gainDayByDayIdx(startDay, currentDayIdx)
+  // const currentDay = gainDayByDayIdx(startDay, currentDayIdx)
   const canToLastDay = startDay.isBefore(currentDay, 'day')
   const canToNextDay = !endDay || (endDay && endDay.isAfter(currentDay, 'day'))
-
-  const weekDays: WeekDay[] = gainWeekDays(startDay, currentWeekIdx)
-  const startWeekDay = first(weekDays)?.date
-  const endWeekDay = last(weekDays)?.date
-  const canToLastWeek = startDay.isBefore(startWeekDay, 'week')
-  const canToNextWeek = !endDay || (endDay && endDay.isAfter(endWeekDay, 'week'))
 
   const toNextDay = (): boolean => {
     if (!canToNextDay) return false
 
     const targetCurrentDayIdx = currentDayIdx + 1
     setCurrentDayIdx(targetCurrentDayIdx)
-    setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, targetCurrentDayIdx))
+    // setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, targetCurrentDayIdx))
     return true
   }
 
@@ -70,58 +65,24 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
 
     const targetCurrentDayIdx = currentDayIdx - 1
     setCurrentDayIdx(targetCurrentDayIdx)
-    setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, targetCurrentDayIdx))
-    return true
-  }
-
-  const toNextWeek = (): boolean => {
-    if (!canToNextWeek) return false
-    setCurrentWeekIdx(currentWeekIdx + 1)
-    return true
-  }
-
-  const toLastWeek = (): boolean => {
-    if (!canToLastWeek) return false
-    setCurrentWeekIdx(currentWeekIdx - 1)
+    // setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, targetCurrentDayIdx))
     return true
   }
 
   return (
     <div>
-      <TimeBucketHeader
-        prefixCls={prefixCls}
-        startWeekDay={startWeekDay}
-        endWeekDay={endWeekDay}
-        canToLast={canToLastWeek}
-        canToNext={canToNextWeek}
-        toNext={toNextWeek}
-        toLast={toLastWeek}
-      />
       <div className={`${prefixCls}-tabs`} ref={viewEl} css={styles.tabs}>
-        {!!width && (
-          <VirtualSlider
-            className={`${prefixCls}-week-list-container`}
-            width={width}
-            idx={currentWeekIdx}
-            toNext={toNextWeek}
-            toLast={toLastWeek}
-          >
-            {({ displayIdxs }) => (
-              <WeekList
-                width={width}
-                currentDayIdx={currentDayIdx}
-                setCurrentDayIdx={setCurrentDayIdx}
-                displayIdxs={displayIdxs}
-                disabledWeeks={disabledWeeks}
-                specifiedDays={specifiedDays}
-                disabledDays={disabledDays}
-                startDay={startDay}
-                endDay={endDay}
-                prefixCls={prefixCls}
-              />
-            )}
-          </VirtualSlider>
-        )}
+        <WeekRoller
+          prefixCls={prefixCls}
+          startDay={startDay}
+          value={currentDay}
+          onChange={(newValue) => {
+            newValue && setCurrentDay(newValue)
+          }}
+          disabledWeeks={disabledWeeks}
+          specifiedDays={specifiedDays}
+          disabledDays={disabledDays}
+        />
         <br />
         {!!width && (
           <VirtualSlider
@@ -132,7 +93,7 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
             toLast={toLastDay}
           >
             {({ displayIdxs }) => (
-              <TImeBucketViewer
+              <TimeSectionListViewer
                 width={width}
                 value={value}
                 displayIdxs={displayIdxs}
@@ -145,8 +106,9 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
                 isMultiple={isMultiple}
                 ranges={ranges}
                 cellRenderer={cellRenderer}
+                advance={advance}
                 onChange={(value?: TimeBucketValue) => {
-                  setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, currentDayIdx))
+                  // setCurrentWeekIdx(gainWeekIdxByDayIdx(startDay, currentDayIdx))
                   onChange(value)
                 }}
               />

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
+import { isNil } from 'lodash'
 import { Moment } from 'moment'
 import cx from 'classnames'
 import CellStatus from '../CellStatus'
@@ -16,10 +17,9 @@ export interface CalendarCellProps {
   isAfterEndDay: boolean
   isLastMonthDay: boolean
   isNextMonthDay: boolean
-  isMakefull: boolean
   isSelectable: boolean
   isNotChecked: boolean
-  currentDay: Moment
+  day: Moment
   remaining?: number
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, isDisabled?: boolean, isSelected?: boolean) => void
   className?: string
@@ -34,15 +34,15 @@ const CellRenderer: React.FC<CalendarCellProps> = (props) => {
     isAfterEndDay,
     isLastMonthDay,
     isNextMonthDay,
-    isMakefull,
     isSelectable,
     isNotChecked,
     isSelected,
-    currentDay,
+    day,
     remaining,
     onClick,
     prefixCls,
   } = props
+  const isMakefull = !isNil(remaining) && remaining <= 0
 
   return (
     <div
@@ -75,14 +75,8 @@ const CellRenderer: React.FC<CalendarCellProps> = (props) => {
           })
         }
       >
-        <span>{currentDay.format('DD')}</span>
-        <CellStatus
-          isSelectable={isSelectable}
-          isSelected={!!isSelected}
-          remaining={remaining}
-          isMakefull={isMakefull}
-          prefixCls={prefixCls}
-        />
+        <span>{day.format('DD')}</span>
+        <CellStatus isSelectable={isSelectable} isSelected={!!isSelected} remaining={remaining} prefixCls={prefixCls} />
       </div>
     </div>
   )

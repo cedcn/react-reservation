@@ -4,7 +4,7 @@ import React from 'react'
 import { Moment } from 'moment'
 import * as styles from '../CalendarHeader/styles'
 
-interface TimeBucketHeaderProps {
+interface WeekRollerHeaderProps {
   prefixCls?: string
   startWeekDay?: Moment
   endWeekDay?: Moment
@@ -14,7 +14,7 @@ interface TimeBucketHeaderProps {
   toNext: () => void
 }
 
-const TimeBucketHeader: React.FC<TimeBucketHeaderProps> = (props) => {
+const WeekRollerHeader: React.FC<WeekRollerHeaderProps> = (props) => {
   const { prefixCls, startWeekDay, endWeekDay, toLast, toNext, canToLast, canToNext } = props
 
   return (
@@ -46,4 +46,4 @@ const TimeBucketHeader: React.FC<TimeBucketHeaderProps> = (props) => {
   )
 }
 
-export default TimeBucketHeader
+export default WeekRollerHeader

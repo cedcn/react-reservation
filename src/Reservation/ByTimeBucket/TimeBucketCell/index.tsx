@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
+import { isNil } from 'lodash'
 import cx from 'classnames'
 import { ByTimeBucketCellProps } from '../../interface'
 import CellStatus from '../../components/CellStatus'
@@ -10,7 +11,6 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
   const {
     isBeforeStartDayMinute,
     isAfterEndDayMinute,
-    isMakefull,
     isSelectable,
     isNotChecked,
     isSelected,
@@ -20,6 +20,7 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
     startTime,
     endTime,
   } = props
+  const isMakefull = !isNil(remaining) && remaining <= 0
 
   return (
     <div
@@ -53,7 +54,6 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
           isSelectable={isSelectable}
           isSelected={!!isSelected}
           remaining={remaining}
-          isMakefull={isMakefull}
           prefixCls={prefixCls}
         />
       </div>

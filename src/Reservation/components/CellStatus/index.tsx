@@ -23,14 +23,14 @@ interface CellStatusProps {
   prefixCls: string
   isSelectable: boolean
   isSelected: boolean
-  isMakefull: boolean
   remaining?: number | null
   remainingMaxThreshold?: number
   className?: string
 }
 
 const CellStatus: React.FC<CellStatusProps> = React.memo((props) => {
-  const { prefixCls, isSelectable, isSelected, isMakefull, remaining, className, remainingMaxThreshold = 10000 } = props
+  const { prefixCls, isSelectable, isSelected, remaining, className, remainingMaxThreshold = 10000 } = props
+  const isMakefull = !isNil(remaining) && remaining <= 0
 
   const gainContent = () => {
     if (isSelectable && isMakefull) {
@@ -53,7 +53,7 @@ const CellStatus: React.FC<CellStatusProps> = React.memo((props) => {
   }
 
   return (
-    <div className={cx(`${prefixCls}-cell-status`, className)} css={ styles.cellStatus}>
+    <div className={cx(`${prefixCls}-cell-status`, className)} css={styles.cellStatus}>
       {content}
     </div>
   )

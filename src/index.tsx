@@ -177,7 +177,7 @@ const Com: React.FC<any> = () => {
       <ReservationByTimeBucket
         ranges={ranges}
         mode="tabs"
-        cellRenderer={({ currentDay }) => <span>{currentDay.format('DD')}</span>}
+        cellRenderer={({ day }) => <span>{day.format('DD')}</span>}
       />
       <h2>限定可预约的范围</h2>
       <ReservationByTimeBucket ranges={ranges} area={{ value: 2, unit: OffsetUnit.Month }} mode="tabs" />

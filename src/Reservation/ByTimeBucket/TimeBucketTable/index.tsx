@@ -7,7 +7,7 @@ import useResize from '../../utils/useResize'
 import moment, { Moment } from 'moment'
 import VirtualSlider from '../../components/VirtualSlider'
 import { gainWeekDays, WeekDay } from '../../utils'
-import TimeBucketHeader from '../../components/TimeBucketHeader'
+import WeekRollerHeader from '../../components/WeekRollerHeader'
 import TimeBucketTable from './Table'
 import { TimeBucketValue, TimeSection, WeekCode, SpecifiedDays, Offset, ByTimeBucketCellProps } from '../../interface'
 import * as styles from './styles'
@@ -80,7 +80,7 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
 
   return (
     <div>
-      <TimeBucketHeader
+      <WeekRollerHeader
         prefixCls={prefixCls}
         startWeekDay={startWeekDay}
         endWeekDay={endWeekDay}

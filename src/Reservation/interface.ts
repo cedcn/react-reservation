@@ -55,10 +55,9 @@ export interface ByTimeBucketCellProps {
   isToday: boolean
   isBeforeStartDayMinute: boolean
   isAfterEndDayMinute: boolean
-  isMakefull: boolean
   isSelectable: boolean
   isNotChecked: boolean
-  currentDay: Moment
+  day: Moment
   remaining?: number
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, isDisabled?: boolean, isSelected?: boolean) => void
   className?: string

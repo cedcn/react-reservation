@@ -19,13 +19,12 @@ export interface TimeRangeItemProps {
 }
 
 export interface ItemChildrenResult {
-  isMakefull: boolean
   isDisabled: boolean
   isSelected: boolean
   isExpire: boolean
   isBeforeStartDayMinute: boolean
   isAfterEndDayMinute: boolean
-  remainingQuota?: number
+  remaining?: number
   startTime: Moment
   endTime: Moment
   onClick: () => void

@@ -116,7 +116,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   }
 
   return (
-    <div className={cx('reservation-by-day', className)}>
+    <div className={cx(`${prefixCls}-calendar`, className)}>
       <CalendarHeader
         prefixCls={prefixCls}
         currentDay={currentMonthDay}

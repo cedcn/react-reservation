@@ -5,9 +5,9 @@ import moment, { Moment } from 'moment'
 import { map } from 'lodash'
 import { isNotCheckedFun, gainDayByDayIdx } from '../../utils'
 import { WeekCode, SpecifiedDays, TimeBucketValue, TimeSection, Offset, ByTimeBucketCellProps } from '../../interface'
-import TimeBucketList from './TimeBucketList'
+import TimeSectionList from '../TimeSectionList'
 
-interface TImeBucketViewerProps {
+interface TimeSectionListViewerProps {
   prefixCls: string
   value?: TimeBucketValue
   displayIdxs: number[]
@@ -25,7 +25,7 @@ interface TImeBucketViewerProps {
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
-const TImeBucketViewer: React.FC<TImeBucketViewerProps> = (props) => {
+const TimeSectionListViewer: React.FC<TimeSectionListViewerProps> = (props) => {
   const {
     displayIdxs,
     prefixCls,
@@ -52,7 +52,7 @@ const TImeBucketViewer: React.FC<TImeBucketViewerProps> = (props) => {
         const isNotChecked = isNotCheckedFun(currentDay, { specifiedDays, disabledWeeks, disabledDays })
 
         return (
-          <TimeBucketList
+          <TimeSectionList
             key={key}
             ranges={ranges}
             isNotChecked={isNotChecked}
@@ -91,4 +91,4 @@ const TImeBucketViewer: React.FC<TImeBucketViewerProps> = (props) => {
   return <React.Fragment>{child}</React.Fragment>
 }
 
-export default React.memo(TImeBucketViewer)
+export default React.memo(TimeSectionListViewer)
