@@ -84,8 +84,16 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
   }, [currentWeekIdx])
 
   useEffect(() => {
-    if (value && !isSameDay(value, prevValue)) {
-      setCurrentWeekIdx(gainWeekIdxByDay(startDay, value))
+    if (value) {
+      if (!isSameDay(value, prevValue)) {
+        setCurrentWeekIdx(gainWeekIdxByDay(startDay, value))
+      }
+
+      const currentWeekDay = find(weekDays, (day) => isSameDay(day.date, value))
+
+      if (currentWeekDay?.meta.isNotChecked) {
+        onChange?.(value.clone().add(1, 'day'))
+      }
     }
   }, [value])
 

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import useResize from '../../utils/useResize'
 import VirtualSlider from '../../components/VirtualSlider'
 import { TimeBucketValue, WeekCode, SpecifiedDays, SectionRanges, ByTimeBucketCellProps, Offset } from '../../interface'
@@ -53,7 +53,6 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
 
   const toNextDay = (): boolean => {
     if (!canToNextDay) return false
-
     setCurrentDay(currentDay.clone().add(1, 'day'))
     return true
   }
@@ -63,6 +62,9 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
     setCurrentDay(currentDay.clone().add(-1, 'day'))
     return true
   }
+  const onTimeSectionChange = useCallback((value?: TimeBucketValue) => {
+    onChange(value)
+  }, [])
 
   return (
     <div>
@@ -105,9 +107,7 @@ const TimeBucketTabs: React.FC<TimeBucketTabsProps> = (props) => {
                 ranges={ranges}
                 cellRenderer={cellRenderer}
                 advance={advance}
-                onChange={(value?: TimeBucketValue) => {
-                  onChange(value)
-                }}
+                onChange={onTimeSectionChange}
               />
             )}
           </VirtualSlider>

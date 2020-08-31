@@ -69,7 +69,7 @@ const diffRanges: DiffSectionRanges = {
     { start: [13, 30], end: [15, 30] },
     { start: [15, 30], end: [20, 30] },
   ],
-  thursday: [
+  wednesday: [
     { start: [10, 10], end: [11, 20] },
     { start: [15, 30], end: [20, 30] },
   ],
@@ -217,7 +217,13 @@ const Com: React.FC<any> = () => {
       {/* {byTimeBucketTableContent} */}
       {/* {byTimeBucketTabsContent} */}
       <h2>指定开始时间和结束时间</h2>
-      <ReservationByTimeBucket ranges={diffRanges} mode="tabs" isMultiple isMinShort />
+      <ReservationByTimeBucket
+        ranges={diffRanges}
+        mode="tabs"
+        isMultiple
+        isMinShort
+        days={{ startDay: moment().add(1, 'day'), disabledWeeks: [0, 6] }}
+      />
       <h2>指定开始时间和结束时间</h2>
       <h2>指定开始时间和结束时间</h2>
     </div>
