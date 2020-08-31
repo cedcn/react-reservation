@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import moment from 'moment'
-import { OffsetUnit, DiffSectionRanges } from './Reservation/interface'
+import moment, { Moment } from 'moment'
+import { OffsetUnit, DiffSectionRanges, ByDayQuota, ByTimeBucketQuota } from './Reservation/interface'
 import ReservationByDay, { ReservationByTimeBucket, TimeSection } from './Reservation'
 import 'normalize.css'
 import './index.css'
@@ -25,34 +25,79 @@ const gainTimeBucketQuotas = () => {
   ]
 }
 
-const quotaRequest = (start: string, end: string) =>
-  new Promise((resolve, reject) => {
-    resolve([
-      {
-        day: moment()
-          .add(1, 'day')
-          .format('YYYY-MM-DD'),
-        remaining: 1,
-      },
-      {
-        day: moment()
-          .add(3, 'day')
-          .format('YYYY-MM-DD'),
-        remaining: 0,
-      },
-      {
-        day: moment()
-          .add(10, 'day')
-          .format('YYYY-MM-DD'),
-        remaining: 100,
-      },
-      {
-        day: moment()
-          .add(20, 'day')
-          .format('YYYY-MM-DD'),
-        remaining: 88,
-      },
-    ])
+const quotaRequest = (start: Moment, end: Moment) =>
+  new Promise<ByDayQuota[]>((resolve, reject) => {
+    setTimeout(() => {
+      resolve([
+        {
+          day: moment()
+            .add(1, 'day')
+            .format('YYYY-MM-DD'),
+          remaining: 1,
+        },
+        {
+          day: moment()
+            .add(3, 'day')
+            .format('YYYY-MM-DD'),
+          remaining: 0,
+        },
+        {
+          day: moment()
+            .add(10, 'day')
+            .format('YYYY-MM-DD'),
+          remaining: 100,
+        },
+        {
+          day: moment()
+            .add(20, 'day')
+            .format('YYYY-MM-DD'),
+          remaining: 88,
+        },
+      ])
+    }, 1000)
+  })
+
+const byTimeBucketQuotaRequest = (start: Moment, end: Moment) =>
+  new Promise<ByTimeBucketQuota[]>((resolve, reject) => {
+    setTimeout(() => {
+      resolve([
+        {
+          start: moment()
+            .hour(10)
+            .minute(10)
+            .format('YYYY-MM-DD HH:ss'),
+          end: moment()
+            .hour(11)
+            .minute(20)
+            .format('YYYY-MM-DD HH:ss'),
+          remaining: 10,
+        },
+        {
+          start: moment()
+            .hour(15)
+            .minute(30)
+            .format('YYYY-MM-DD HH:ss'),
+          end: moment()
+            .hour(20)
+            .minute(30)
+            .format('YYYY-MM-DD HH:ss'),
+          remaining: 88,
+        },
+        {
+          start: moment()
+            .add(1, 'day')
+            .hour(10)
+            .minute(10)
+            .format('YYYY-MM-DD HH:ss'),
+          end: moment()
+            .add(1, 'day')
+            .hour(11)
+            .minute(20)
+            .format('YYYY-MM-DD HH:ss'),
+          remaining: 1,
+        },
+      ])
+    }, 1000)
   })
 
 const ranges: TimeSection[] = [
@@ -96,6 +141,7 @@ const Com: React.FC<any> = () => {
     <>
       <h2>默认</h2>
       <ReservationByDay />
+      <ReservationByDay quotaRequest={quotaRequest} />
       <ReservationByDay defaultValue={moment().add(1, 'day')} />
       <ReservationByDay isMinShort />
       <h2>支持多选</h2>
@@ -216,16 +262,9 @@ const Com: React.FC<any> = () => {
       {/* {byDayContent} */}
       {/* {byTimeBucketTableContent} */}
       {/* {byTimeBucketTabsContent} */}
-      <h2>指定开始时间和结束时间</h2>
-      <ReservationByTimeBucket
-        ranges={diffRanges}
-        mode="tabs"
-        isMultiple
-        isMinShort
-        days={{ startDay: moment().add(1, 'day'), disabledWeeks: [0, 6] }}
-      />
-      <h2>指定开始时间和结束时间</h2>
-      <h2>指定开始时间和结束时间</h2>
+      <ReservationByDay quotaRequest={quotaRequest} />
+      <ReservationByTimeBucket ranges={ranges} quotaRequest={byTimeBucketQuotaRequest} />
+      <ReservationByTimeBucket ranges={ranges} quotaRequest={byTimeBucketQuotaRequest} mode="tabs" />
     </div>
   )
 }

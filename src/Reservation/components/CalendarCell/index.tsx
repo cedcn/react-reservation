@@ -72,6 +72,7 @@ const CellRenderer: React.FC<CalendarCellProps> = (props) => {
             isMakeFull: isMakefull,
             notInMonth: isLastMonthDay || isNextMonthDay,
             isInvalid: isBeforeStartDay || isAfterEndDay || isLastMonthDay || isNextMonthDay,
+            isALittleRemaining: !isNil(remaining) && remaining > 0 && remaining <= 100,
           })
         }
       >

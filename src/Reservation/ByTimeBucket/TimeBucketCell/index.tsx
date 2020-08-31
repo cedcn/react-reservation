@@ -44,18 +44,14 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
             isLineGray: isNotChecked,
             isMakeFull: isMakefull,
             isInvalid: isBeforeStartDay || isAfterEndDay,
+            isALittleRemaining: !isNil(remaining) && remaining > 0 && remaining <= 100,
           })
         }
       >
         <div>{`${startTime?.format('HH')}:${startTime?.format('mm')} - ${endTime?.format('HH')}:${endTime?.format(
           'mm'
         )}`}</div>
-        <CellStatus
-          isSelectable={isSelectable}
-          isSelected={!!isSelected}
-          remaining={remaining}
-          prefixCls={prefixCls}
-        />
+        <CellStatus isSelectable={isSelectable} isSelected={!!isSelected} remaining={remaining} prefixCls={prefixCls} />
       </div>
     </div>
   )

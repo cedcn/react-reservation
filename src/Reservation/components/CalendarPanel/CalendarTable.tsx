@@ -20,7 +20,7 @@ export interface CalendarListProps {
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
   onChange?: (value?: CalendarValue | null) => void
-  quotas?: CalendarQuota[]
+  quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota[]>
   advance?: Offset | boolean
   cellRenderer?: React.ComponentType<CalendarCellProps>
   isMultiple?: boolean
@@ -38,7 +38,7 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
     disabledDays,
     onChange,
     endDay,
-    quotas,
+    quotaRequest,
     advance,
     cellRenderer,
     isMultiple,
@@ -46,7 +46,7 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
 
   const child = useMemo(
     () =>
-      map(displayIdxs, (idx) => {
+      map(displayIdxs, (idx, idxIndex) => {
         const { monthDays, firstMonthDay, lastMonthDay } = gainMonthDays({
           startDay,
           monthIdx: idx,
@@ -65,9 +65,11 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
           monthDays,
           onChange,
           firstMonthDay,
+          lastMonthDay,
           width,
           value,
-          quotas,
+          quotaRequest,
+          isActive: idxIndex === 1,
           cellRenderer,
           isMultiple,
         }
@@ -84,7 +86,7 @@ const CalendarTable: React.FC<CalendarListProps> = (props) => {
       disabledWeeks,
       disabledDays,
       map(specifiedDays, (item) => item.format()).join(''),
-      quotas,
+      quotaRequest,
       advance,
       moment.locale(),
     ]

@@ -41,6 +41,7 @@ const CellRenderer: React.FC<ByTimeBucketCellProps> = (props) => {
             isSelectable,
             isLineGray: isNotChecked || isBeforeStartDay || isAfterEndDay,
             isMakeFull: isMakefull,
+            isALittleRemaining: !isNil(remaining) && remaining > 0 && remaining <= 100,
           })
         }
       >

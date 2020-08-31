@@ -13,10 +13,11 @@ import {
   Offset,
   ByTimeBucketCellProps,
   isSameSectionRanges,
+  ByTimeBucketQuota,
 } from '../interface'
 
 import { getNow, getDateByArea } from '../utils'
-import comss from '../styles'
+import * as styles from './styles'
 
 interface TimeBucketProps {
   prefixCls?: string
@@ -29,6 +30,7 @@ interface TimeBucketProps {
   isMultiple?: boolean
   area?: Offset
   isMinShort?: boolean
+  quotaRequest?: (start: Moment, end: Moment) => Promise<ByTimeBucketQuota[]>
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
@@ -45,6 +47,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     isMinShort,
     area,
     cellRenderer,
+    quotaRequest,
   } = props
 
   let startDay: Moment | null | undefined
@@ -89,6 +92,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
     isMultiple,
     isMinShort,
     cellRenderer,
+    quotaRequest,
   }
 
   let content
@@ -106,7 +110,7 @@ const TimeBucket: React.FC<TimeBucketProps> = (props) => {
   }
 
   return (
-    <div className={`${prefixCls}-time-bucket`} css={comss.reservation}>
+    <div className={`${prefixCls}-time-bucket`} css={styles.byTimeBucket}>
       {content}
     </div>
   )

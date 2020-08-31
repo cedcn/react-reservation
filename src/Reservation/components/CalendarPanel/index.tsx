@@ -6,7 +6,7 @@ import useResize from '../../utils/useResize'
 import { WeekCode, SpecifiedDays } from '../../interface'
 import CalendarTHead from './CalendarTHead'
 import VirtualSlider from '../VirtualSlider'
-import { CalendarValue } from '../Calendar'
+import { CalendarValue, CalendarQuota } from '../Calendar'
 import CalendarTable from './CalendarTable'
 import { CalendarCellProps } from '../CalendarCell'
 import { Offset } from '../../interface'
@@ -28,6 +28,7 @@ export interface CalendarPanelProps {
   isMultiple?: boolean
   toggleOff?: boolean
   advance?: Offset | boolean
+  quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota[]>
   cellRenderer?: React.ComponentType<CalendarCellProps>
 }
 
@@ -48,6 +49,7 @@ const Calendar: React.FC<CalendarPanelProps> = (props) => {
     isMinShort,
     cellRenderer,
     isMultiple,
+    quotaRequest,
   } = props
 
   const [viewRef, width] = useResize()
@@ -79,6 +81,7 @@ const Calendar: React.FC<CalendarPanelProps> = (props) => {
                 advance={advance}
                 cellRenderer={cellRenderer}
                 isMultiple={isMultiple}
+                quotaRequest={quotaRequest}
               />
             )}
           </VirtualSlider>

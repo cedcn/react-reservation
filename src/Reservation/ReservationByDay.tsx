@@ -16,7 +16,7 @@ export interface ReservationByDayProps {
   value?: Value
   onChange?: (value?: Value) => void
   days?: Days
-  quotas?: ByDayQuota[] | ((startDay: Moment, endDay: Moment) => ByDayQuota[])
+  quotaRequest?: (start: Moment, end: Moment) => Promise<ByDayQuota[]>
   advance?: Offset | boolean
   isMultiple?: boolean
   area?: Offset

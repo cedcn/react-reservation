@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import cx from 'classnames'
 import { DATE_COL_COUNT, DATE_ROW_COUNT } from '../../constants'
 import { isSameDay, MonthDay } from '../../utils'
 import { CalendarValue, CalendarQuota } from '../Calendar'
-import { find, get, isUndefined, isArray, cloneDeep, filter, isEqual, isNil, some } from 'lodash'
+import { get, isUndefined, isArray, cloneDeep, filter, isEqual, isNil, some, forEach } from 'lodash'
 import CellRenderer, { CalendarCellProps } from '../CalendarCell'
 import * as styles from './styles'
 
@@ -16,12 +16,14 @@ export interface CalendarTBodyProps {
   value?: CalendarValue | null
   onChange?: (value?: CalendarValue | null) => void
   className?: string
-  quotas?: CalendarQuota[]
   firstMonthDay: Moment
+  lastMonthDay: Moment
   monthDays: MonthDay[]
   cellRenderer?: React.ComponentType<CalendarCellProps>
+  quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota[]>
   isMultiple?: boolean
   toggleOff?: boolean
+  isActive: boolean
 }
 
 const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
@@ -30,17 +32,47 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
     monthDays,
     firstMonthDay,
     value,
+    lastMonthDay,
     width,
     onChange,
-    quotas,
     isMultiple,
     toggleOff,
+    quotaRequest,
     cellRenderer: CustomCellRenderer,
+    isActive,
   } = props
+
+  const [quotas, setQuotas] = useState<CalendarQuota[] | undefined | null>(null)
+  const [isLoadingQuota, setIsLoadingQuota] = useState(false)
+
+  useEffect(() => {
+    if (quotaRequest && isActive && isNil(quotas)) {
+      setIsLoadingQuota(true)
+      quotaRequest(firstMonthDay, lastMonthDay)
+        .then((data) => {
+          setQuotas(data)
+        })
+        .finally(() => {
+          setIsLoadingQuota(false)
+        })
+    }
+  }, [isActive])
+
+  const quotasObj = useMemo(() => {
+    if (isNil(quotas)) return undefined
+
+    const mObj = new Map<string, CalendarQuota>()
+    forEach(quotas, (quota) => {
+      const { day } = quota
+      mObj.set(moment(day).format('YYYY-MM-DD'), quota)
+    })
+
+    return mObj
+  }, [quotas])
 
   const onCellClick = useCallback(
     (current, isDisabled, isSelected) => {
-      if (isDisabled) return
+      if (isDisabled || isLoadingQuota) return
 
       let newValue = cloneDeep(value)
 
@@ -70,7 +102,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         onChange?.(newValue)
       }
     },
-    [isMultiple, toggleOff, value, onChange]
+    [isMultiple, toggleOff, value, onChange, isLoadingQuota]
   )
 
   let passed = 0
@@ -96,7 +128,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
         isNotChecked,
       } = meta
 
-      const currentQuota = find(quotas, (quota) => !!isSameDay(current, moment(quota.day)))
+      const currentQuota = quotasObj?.get(current.format('YYYY-MM-DD'))
       const remaining = get(currentQuota, 'remaining')
 
       const isSelectable =
@@ -155,7 +187,7 @@ const CalendarTBody: React.FC<CalendarTBodyProps> = (props) => {
   return (
     <div
       className={cx(`${prefixCls}-tbody`)}
-      style={{ width }}
+      style={{ width, opacity: isLoadingQuota ? 0.5 : 1 }}
       title={firstMonthDay.format('YYYY年MM月')}
       css={styles.tbody}
     >

@@ -7,6 +7,7 @@ import CalendarHeader from '../CalendarHeader'
 import CalendarPanel from '../CalendarPanel'
 import { WeekCode, SpecifiedDays, Offset } from '../../interface'
 import { CalendarCellProps } from '../CalendarCell'
+import * as styles from './styles'
 
 // calendar
 export type CalendarValue = Moment | Moment[] | null
@@ -28,7 +29,7 @@ export interface CalendarProps {
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
   advance?: Offset | boolean
-  quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota>
+  quotaRequest?: (start: Moment, end: Moment) => Promise<CalendarQuota[]>
   cellRenderer?: React.ComponentType<CalendarCellProps>
   isMinShort?: boolean
   startDay: Moment
@@ -50,6 +51,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     specifiedDays,
     disabledWeeks,
     disabledDays,
+    quotaRequest,
   } = props
   const [currentMonthIdx, setCurrentMonthIdx] = useState(0)
 
@@ -89,10 +91,11 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     isMinShort,
     isMultiple,
     cellRenderer,
+    quotaRequest,
   }
 
   return (
-    <div className={cx(`${prefixCls}-calendar`, className)}>
+    <div className={cx(`${prefixCls}-calendar`, className)} css={styles.calendar}>
       <CalendarHeader
         prefixCls={prefixCls}
         currentDay={currentMonthDay}

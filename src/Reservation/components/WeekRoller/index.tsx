@@ -11,7 +11,7 @@ import { Offset, WeekCode, SpecifiedDays } from '../../interface'
 import { gainWeekDays, WeekDay, isSameDay, gainWeekIdxByDay } from '../../utils'
 import { WeekRollerCellProps } from '../WeekRollerCell'
 
-export interface WeekRollerProps {
+export interface WeekRollerProps<Q> {
   prefixCls: string
   value?: Moment | null
   onChange?: (value?: Moment | null) => void
@@ -24,9 +24,12 @@ export interface WeekRollerProps {
   isMinShort?: boolean
   startDay: Moment
   endDay?: Moment
+  quotaRequest?: (start: Moment, end: Moment) => Promise<Q[]>
+  setQuotas?: (quotas: Q[]) => void
+  setIsLoadingQuota?: (bool: boolean) => void
 }
 
-const WeekRoller: React.FC<WeekRollerProps> = (props) => {
+const WeekRoller = <Q extends any>(props: WeekRollerProps<Q>) => {
   const {
     prefixCls = 'rV',
     className,
@@ -40,6 +43,9 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
     disabledWeeks,
     disabledDays,
     specifiedDays,
+    quotaRequest,
+    setIsLoadingQuota,
+    setQuotas,
   } = props
 
   const prevValue = usePrevious(value)
@@ -84,6 +90,28 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
   }, [currentWeekIdx])
 
   useEffect(() => {
+    let didCancel = false
+    if (quotaRequest && startWeekDay && endWeekDay) {
+      setIsLoadingQuota?.(true)
+      quotaRequest(startWeekDay, endWeekDay)
+        .then((data) => {
+          if (!didCancel) {
+            setQuotas?.(data)
+          }
+        })
+        .finally(() => {
+          if (!didCancel) {
+            setIsLoadingQuota?.(false)
+          }
+        })
+    }
+
+    return () => {
+      didCancel = true
+    }
+  }, [currentWeekIdx])
+
+  useEffect(() => {
     if (value) {
       if (!isSameDay(value, prevValue)) {
         setCurrentWeekIdx(gainWeekIdxByDay(startDay, value))
@@ -122,7 +150,6 @@ const WeekRoller: React.FC<WeekRollerProps> = (props) => {
         endWeekDay={endWeekDay}
         canToLast={canToLastWeek}
         canToNext={canToNextWeek}
-        isMinShort={isMinShort}
         toNext={toNextWeek}
         toLast={toLastWeek}
       />

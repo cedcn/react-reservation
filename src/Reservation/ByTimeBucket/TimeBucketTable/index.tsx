@@ -16,6 +16,7 @@ import {
   SpecifiedDays,
   Offset,
   ByTimeBucketCellProps,
+  ByTimeBucketQuota,
 } from '../../interface'
 import * as styles from './styles'
 
@@ -33,6 +34,7 @@ export interface TimeBucketViewerProps {
   isMultiple?: boolean
   isMinShort?: boolean
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
+  quotaRequest?: (start: Moment, end: Moment) => Promise<ByTimeBucketQuota[]>
 }
 
 const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
@@ -46,10 +48,10 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
     specifiedDays,
     disabledDays,
     onChange,
-    isMinShort,
     isMultiple,
     advance,
     cellRenderer,
+    quotaRequest,
   } = props
   const [currentWeekIdx, setCurrentWeekIdx] = useState(0)
 
@@ -144,6 +146,7 @@ const TimeBucketViewer: React.FC<TimeBucketViewerProps> = (props) => {
                   currentWeekIdx={currentWeekIdx}
                   toNext={toNextWeek}
                   toLast={toLastWeek}
+                  quotaRequest={quotaRequest}
                   isMultiple={isMultiple}
                   advance={advance}
                   cellRenderer={cellRenderer}

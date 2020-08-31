@@ -7,7 +7,7 @@ import { TimeBucketValue, ByTimeBucketQuota, isListTimeBucket, TimeRange, Offset
 export interface TimeRangeItemProps {
   value?: TimeBucketValue
   timeRange: TimeRange
-  quota?: ByTimeBucketQuota
+  quotasObj?: Map<string, ByTimeBucketQuota>
   onChange: (value?: TimeBucketValue) => void
   current?: Moment
   isBeforeStartDay: boolean
@@ -33,18 +33,18 @@ const TimeRangeItem: React.FC<TimeRangeItemProps> = (props) => {
     advance,
     isBeforeStartDay,
     isAfterEndDay,
-    quota,
+    quotasObj,
     onChange,
     value,
     isMultiple,
-    isLoadingQuota,
     timeRange,
     isNotChecked,
     children,
+    isLoadingQuota,
   } = props
 
   const [startDateTime, endDateTime] = timeRange
-
+  const quota = quotasObj?.get(`${startDateTime.format('YYYY-MM-DD.HH:ss')}-${endDateTime.format('YYYY-MM-DD.HH:ss')}`)
   const remaining = quota?.remaining
   const isMakefull = !isNil(remaining) && remaining <= 0
   const isALittleRemaining = !isNil(remaining) && remaining > 0 && remaining < MAX_SHOW_QUOTA
@@ -60,7 +60,7 @@ const TimeRangeItem: React.FC<TimeRangeItemProps> = (props) => {
     : false
 
   const onClick = useCallback(() => {
-    if (isDisabled) return
+    if (isDisabled || isLoadingQuota) return
 
     let newValue = cloneDeep(value)
     if (isMultiple) {

@@ -24,7 +24,7 @@ export interface ReservationTimeBucketProps {
   days?: Days
   ranges: SectionRanges
   onChange?: (value?: TimeBucketValue) => void
-  quotas?: ByTimeBucketQuota[] | ((startDay: Moment, endDay: Moment) => ByTimeBucketQuota[])
+  quotaRequest?: (start: Moment, end: Moment) => Promise<ByTimeBucketQuota[]>
   advance?: Offset | boolean
   area?: Offset
   isMultiple?: boolean

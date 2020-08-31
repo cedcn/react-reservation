@@ -8,7 +8,6 @@ interface WeekRollerHeaderProps {
   prefixCls?: string
   startWeekDay?: Moment
   endWeekDay?: Moment
-  isMinShort?: boolean
   canToLast: boolean
   canToNext: boolean
   toLast: () => void
@@ -16,7 +15,7 @@ interface WeekRollerHeaderProps {
 }
 
 const WeekRollerHeader: React.FC<WeekRollerHeaderProps> = (props) => {
-  const { prefixCls, startWeekDay, endWeekDay, toLast, toNext, canToLast, canToNext, isMinShort } = props
+  const { prefixCls, startWeekDay, endWeekDay, toLast, toNext, canToLast, canToNext } = props
 
   return (
     <div className={`${prefixCls}-header`} css={styles.header}>

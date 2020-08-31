@@ -12,6 +12,7 @@ import {
   SpecifiedDays,
   Offset,
   ByTimeBucketCellProps,
+  ByTimeBucketQuota,
 } from '../../interface'
 
 interface TimeBucketListProps {
@@ -28,11 +29,11 @@ interface TimeBucketListProps {
   onChange: (value?: TimeBucketValue) => void
   advance?: Offset | boolean
   isMultiple?: boolean
-  quotas?: any
   currentWeekIdx: number
   toNext: () => boolean
   toLast: () => boolean
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
+  quotaRequest?: (start: Moment, end: Moment) => Promise<ByTimeBucketQuota[]>
 }
 
 const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
@@ -51,15 +52,15 @@ const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
     endDay,
     currentWeekIdx,
     ranges,
-    quotas,
     advance,
     isMultiple,
     cellRenderer,
+    quotaRequest,
   } = props
 
   const child = useMemo(
     () =>
-      map(displayIdxs, (idx) => {
+      map(displayIdxs, (idx, idxIndex) => {
         const weekDaysItem = gainWeekDays({
           startDay,
           endDay,
@@ -85,8 +86,9 @@ const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
           onChange,
           width,
           value,
+          quotaRequest,
+          isActive: idxIndex === 1,
           ranges,
-          quotas,
           advance,
           isMultiple,
           cellRenderer,
@@ -105,9 +107,9 @@ const TimeBucketTable: React.FC<TimeBucketListProps> = (props) => {
       startDay.format(),
       endDay && endDay.format(),
       ranges,
-      quotas,
       advance,
       isMultiple,
+      quotaRequest,
       cellRenderer,
     ]
   )

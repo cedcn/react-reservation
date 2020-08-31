@@ -4,7 +4,15 @@ import React, { useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import { map } from 'lodash'
 import { gainNormalDay } from '../../utils'
-import { WeekCode, SpecifiedDays, TimeBucketValue, SectionRanges, Offset, ByTimeBucketCellProps } from '../../interface'
+import {
+  WeekCode,
+  SpecifiedDays,
+  TimeBucketValue,
+  SectionRanges,
+  Offset,
+  ByTimeBucketCellProps,
+  ByTimeBucketQuota,
+} from '../../interface'
 import TimeSectionList from '../TimeSectionList'
 
 interface TimeSectionListViewerProps {
@@ -19,9 +27,10 @@ interface TimeSectionListViewerProps {
   disabledWeeks?: WeekCode[]
   specifiedDays?: SpecifiedDays
   disabledDays?: Moment[]
-  quotas?: any
+  quotasObj?: Map<string, ByTimeBucketQuota>
   advance?: Offset | boolean
   isMultiple?: boolean
+  isLoadingQuota?: boolean
   cellRenderer?: React.ComponentType<ByTimeBucketCellProps>
 }
 
@@ -38,10 +47,11 @@ const TimeSectionListViewer: React.FC<TimeSectionListViewerProps> = (props) => {
     onChange,
     endDay,
     ranges,
-    quotas,
+    quotasObj,
     advance,
     isMultiple,
     cellRenderer,
+    isLoadingQuota,
   } = props
 
   const child = useMemo(
@@ -71,8 +81,10 @@ const TimeSectionListViewer: React.FC<TimeSectionListViewerProps> = (props) => {
             isMultiple={isMultiple}
             currentDay={currentDay}
             width={width}
+            quotasObj={quotasObj}
             prefixCls={prefixCls}
             cellRenderer={cellRenderer}
+            isLoadingQuota={isLoadingQuota}
           />
         )
       }),
@@ -87,11 +99,12 @@ const TimeSectionListViewer: React.FC<TimeSectionListViewerProps> = (props) => {
       startDay.format(),
       endDay && endDay.format(),
       ranges,
-      quotas,
+      quotasObj,
       advance,
       isMultiple,
       cellRenderer,
       moment.locale(),
+      isLoadingQuota,
     ]
   )
 
